@@ -1,0 +1,7 @@
+@import './variables';
+
+.title {
+  color: $main-orage;
+  font-family: $main-font;
+  @extend %title-style
+}
