@@ -1,8 +1,26 @@
+$black: #000000;
+$white: #FFFFFF;
+$link-blue: #0099FF;
+$main-orage: #ff6600;
+$form-gray: #f5f8fa;
+$form-label-gray: #657786;
 
-$main-orage: #FF6600;
-$main-font: 'Noto Sans TC', sans-serif;
+$main-font: "Noto Sans TC", sans-serif;
 
-%title-style{
+%logo-style {
   font-size: 1.4375rem;
   font-weight: 700;
+  font-family: $main-font;
+}
+%label-style {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-family: $main-font;
+  color: $form-label-gray;
+}
+%input-style {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  font-family: $main-font;
+  color: $black;
 }
