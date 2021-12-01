@@ -35,6 +35,11 @@ const routes = [{
     name: 'AdminSignIn',
     component: AdminSignIn
 }, {
+    path: '/admin/main',
+    name: 'AdminMain',
+    component: () =>
+        import ('../views/AdminMain.vue')
+}, {
     path: '*',
     name: 'not-found',
     component: NotFound
