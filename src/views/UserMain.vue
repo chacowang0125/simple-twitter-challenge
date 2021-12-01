@@ -33,11 +33,11 @@ export default {
   // position: relative;
   display: flex;
   .main-container {
-    border: 1px solid red;
     flex: 1;
     hr {
       width: 100%;
       height: 10px;
+			margin: 0;
       border: 0;
       background-color: $page-divider;
     }
