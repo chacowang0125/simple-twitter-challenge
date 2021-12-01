@@ -1,71 +1,69 @@
-@import './variables';
-
+@import "./variables";
 #signin {
-  margin-top: 65px;
-  text-align: center;
-  .logo {
-    margin-bottom: 45px;
-    .logo-text {
-      @extend %logo-style;
-    }
-    .logo-image {
-      width: 40px;
-      height: 40px;
-      margin: 0 auto 25px auto
-    }
-  }
-  .form {
-    width: 100%;
-    margin-bottom: 40px;
-    .form-row {
-      width: 540px;
-      height: 52px;
-      margin: 0 auto 32px auto;
-      background-color: $form-gray;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      border-bottom: 2px solid $form-label-gray;
-      label {
-        @extend %label-style;
-        margin: 0 auto 0 10px;
-        padding: 0;
-        
-      }
-      input {
-        @extend %input-style;
-        border: none;
-        background-color: $form-gray !important; 
-        margin-left: 10px;
-        box-shadow: inset 0 0 0 1000px $form-gray;
-      }
-    }
-  }
-  .btn {
-    background-color: $main-orage;
-    width: 540px;
-    height: 46px;
-    border-radius: 50px;
-    font-size: 1.125rem;
-    font-weight: 700;
-    font-family: $main-font;
-    color: $white;
-  }
-  .links {
-    width: 540px;
-    margin: 20px auto 0 auto;
-    .link-list {
-      display: flex;
-      justify-content: right;
-      .link-list-item {
-        font-size: 1.125rem;
-        font-family: $main-font;
-        color: $link-blue;
-        margin-left: 1px;
-        &.text {
-          border-bottom: 2px solid $link-blue;
+    margin-top: 65px;
+    text-align: center;
+    .logo {
+        margin-bottom: 45px;
+        .logo-text {
+            @extend %logo-style;
         }
-      }
+        .logo-image {
+            width: 40px;
+            height: 40px;
+            margin: 0 auto 25px auto;
+        }
     }
-  }
+    .form {
+        width: 100%;
+        margin-bottom: 40px;
+        .form-row {
+            width: 540px;
+            height: 52px;
+            margin: 0 auto 32px auto;
+            background-color: $input-background-color;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border-bottom: 2px solid $label-font-color;
+            label {
+                @extend %label-style;
+                margin: 0 auto 0 10px;
+                padding: 0;
+            }
+            input {
+                @extend %input-style;
+                border: none;
+                background-color: $input-background-color !important;
+                margin-left: 10px;
+                box-shadow: inset 0 0 0 1000px $input-background-color;
+            }
+        }
+    }
+    .btn {
+        background-color: $main-orange;
+        width: 540px;
+        height: 46px;
+        border-radius: 50px;
+        font-size: 1.125rem;
+        font-weight: 700;
+        font-family: $main-font;
+        color: $white;
+    }
+    .links {
+        width: 540px;
+        margin: 20px auto 0 auto;
+        .link-list {
+            display: flex;
+            justify-content: right;
+            .link-list-item {
+                font-size: 1.125rem;
+                font-family: $main-font;
+                color: $link-blue;
+                margin-left: 1px;
+                &.text {
+                    border-bottom: 2px solid $link-blue;
+                }
+            }
+        }
+    }
 }

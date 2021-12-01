@@ -1,7 +1,7 @@
 <template>
   <div id="signin">
     <div class="logo">
-      <img class="logo-image" src="./../assets/Icon.png" alt="" />
+      <img class="logo-image" src="./../assets/images/logo.svg" alt="" />
       <h2 class="logo-text">登入 Alphitter</h2>
     </div>
     <LoginForm />
