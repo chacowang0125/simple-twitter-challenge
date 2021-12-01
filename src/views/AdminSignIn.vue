@@ -2,7 +2,7 @@
   <div id="signin">
     <div class="logo">
       <img class="logo-image" src="./../assets/images/logo.svg" alt="" />
-      <h2 class="logo-text">登入 Alphitter</h2>
+      <h2 class="logo-text">後台登入</h2>
     </div>
     <LoginForm />
   </div>
@@ -12,7 +12,7 @@
 import LoginForm from "./../components/LoginForm";
 
 export default {
-  name: "SignIn",
+  name: "AdminSignIn",
   components: {
     LoginForm,
   },
@@ -22,3 +22,4 @@ export default {
 <style lang="scss">
 @import "./../assets/styles/_signin.scss";
 </style>
+
