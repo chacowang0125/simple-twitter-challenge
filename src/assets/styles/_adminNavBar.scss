@@ -1,0 +1,54 @@
+@import './variables';
+
+#admin-navbar {
+  position: relative;
+  border-right: 1px solid $page-divider;
+  width: 320px;
+  height: 100vh;
+  padding: 15px 0;
+  .container {
+    width: 70%;
+    margin: auto;
+    li {
+      cursor:pointer;
+      align-items: center;
+      margin: 30px 0;
+      .nav-link {
+        display: flex;
+      }
+      &.active,
+      &:hover {
+        .nav-title {
+          color: $main-orange;
+        }
+        .nav-icon {
+          position: relative;
+          left: -80px;
+          filter: drop-shadow($main-orange 80px 0);
+        }
+      }
+    }
+    .nav-list-logout {
+      position: absolute;
+      bottom: 0;
+    }
+  }
+}
+
+.nav-logo {
+  width: 30px;
+  height: 30px;
+  margin-bottom: 40px;
+}
+
+.nav-icon {
+  width: 24px;
+  height: 24px;
+  margin-right: 10px;
+}
+
+.nav-title {
+  height: 100%;
+  margin-left: 20px;
+  @extend %navtop-style
+}
