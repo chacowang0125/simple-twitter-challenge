@@ -1,7 +1,7 @@
-@import './variables';
+@import "./variables";
 #side-bar {
     position: relative;
-    border-right: 1px solid$page-divider;
+    border-right: 1px solid $page-divider;
     width: 320px;
     height: 100vh;
     padding: 15px 0;
@@ -9,17 +9,19 @@
         width: 70%;
         margin: auto;
         li {
-            display: flex;
             align-items: center;
             margin: 25px 0;
+            .nav-link {
+                display: flex;
+            }
             &.active,
             &:hover {
                 .nav-title {
                     color: $main-orange;
                 }
                 .nav-icon {
-                    position: relative;
-                    left: -80px;
+                    overflow: hidden;
+                    transform: translateX(-80px);
                     filter: drop-shadow($main-orange 80px 0);
                 }
             }
@@ -34,11 +36,10 @@
 .nav-logo {
     width: 30px;
     height: 30px;
-    margin-bottom: 20px;
+    margin-bottom: 40px;
 }
 
 .nav-icon {
-    // display: inline-block;
     width: 24px;
     height: 24px;
 }
@@ -54,5 +55,5 @@
 .nav-button {
     width: 100%;
     height: 38px;
-    @extend %button-style
+    @extend %button-style;
 }
