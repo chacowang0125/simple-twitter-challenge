@@ -11,7 +11,7 @@
           class="nav-list"
           :class="{ active: currentRouteName === 'AdminMain' }"
         >
-          <router-link to="/signup" class="nav-link">
+          <router-link to="/admin/main" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/home-icon.svg"
@@ -20,8 +20,11 @@
             <span class="nav-title">推文清單</span>
           </router-link>
         </li>
-        <li class="nav-list" :class="{ active: currentRouteName === 'SigIn' }">
-          <router-link to="/signup" class="nav-link">
+        <li
+          class="nav-list"
+          :class="{ active: currentRouteName === 'AdminUsers' }"
+        >
+          <router-link to="/admin/users" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/person-icon.svg"
