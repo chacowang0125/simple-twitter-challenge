@@ -7,63 +7,61 @@
             ><img class="nav-logo" src="../assets/images/logo.svg" alt="logo"
           /></a>
         </li>
-        <a href="#" active>
-          <li
-            class="nav-list"
-            :class="{ active: currentpage === 'home' }"
-            @click.stop.prevent="showPage('home')"
-          >
+        <li
+          class="nav-list"
+          :class="{ active: currentRouteName === 'tweets' }"
+        >
+          <router-link to="/tweets" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/home-icon.svg"
               alt="home-page"
             />
             <span class="nav-title">首頁</span>
-          </li>
-        </a>
-        <a href="#">
-          <li
-            class="nav-list"
-            :class="{ active: currentpage === 'personal' }"
-            @click.stop.prevent="showPage('personal')"
-          >
+          </router-link>
+        </li>
+        <li
+          class="nav-list"
+          :class="{ active: currentRouteName === 'user-edit' }"
+        >
+					<!-- link user tweet -->
+          <router-link to="/user/edit" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/person-icon.svg"
               alt="personal-info"
             />
             <span class="nav-title">個人資料</span>
-          </li>
-        </a>
-        <a href="#">
-          <li
-            class="nav-list"
-            :class="{ active: currentpage === 'setting' }"
-            @click.stop.prevent="showPage('setting')"
-          >
+          </router-link>
+        </li>
+        <li
+          class="nav-list"
+          :class="{ active: currentRouteName === 'user-tweet' }"
+        >
+          <router-link to="/user/edit" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/setting-icon.svg"
               alt="setting"
             />
             <span class="nav-title">設定</span>
-          </li>
-        </a>
-        <a href="#">
-          <li class="nav-list">
+          </router-link>
+        </li>
+        <li class="nav-list">
+          <a href="#">
             <button class="nav-button">推文</button>
-          </li>
-        </a>
-        <a href="">
-          <li class="nav-list nav-list-logout">
+          </a>
+        </li>
+        <li class="nav-list nav-list-logout">
+          <rouer-link to="/tweets" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/logout-icon.svg"
               alt="logout"
             />
             <span class="nav-title">登出</span>
-          </li>
-        </a>
+          </rouer-link>
+        </li>
       </ul>
     </div>
   </div>
@@ -79,12 +77,16 @@ export default {
   name: "NavBar",
   data() {
     return {
-      currentpage: "home",
     };
   },
   methods: {
     showPage(page) {
       this.currentpage = page;
+    },
+  },
+	computed: {
+    currentRouteName() {
+      return this.$route.name;
     },
   },
 };
