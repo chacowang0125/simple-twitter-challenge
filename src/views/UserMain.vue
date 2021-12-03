@@ -2,14 +2,14 @@
   <div class="container">
     <NavBar />
     <div class="main-container">
-			<PostDetailCard />
-      <!-- <div class="newpostform-container">
+			<!-- <PostDetailCard /> -->
+      <div class="newpostform-container">
         <NewPostForm />
       </div>
       <hr />
       <div class="showpostform-container">
         <ShowPostsList />
-      </div> -->
+      </div>
     </div>
     <div class="popularbar-container">
       <PopularBar />
@@ -20,18 +20,18 @@
 <script>
 import NavBar from "./../components/NavBar.vue";
 import PopularBar from "./../components/PopularBar.vue";
-// import NewPostForm from "./../components/NewPostForm.vue";
-// import ShowPostsList from "./../components/ShowPostsList.vue";
-import PostDetailCard from "./../components/PostDetailCard.vue"
+import NewPostForm from "./../components/NewPostForm.vue";
+import ShowPostsList from "./../components/ShowPostsList.vue";
+// import PostDetailCard from "./../components/PostDetailCard.vue"
 
 export default {
   name: "UserMain",
   components: {
     NavBar,
     PopularBar,
-    // NewPostForm,
-    // ShowPostsList,
-		PostDetailCard
+    NewPostForm,
+    ShowPostsList,
+		// PostDetailCard
   },
 };
 </script>

@@ -1,0 +1,97 @@
+@import "../styles/variables";
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.page-title {
+    @extend %page-title-style;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    &-name {
+        font-weight: 900;
+        margin-left: 30px;
+        .tweets {
+            @extend %label-style;
+            line-height: 13px;
+        }
+    }
+}
+
+.page-banner {
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid $page-divider;
+    &-followed,
+    &-following {
+        padding: 14px 44px;
+        @extend %user-account-style;
+        font-weight: 700;
+        cursor: pointer;
+        &.active {
+            color: $main-orange;
+            border-bottom: 2px solid $main-orange;
+        }
+    }
+}
+
+.page-list {
+    flex: 1;
+    &::-webkit-scrollbar {
+        width: 3px;
+        background-color: transparent;
+        &-thumb {
+            border-radius: 10px;
+            background-color: $page-divider;
+        }
+    }
+}
+
+.list-card {
+    border-bottom: 1px solid $page-divider;
+    width: 100%;
+    padding: 10px 20px;
+    display: flex;
+    flex-direction: row;
+    &-avatar {
+        border: 1px solid gray;
+        @extend %avatar-img-style;
+    }
+    &-content {
+        flex: 1;
+        text-align: left;
+        margin-left: 10px;
+        position: relative;
+        &-header {
+            .name {
+                @extend %user-name-style;
+            }
+            .account {
+                @extend %user-account-style;
+            }
+            button {
+                position: absolute;
+                top: 0px;
+                right: 0px;
+                border: 1px solid $main-orange;
+                border-radius: 100px;
+                height: 25px;
+                font-weight: bold;
+                font-size: 15px;
+                &.follow {
+                    width: 60px;
+                    color: $main-orange;
+                }
+                &.following {
+                    width: 90px;
+                    color: #fff;
+                    background-color: $main-orange;
+                }
+            }
+        }
+        &-description {
+            @extend %input-style;
+        }
+    }
+}
