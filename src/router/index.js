@@ -31,10 +31,10 @@ const routes = [{
     component: () =>
         import ('../views/UserEdit.vue')
 }, {
-    path: '/user/tweet',
-    name: 'user-tweet',
-    // component: () =>
-    //     import ('../views/UserEdit.vue')
+    path: '/user/follow',
+    name: 'user-follow',
+    component: () =>
+        import ('../views/UserFollow.vue'),
 }, {
     path: '/admin/signin',
     name: 'AdminSignIn',
