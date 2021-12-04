@@ -4,6 +4,7 @@ import SignIn from '../views/SignIn.vue'
 import UserMain from '../views/UserMain.vue'
 import NotFound from '../views/NotFound.vue'
 import AdminSignIn from '../views/AdminSignIn.vue'
+import Modal from '../views/Modal.vue'
 
 
 Vue.use(VueRouter)
@@ -35,6 +36,10 @@ const routes = [{
     name: 'user-follow',
     component: () =>
         import ('../views/UserFollow.vue'),
+}, {
+    path: '/user/modal',
+    name: 'create-tweet-modal',
+    component: Modal
 }, {
     path: '/admin/signin',
     name: 'AdminSignIn',
