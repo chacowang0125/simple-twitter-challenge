@@ -4,6 +4,7 @@ $main-font-color: #1c1c1c;
 $page-divider: #e6ecf0;
 $label-font-color: #657786;
 $form-gray: #657786;
+$like-red: #E0245E;
 $input-background-color: #f5f8fa;
 $input-bottom-color: #657786;
 $popularList-background-color: #f5f8fa;
@@ -42,20 +43,17 @@ sans-serif;
 %logo-style {
     font-size: 1.4375rem;
     font-weight: 700;
-    font-family: $main-font;
 }
 
 %label-style {
     font-size: 0.9375rem;
     font-weight: 500;
-    font-family: $main-font;
     color: $form-gray;
 }
 
 %input-style {
     font-size: 0.9375rem;
     font-weight: 500;
-    font-family: $main-font;
     color: $black;
 }
 
@@ -82,6 +80,11 @@ sans-serif;
 %navtop-style {
   font-size: 1.125rem;
   font-weight: 700;
-  font-family: $main-font;
+  color: $main-font-color;
+}
+
+%name-style {
+  font-size: 1.188rem;
+  font-weight: 900;
   color: $main-font-color;
 }
