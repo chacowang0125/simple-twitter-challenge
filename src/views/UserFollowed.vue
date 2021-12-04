@@ -2,7 +2,7 @@
   <div class="container">
       <Navbar />
     <div class="main-container">
-      <UserFollowingFeed />
+      <UserFollowedFeed />
     </div>
       <PopularBar />
   </div>
@@ -11,13 +11,13 @@
 <script>
 import Navbar from "../components/NavBar.vue";
 import PopularBar from "../components/PopularBar.vue";
-import UserFollowingFeed from "../components/UserFollowingFeed.vue";
+import UserFollowedFeed from "../components/UserFollowedFeed.vue";
 
 export default {
-  name: "UserFollow",
+  name: "UserFollowed",
   components: {
     Navbar,
-    UserFollowingFeed,
+		UserFollowedFeed,
     PopularBar,
   },
   setup() {},

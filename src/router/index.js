@@ -32,10 +32,20 @@ const routes = [{
     component: () =>
         import ('../views/UserEdit.vue')
 }, {
-    path: '/user/follow',
-    name: 'user-follow',
+    path: '/user/tweet',
+    name: 'user-tweet',
     component: () =>
-        import ('../views/UserFollow.vue'),
+        import ('../views/Tweet.vue')
+}, {
+    path: '/user/followed',
+    name: 'user-followed',
+    component: () =>
+        import ('../views/UserFollowed.vue'),
+}, {
+    path: '/user/following',
+    name: 'user-following',
+    component: () =>
+        import ('../views/UserFollowing.vue'),
 }, {
     path: '/user/modal',
     name: 'create-tweet-modal',

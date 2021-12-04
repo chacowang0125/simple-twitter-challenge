@@ -9,10 +9,10 @@
     </div>
     <div class="page-banner">
       <router-link to="/user/followed">
-        <div class="page-banner-followed">跟隨者</div>
+        <div class="page-banner-followed active">跟隨者</div>
       </router-link>
-      <router-link to="/user/folloing">
-        <div class="page-banner-following active">正在跟隨</div>
+      <router-link to="/user/following">
+        <div class="page-banner-following">正在跟隨</div>
       </router-link>
     </div>
     <div class="page-list">
@@ -59,7 +59,7 @@ export default {
   name: "UserFollowingFeed",
   data() {
     return {
-      currentRouteName: "following",
+      currentRouteName: "followed",
       currentUser: {
         id: 1,
         name: "JohnDoe",
@@ -80,7 +80,7 @@ export default {
           account: "@apple",
           avatar: "",
           introduction: "I am Apple.",
-          isFollowed: true,
+          isFollowed: false,
         },
         {
           id: 3,
