@@ -6,6 +6,7 @@ import NotFound from '../views/NotFound.vue'
 import AdminSignIn from '../views/AdminSignIn.vue'
 
 
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -36,6 +37,27 @@ const routes = [{
     // component: () =>
     //     import ('../views/UserEdit.vue')
 }, {
+    path: '/profile/:id',
+      component: () => import('../views/UserProfile.vue'),
+      children: [
+      {
+        path: '/',
+        name: 'tweet',
+        component: () => import('../components/UserTweetFeed.vue')
+      },
+      {
+        path: 'comment',
+        name: 'comment',
+        component:()=>import('../components/UserCommentFeed.vue')
+      },
+      {
+        path: 'liked',
+        name: 'liked',
+        component: () => import('../components/UserLikedFeed.vue')
+      },
+    ]
+},     
+    {
     path: '/admin/signin',
     name: 'AdminSignIn',
     component: AdminSignIn
