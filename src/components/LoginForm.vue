@@ -113,6 +113,7 @@ export default {
         console.log("start");
         localStorage.setItem("token", data.token);
         this.$store.commit("setCurrentUser", data.user);
+        console.log("start");
         if (data.user.role === "user") {
           this.$router.push({ name: "home" });
         }
