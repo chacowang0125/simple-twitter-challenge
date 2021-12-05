@@ -71,7 +71,8 @@ sans-serif;
 %user-account-style {
     font-size: 15px;
     font-weight: 500;
-    color: $label-font-color
+    color: $label-font-color;
+    letter-spacing: 0.5px;
 }
 
 %avatar-img-style {

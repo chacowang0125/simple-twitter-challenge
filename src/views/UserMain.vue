@@ -1,18 +1,22 @@
 <template>
   <div class="container">
-    <NavBar />
+    <NavBar :modal-on="modalTrunOn" />
     <div class="main-container">
-			<PostDetailCard />
-      <!-- <div class="newpostform-container">
+      <PostDetailCard />
+      <div class="newpostform-container">
         <NewPostForm />
       </div>
       <hr />
       <div class="showpostform-container">
         <ShowPostsList />
-      </div> -->
+      </div>
     </div>
     <div class="popularbar-container">
       <PopularBar />
+    </div>
+    <div class="modal" >
+      <ReplyPostModal v-show="openReplyPostModal"/>
+      <CreateNewTweetModal v-show="openCreateNewTweetModal" @after-add-tweet="afterAddTweet" />
     </div>
   </div>
 </template>
@@ -20,24 +24,36 @@
 <script>
 import NavBar from "./../components/NavBar.vue";
 import PopularBar from "./../components/PopularBar.vue";
-// import NewPostForm from "./../components/NewPostForm.vue";
-// import ShowPostsList from "./../components/ShowPostsList.vue";
-import PostDetailCard from "./../components/PostDetailCard.vue"
+import NewPostForm from "./../components/NewPostForm.vue";
+import ShowPostsList from "./../components/ShowPostsList.vue";
+import CreateNewTweetModal from "../components/CreateNewTweetModal.vue";
+import ReplyPostModal from "../components/ReplyPostModal.vue"
+import { mapState } from "vuex";
 
 export default {
   name: "UserMain",
   components: {
     NavBar,
     PopularBar,
-    // NewPostForm,
-    // ShowPostsList,
-		PostDetailCard
+    NewPostForm,
+    ShowPostsList,
+    CreateNewTweetModal,
+    ReplyPostModal
+  },
+  methods: {
+    afterAddTweet() {
+      this.$store.commit("toggleCreateNewTweetModal");
+    },
+  },
+  computed: {
+    ...mapState(["openCreateNewTweetModal","openReplyPostModal"]),
   },
 };
 </script>
 <style lang="scss" scoped>
 @import "../assets/styles/_variables.scss";
 .container {
+  position: relative;
   display: flex;
   .main-container {
     height: 100vh;
@@ -65,6 +81,11 @@ export default {
         }
       }
     }
+  }
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
   }
 }
 </style>

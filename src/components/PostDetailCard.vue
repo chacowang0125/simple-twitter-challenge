@@ -4,7 +4,7 @@
     <div class="tweet-card">
       <div class="tweet-card-info">
         <div class="tweet-card-info-img">
-          <img src="" alt="" />
+          <img :src="tweet.user.avatar" alt="" />
         </div>
         <div class="tweet-card-info-name">
           <div class="name">{{ tweet.user.name }}</div>
@@ -41,7 +41,9 @@
     <div class="tweet-reply-list">
       <a href="">
         <div v-for="reply in replies" :key="reply.id" class="tweet-reply">
-          <div class="tweet-reply-img"><img src="" alt="" /></div>
+          <div class="tweet-reply-img">
+            <img :src="reply.avatar" alt="" />
+          </div>
           <div class="tweet-reply-content">
             <div class="tweet-reply-content-info">
               <span class="name">{{ reply.name }}</span>
@@ -72,7 +74,7 @@ export default {
           id: 1,
           name: "Chaco",
           account: "@chaco",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
         },
         createdAt: "上午10:00",
         description: "今天天氣真的有夠冷",
@@ -85,7 +87,7 @@ export default {
           id: 1,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           comment: "Good Job!",
           createdAt: "2小時前",
         },
@@ -93,7 +95,7 @@ export default {
           id: 2,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           comment: "Good Job!",
           createdAt: "2小時前",
         },
@@ -101,7 +103,7 @@ export default {
           id: 3,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           comment: "Good Job!",
           createdAt: "2小時前",
         },
@@ -109,7 +111,7 @@ export default {
           id: 4,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           comment: "Good Job!",
           createdAt: "2小時前",
         },
@@ -117,7 +119,7 @@ export default {
           id: 5,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           comment: "Good Job!",
           createdAt: "2小時前",
         },
@@ -125,7 +127,7 @@ export default {
           id: 6,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           comment: "Good Job!",
           createdAt: "2小時前",
         },

@@ -3,14 +3,11 @@
     <div class="container">
       <ul>
         <li>
-          <a href="#"
+          <router-link to="/tweets"
             ><img class="nav-logo" src="../assets/images/logo.svg" alt="logo"
-          /></a>
+          /></router-link>
         </li>
-        <li
-          class="nav-list"
-          :class="{ active: currentRouteName === 'tweets' }"
-        >
+        <li class="nav-list" :class="{ active: currentRouteName === 'tweets' }">
           <router-link to="/tweets" class="nav-link">
             <img
               class="nav-icon"
@@ -24,7 +21,7 @@
           class="nav-list"
           :class="{ active: currentRouteName === 'user-edit' }"
         >
-					<!-- link user tweet -->
+          <!-- link user tweet -->
           <router-link to="/user/edit" class="nav-link">
             <img
               class="nav-icon"
@@ -49,7 +46,7 @@
         </li>
         <li class="nav-list">
           <a href="#">
-            <button class="nav-button">推文</button>
+            <button class="nav-button" @click="opencreateNewTweetModal">推文</button>
           </a>
         </li>
         <li class="nav-list nav-list-logout">
@@ -76,15 +73,17 @@
 export default {
   name: "NavBar",
   data() {
-    return {
-    };
+    return {};
   },
   methods: {
     showPage(page) {
       this.currentpage = page;
     },
+		opencreateNewTweetModal() {
+			this.$store.commit('toggleCreateNewTweetModal')
+		}
   },
-	computed: {
+  computed: {
     currentRouteName() {
       return this.$route.name;
     },

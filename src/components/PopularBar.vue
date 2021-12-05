@@ -6,9 +6,12 @@
       <li v-for="user in users" :key="user.id" class="list-card">
         <!-- router-link -->
         <div class="list-card-avatar">
-          <router-link>
-            <!-- <img class="card-avatar-img" src="user.avatar" alt=""> -->
-          </router-link>
+          <!-- <router-link> -->
+            <img
+              :src="user.avatar"
+              alt=""
+            />
+          <!-- </router-link> -->
         </div>
         <div class="list-card-content">
           <div class="list-card-content-name">{{ user.name }}</div>
@@ -44,28 +47,28 @@ const dummydata = {
       id: 1,
       name: "Chaco",
       account: "@chaco123",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       isFollowed: true,
     },
     {
       id: 2,
       name: "Vince",
       account: "@vince123",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       isFollowed: false,
     },
     {
       id: 3,
       name: "小鹿",
       account: "@deer123",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       isFollowed: true,
     },
     {
       id: 4,
       name: "Ya Chu",
       account: "@yachu123",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       isFollowed: false,
     },
   ],

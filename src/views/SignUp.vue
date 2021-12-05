@@ -132,11 +132,10 @@ export default {
     background-color: $input-background-color;
     font-size: 20px;
     padding: 1.75rem 0rem 0.5rem 10px;
+    box-shadow: inset 0 0 0 1000px $input-background-color;
+    &:hover,
     &:focus {
-      border-bottom: 2px solid #0099ff; //改成變數
-    }
-    &:hover {
-      box-shadow: 0 0 5px #ccc;
+      border-bottom: 2px solid $link-blue;
     }
   }
 }
