@@ -4,7 +4,7 @@
     <div id="profile">
       <UserTopNav :user="user" />
       <div id="profile-user">
-        <UserProfileComponent :initialUser="user" />
+        <UserProfileComponent :user="user" />
       </div>
       <div id="stepper">
         <UserStepper />
@@ -31,6 +31,8 @@ import UserTopNav from "./../components/UserTopNav.vue";
 import UserProfileComponent from "../components/UserProfileComponent.vue";
 import UserStepper from "./../components/UserStepper.vue";
 import UserEditModal from "./../components/UserEditModal.vue";
+import usersAPI from "./../apis/users";
+import { Toast } from "./../utils/helpers";
 
 const dummyUser = {
   user: {
@@ -180,8 +182,8 @@ export default {
         account: "",
         avatar: "",
         cover: "",
-        followerCounts: "",
-        followingCounts: "",
+        followers: "",
+        followings: "",
         tweetsCounts: "",
       },
       tweets: [],
@@ -214,19 +216,32 @@ export default {
   //   next();
   // },
   methods: {
-    fetchUser(userId) {
-      console.log("user id: ", userId);
-      this.user = {
-        id: dummyUser.user.id,
-        name: dummyUser.user.name,
-        account: dummyUser.user.account,
-        introduction: dummyUser.user.introduction,
-        avatar: dummyUser.user.avatar,
-        cover: dummyUser.user.cover,
-        followerCounts: dummyUser.user.followers,
-        followingCounts: dummyUser.user.followings,
-        tweetsCounts: dummyUser.user.tweetsCounts,
-      };
+    async fetchUser(userId) {
+      try {
+        const response = await usersAPI.getUser({
+          userId,
+        });
+        console.log(response);
+        const { data } = response;
+        const { id, name, account, avatar, cover, followers, followings } =
+          data;
+        console.log(userId);
+        this.user = {
+          id,
+          name,
+          account,
+          avatar,
+          cover,
+          followers,
+          followings,
+        };
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "無法取得使用者，請稍後再試",
+        });
+      }
     },
     fetchTweet(userId) {
       console.log("user id: ", userId);

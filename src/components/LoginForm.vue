@@ -98,19 +98,20 @@ export default {
           throw new Error(data.message);
         }
 
-        //判定user role是否正確登入前台後台
-        // if (
-        //   (data.user.role === "user" && currentRouteName === "AdminSignIn") ||
-        //   (data.user.role === "admin" && currentRouteName === "sign-in")
-        // ) {
-        //   Toast.fire({
-        //     icon: "warning",
-        //     title: "帳號不存在",
-        //   });
-        //   this.isProcessing = false;
-        //   return;
-        // }
-        console.log("start");
+        if (
+          (data.user.role === "user" && this.$route.name === "AdminSignIn") ||
+          (data.user.role === "admin" && this.$route.name === "sign-in")
+        ) {
+          Toast.fire({
+            icon: "warning",
+            title: "帳號不存在",
+          });
+          this.isProcessing = false;
+          return;
+        } else {
+          console.log(data);
+        }
+
         localStorage.setItem("token", data.token);
         this.$store.commit("setCurrentUser", data.user);
         console.log("start");

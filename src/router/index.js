@@ -5,7 +5,6 @@ import UserMain from '../views/UserMain.vue'
 import NotFound from '../views/NotFound.vue'
 import AdminSignIn from '../views/AdminSignIn.vue'
 import store from '../store'
-import usersAPI from './../apis/users'
 
 
 
@@ -111,7 +110,7 @@ router.beforeEach(async (to, from, next) => {
     
   }
 
-  const pathsWithoutAuthentication = ['SignIn', 'sign-up']
+  const pathsWithoutAuthentication = ['SignIn', 'sign-up', 'AdminSignIn']
 
   // 如果 token 無效，且要去除了登入和註冊以外的其他頁面，則轉址到登入頁
   if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
