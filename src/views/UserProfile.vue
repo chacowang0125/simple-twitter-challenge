@@ -19,28 +19,32 @@
     <div class="popularbar-container">
       <PopularBar />
     </div>
+    <UserEditModal :initialUser="user" />
   </div>
 </template>
 
 <script>
-import { Toast } from "./../utils/helpers";
+// import { Toast } from "./../utils/helpers";
 import NavBar from "./../components/NavBar.vue";
 import PopularBar from "./../components/PopularBar.vue";
 import UserTopNav from "./../components/UserTopNav.vue";
 import UserProfileComponent from "../components/UserProfileComponent.vue";
 import UserStepper from "./../components/UserStepper.vue";
+import UserEditModal from "./../components/UserEditModal.vue";
 
 const dummyUser = {
   user: {
-    id: 1,
-    name: "John Adams",
-    account: "gang",
+    id: 3,
+    account: "user3",
+    name: "測試人員",
     avatar:
       "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
     cover:
       "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-    followerCounts: 16,
-    followingCounts: 18,
+    introduction: "我只是一個測試人員",
+    isFollowed: 1,
+    followings: 2,
+    followers: 3,
   },
 };
 
@@ -165,6 +169,7 @@ export default {
     UserTopNav,
     UserProfileComponent,
     UserStepper,
+    UserEditModal,
   },
   data() {
     return {
@@ -213,10 +218,11 @@ export default {
         id: dummyUser.user.id,
         name: dummyUser.user.name,
         account: dummyUser.user.account,
+        introduction: dummyUser.user.introduction,
         avatar: dummyUser.user.avatar,
         cover: dummyUser.user.cover,
-        followerCounts: dummyUser.user.followerCounts,
-        followingCounts: dummyUser.user.followingCounts,
+        followerCounts: dummyUser.user.followers,
+        followingCounts: dummyUser.user.followings,
       };
     },
     fetchTweet(userId) {
