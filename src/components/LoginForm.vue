@@ -113,9 +113,12 @@ export default {
         console.log("start");
         localStorage.setItem("token", data.token);
         this.$store.commit("setCurrentUser", data.user);
-        if (data.user.role === "user") this.$router.push({ name: "Home" });
-        if (data.user.role === "admin")
+        if (data.user.role === "user") {
+          this.$router.push({ name: "home" });
+        }
+        if (data.user.role === "admin") {
           this.$router.push({ name: "AdminMain" });
+        }
       } catch (error) {
         this.isProcessing = false;
 

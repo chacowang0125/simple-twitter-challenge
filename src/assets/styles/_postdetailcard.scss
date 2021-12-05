@@ -1,9 +1,13 @@
 @import "../styles/variables";
 .page-title {
     @extend %page-title-style;
-    &::before {
-        content: "←";
-        margin-right: 10px;
+    display: flex;
+    align-items: center;
+    img {
+        width: 17px;
+        height: 14px;
+        margin: 20px 43px 21px 0px;
+        cursor: pointer;
     }
 }
 

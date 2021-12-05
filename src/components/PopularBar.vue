@@ -6,12 +6,12 @@
       <li v-for="user in users" :key="user.id" class="list-card">
         <!-- router-link -->
         <div class="list-card-avatar">
-          <!-- <router-link> -->
+          <router-link :to="{name: 'tweet', params: { id: user.id}}" >
             <img
               :src="user.avatar"
-              alt=""
+              alt="user-avatar"
             />
-          <!-- </router-link> -->
+          </router-link>
         </div>
         <div class="list-card-content">
           <div class="list-card-content-name">{{ user.name }}</div>

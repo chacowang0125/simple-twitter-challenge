@@ -1,25 +1,25 @@
 <template>
   <div class="container">
     <div class="page-title">
-      <div class="arrow">←</div>
+      <img class="profile-topnav-icon" src="./../assets/images/exit-icon.svg" />
       <div class="page-title-name">
         <div class="name">{{ currentUser.name }}</div>
         <div class="tweets">{{ currentUser.posts.length }}推文</div>
       </div>
     </div>
     <div class="page-banner">
-      <router-link to="/user/followed">
+			<router-link :to="{name:'user-followed',params:{id: currentUser.id}}">
         <div class="page-banner-followed">跟隨者</div>
       </router-link>
-      <router-link to="/user/folloing">
+			<router-link :to="{name:'user-following',params:{id: currentUser.id}}">
         <div class="page-banner-following active">正在跟隨</div>
       </router-link>
     </div>
     <div class="page-list">
       <li v-for="follower in followers" :key="follower.id" class="list-card">
         <div class="list-card-avatar">
-          <router-link>
-            <!-- <img class="card-avatar-img" src="follower.avatar" alt=""> -->
+          <router-link :to="{ name: 'tweet', params: { id: follower.id } }">
+            <img :src="follower.avatar" alt="user-avatar">
           </router-link>
         </div>
         <div class="list-card-content">
@@ -70,7 +70,7 @@ export default {
           id: 1,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           introduction: "I am Apple.",
           isFollowed: true,
         },
@@ -78,7 +78,7 @@ export default {
           id: 2,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           introduction: "I am Apple.",
           isFollowed: true,
         },
@@ -86,7 +86,7 @@ export default {
           id: 3,
           name: "Apple",
           account: "@apple",
-          avatar: "",
+          avatar: "https://picsum.photos/200",
           introduction: "I am Apple.",
           isFollowed: true,
         },
