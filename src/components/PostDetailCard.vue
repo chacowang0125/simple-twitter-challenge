@@ -1,6 +1,9 @@
 <template>
   <div class="container">
-    <div class="page-title">推文</div>
+    <div class="page-title">
+			<img class="profile-topnav-icon" src="./../assets/images/exit-icon.svg" />
+			<div class="page-title-name">推文</div>
+		</div>
     <div class="tweet-card">
       <div class="tweet-card-info">
         <div class="tweet-card-info-img">

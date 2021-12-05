@@ -24,7 +24,7 @@ const routes = [{
             import ('../views/SignUp.vue')
     }, {
         path: '/home',
-        name: 'tweets',
+        name: 'home',
         component: UserMain
     }, {
         path: '/user/edit',
@@ -32,8 +32,8 @@ const routes = [{
         component: () =>
             import ('../views/UserEdit.vue')
     }, {
-        path: '/tweet/:id',
-        name: 'tweet-detail',
+        path: '/tweets/:id',
+        name: 'tweets-detail',
         component: () =>
             import ('../views/Tweet.vue')
     }, {

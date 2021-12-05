@@ -19,6 +19,7 @@ export default {
     NavBar,
     UserForm,
   },
+
 };
 </script>
 <style scoped>

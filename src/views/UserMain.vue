@@ -8,7 +8,7 @@
       </div>
       <hr />
       <div class="showpostform-container">
-        <ShowPostsList />
+        <ShowPostsList @after-click-like='afterClickLike'/>
       </div>
     </div>
     <div class="popularbar-container">
@@ -44,6 +44,9 @@ export default {
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");
     },
+		// afterClickLike(tweetId) {
+//
+		// }
   },
   computed: {
     ...mapState(["openCreateNewTweetModal","openReplyPostModal"]),

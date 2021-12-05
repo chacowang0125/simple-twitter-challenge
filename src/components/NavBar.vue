@@ -3,12 +3,12 @@
     <div class="container">
       <ul>
         <li>
-          <router-link to="/tweets"
+          <router-link to="/home"
             ><img class="nav-logo" src="../assets/images/logo.svg" alt="logo"
           /></router-link>
         </li>
-        <li class="nav-list" :class="{ active: currentRouteName === 'tweets' }">
-          <router-link to="/tweets" class="nav-link">
+        <li class="nav-list" :class="{ active: currentRouteName === 'home' }">
+          <router-link to="/home" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/home-icon.svg"
@@ -17,12 +17,9 @@
             <span class="nav-title">首頁</span>
           </router-link>
         </li>
-        <li
-          class="nav-list"
-          :class="{ active: currentRouteName === 'user-edit' }"
-        >
+        <li class="nav-list" :class="{ active: currentRouteName === 'tweet' }">
           <!-- link user tweet -->
-          <router-link to="/user/edit" class="nav-link">
+          <router-link to="/profile/1" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/person-icon.svg"
@@ -33,7 +30,7 @@
         </li>
         <li
           class="nav-list"
-          :class="{ active: currentRouteName === 'user-tweet' }"
+          :class="{ active: currentRouteName === 'user-edit' }"
         >
           <router-link to="/user/edit" class="nav-link">
             <img
@@ -46,18 +43,20 @@
         </li>
         <li class="nav-list">
           <a href="#">
-            <button class="nav-button" @click="opencreateNewTweetModal">推文</button>
+            <button class="nav-button" @click="opencreateNewTweetModal">
+              推文
+            </button>
           </a>
         </li>
         <li class="nav-list nav-list-logout">
-          <rouer-link to="/tweets" class="nav-link">
+          <router-link to="/signin" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/logout-icon.svg"
               alt="logout"
             />
             <span class="nav-title">登出</span>
-          </rouer-link>
+          </router-link>
         </li>
       </ul>
     </div>
@@ -69,19 +68,22 @@
 </style>
 
 <script>
-//如果把a標籤放在li裏面，上面會有空白，放裡面還是外面？
 export default {
   name: "NavBar",
   data() {
-    return {};
+    return {
+      currentUser: {
+        id: 1,
+      },
+    };
   },
   methods: {
     showPage(page) {
       this.currentpage = page;
     },
-		opencreateNewTweetModal() {
-			this.$store.commit('toggleCreateNewTweetModal')
-		}
+    opencreateNewTweetModal() {
+      this.$store.commit("toggleCreateNewTweetModal");
+    },
   },
   computed: {
     currentRouteName() {

@@ -2,7 +2,7 @@
   <div class="container">
     <div class="page-title">帳戶設定</div>
     <div class="page-content">
-      <form class="page-content-form" action="post" >
+      <form class="page-content-form" action="post">
         <div class="form-group">
           <label for="account">帳號</label>
           <input
@@ -55,26 +55,27 @@
         </div>
       </form>
       <div class="button-wrapper">
-        <button class="form-button" @click.stop.prevent="handleSubmit">儲存</button>
+        <button class="form-button" @click.stop.prevent="handleSubmit">
+          儲存
+        </button>
       </div>
     </div>
   </div>
 </template>
-<style lang="scss" scoped>
-@import "../assets/styles/_userform.scss";
-
-</style>
 <script>
-const dummyUser = {
-  user: {
-    id: 1,
-    name: "Johe Doe",
-    account: "@wonderman",
-    email: "JohnDoe@gmail.com",
-    password: 123,
-    confirmedPassword: 123,
-  },
-};
+// import { Toast } from "./../utils/helpers";
+import usersAPI from "../apis/users"
+
+// const dummyUser = {
+//   user: {
+//     id: 1,
+//     name: "Johe Doe",
+//     account: "@wonderman",
+//     email: "JohnDoe@gmail.com",
+//     password: 123,
+//     confirmedPassword: 123,
+//   },
+// };
 export default {
   name: "UserForm",
   data() {
@@ -90,15 +91,21 @@ export default {
     };
   },
   methods: {
-    fetchUser() {
-      this.user = dummyUser.user;
+    async fetchUser() {
+			const { data } = await usersAPI.getCurrentUser()
+			console.log(data)
+      // this.user = dummyUser.user;
     },
-    handleSubmit() {
-			//post
-		},
+    // handleSubmit() {
+    //   post
+    // },
   },
   created() {
     this.fetchUser();
   },
 };
 </script>
+
+<style lang="scss" scoped>
+	@import "../assets/styles/_userform.scss";
+</style>

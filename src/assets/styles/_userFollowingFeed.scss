@@ -9,9 +9,15 @@
     border-bottom: none;
     display: flex;
     align-items: center;
+    img {
+        width: 17px;
+        height: 14px;
+        margin: 20px 0px 21px 0px;
+        cursor: pointer;
+    }
     &-name {
         font-weight: 900;
-        margin-left: 30px;
+        margin-left: 43px;
         .tweets {
             @extend %label-style;
             line-height: 13px;
@@ -55,8 +61,9 @@
     display: flex;
     flex-direction: row;
     &-avatar {
-        border: 1px solid gray;
-        @extend %avatar-img-style;
+        img {
+            @extend %avatar-img-style;
+        }
     }
     &-content {
         flex: 1;
