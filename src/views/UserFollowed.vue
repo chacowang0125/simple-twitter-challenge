@@ -1,10 +1,10 @@
 <template>
   <div class="container">
-      <Navbar />
+    <Navbar />
     <div class="main-container">
       <UserFollowedFeed />
     </div>
-      <PopularBar />
+    <PopularBar />
   </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
   name: "UserFollowed",
   components: {
     Navbar,
-		UserFollowedFeed,
+    UserFollowedFeed,
     PopularBar,
   },
   setup() {},
@@ -25,12 +25,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
 .container {
   display: flex;
-	.main-container {
-		flex: 1;
-
-	}
+  .main-container {
+    flex: 1;
+  }
 }
 </style>

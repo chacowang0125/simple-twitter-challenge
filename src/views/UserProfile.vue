@@ -2,7 +2,7 @@
   <div class="container">
     <NavBar />
     <div id="profile">
-      <UserTopNav />
+      <UserTopNav :user="user" />
       <div id="profile-user">
         <UserProfileComponent :initialUser="user" />
       </div>
@@ -42,9 +42,10 @@ const dummyUser = {
     cover:
       "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
     introduction: "我只是一個測試人員",
-    isFollowed: 1,
     followings: 2,
     followers: 3,
+    tweetsCounts: 10,
+    isFollowed: 1,
   },
 };
 
@@ -181,6 +182,7 @@ export default {
         cover: "",
         followerCounts: "",
         followingCounts: "",
+        tweetsCounts: "",
       },
       tweets: [],
       comments: [],
@@ -223,6 +225,7 @@ export default {
         cover: dummyUser.user.cover,
         followerCounts: dummyUser.user.followers,
         followingCounts: dummyUser.user.followings,
+        tweetsCounts: dummyUser.user.tweetsCounts,
       };
     },
     fetchTweet(userId) {
