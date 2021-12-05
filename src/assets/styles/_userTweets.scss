@@ -1,0 +1,74 @@
+@import './variables';
+* {
+    font-size: 15px;
+    font-weight: 500;
+    text-align: left;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+}
+
+.tweet-card {
+    border-bottom: 1px solid $page-divider;
+    width: 100%;
+    padding: 15px;
+    display: flex;
+    &-img {
+        width: 50px;
+        height: 50px;
+        border: 1px solid gray;
+        border-radius: 50%;
+    }
+}
+
+.tweet-card-content {
+    flex: 1;
+    margin: 0 10px;
+    display: flex;
+    flex-direction: column;
+    &-info {
+        .name {
+            font-weight: 700;
+            color: $main-font-color;
+        }
+        .account {
+            margin: 0 5px;
+            color: $label-font-color;
+        }
+        .created-at {
+            color: $label-font-color;
+            &::before {
+                content: "•";
+                margin-right: 5px;
+            }
+        }
+    }
+    &-text {
+        margin: 5px 0;
+        color: $main-font-color;
+    }
+    &-reply {
+        display: flex;
+        .content-reply {
+            display: flex;
+            align-items: center;
+            width: 80px;
+            
+            img {
+                width: 15px;
+                height: 15px;
+                margin-right: 10px;
+            }
+            &-number {
+                color: $label-font-color;
+            }
+            .active {
+              color: $like-red;
+            }
+
+        }
+        
+    }
+}

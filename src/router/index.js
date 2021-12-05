@@ -7,6 +7,7 @@ import AdminSignIn from '../views/AdminSignIn.vue'
 import Modal from '../views/Modal.vue'
 
 
+
 Vue.use(VueRouter)
 
 const routes = [{
@@ -51,10 +52,41 @@ const routes = [{
     name: 'create-tweet-modal',
     component: Modal
 }, {
+    path: '/profile/:id',
+      component: () => import('../views/UserProfile.vue'),
+      children: [
+      {
+        path: '/',
+        name: 'tweet',
+        component: () => import('../components/UserTweetFeed.vue')
+      },
+      {
+        path: 'comment',
+        name: 'comment',
+        component:()=>import('../components/UserCommentFeed.vue')
+      },
+      {
+        path: 'liked',
+        name: 'liked',
+        component: () => import('../components/UserLikedFeed.vue')
+      },
+    ]
+},     
+    {
     path: '/admin/signin',
     name: 'AdminSignIn',
     component: AdminSignIn
 }, {
+    path: '/admin/main',
+    name: 'AdminMain',
+    component: () =>
+        import ('../views/AdminMain.vue')
+}, {
+    path: '/admin/users',
+    name: 'AdminUsers',
+    component: () =>
+        import ('../views/AdminUsers.vue')
+},{
     path: '*',
     name: 'not-found',
     component: NotFound
