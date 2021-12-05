@@ -17,16 +17,28 @@
 
       <div class="profile-follow-wrapper">
         <div class="profile-follow group">
-          <span class="profile-follow count"
-            >{{ user.followingCounts }} 個</span
+          <router-link
+            :to="{ name: 'user-followed', params: { id: user.id } }"
+            class="profile-follow count"
+            >{{ user.followingCounts }} 個</router-link
           >
-          <span class="profile-follow text">跟隨中</span>
+          <router-link
+            :to="{ name: 'user-followed', params: { id: user.id } }"
+            class="profile-follow text"
+            >跟隨中</router-link
+          >
         </div>
         <div class="profile-follow group">
-          <span class="profile-follow countt"
-            >{{ user.followerCounts }} 個</span
+          <router-link
+            :to="{ name: 'user-following', params: { id: user.id } }"
+            class="profile-follow countt"
+            >{{ user.followerCounts }} 個</router-link
           >
-          <span class="profile-follow text">跟隨者</span>
+          <router-link
+            :to="{ name: 'user-following', params: { id: user.id } }"
+            class="profile-follow text"
+            >跟隨者</router-link
+          >
         </div>
       </div>
     </div>

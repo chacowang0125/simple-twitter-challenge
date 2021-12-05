@@ -1,13 +1,16 @@
   <template>
   <div class="container">
     <div class="tweet-card" v-for="tweet in tweets" :key="tweet.id">
-      <div class="tweet-card-img"></div>
-      <div class="tweet-card-content">
-        <div class="tweet-card-content-info">
+      <router-link :to="{ name: 'tweet', params: { id: user.id } }" class="tweet-card-img"></router-link>
+      <router-link
+        :to="{ name: 'tweet-detail', params: { id: tweet.id } }"
+        class="tweet-card-content"
+      >
+        <div
+          class="tweet-card-content-info">
           <span class="name">{{ user.name }}</span>
           <span class="account">@{{ user.account }}</span>
           <span class="created-at">{{ tweet.createdAt | fromNow }}</span>
-        </div>
         <div class="tweet-card-content-text">
           {{ tweet.description }}
         </div>
@@ -41,7 +44,7 @@
             >
           </div>
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
