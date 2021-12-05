@@ -59,7 +59,7 @@
 </style>
 
 <script>
-import { Toast } from "./../utils/helpers";
+// import { Toast } from "./../utils/helpers";
 
 export default {
   name: "LoginForm",
@@ -76,53 +76,53 @@ export default {
     },
   },
   methods: {
-    async handleSubmit() {
-      try {
-        if (!this.email || !this.password) {
-          Toast.fire({
-            icon: "warning",
-            title: "Please enter email and password to login",
-          });
-          return;
-        }
-        this.isProcessing = true;
-        const response = await authorizationAPI.signIn({
-          email: this.email,
-          password: this.password,
-        });
-        const { data } = response;
-        if (data.status !== "success") {
-          throw new Error(data.message);
-        }
+    // async handleSubmit() {
+    //   try {
+    //     if (!this.email || !this.password) {
+    //       Toast.fire({
+    //         icon: "warning",
+    //         title: "Please enter email and password to login",
+    //       });
+    //       return;
+    //     }
+    //     this.isProcessing = true;
+    //     const response = await authorizationAPI.signIn({
+    //       email: this.email,
+    //       password: this.password,
+    //     });
+    //     const { data } = response;
+    //     if (data.status !== "success") {
+    //       throw new Error(data.message);
+    //     }
 
-        //判定user role是否正確登入前台後台
-        if (
-          (data.user.role === "user" && currentRouteName === "AdminSignIn") ||
-          (data.user.role === "admin" && currentRouteName === "sign-in")
-        ) {
-          Toast.fire({
-            icon: "warning",
-            title: "帳號不存在",
-          });
-          this.isProcessing = false;
-          return;
-        }
+    //     //判定user role是否正確登入前台後台
+    //     if (
+    //       (data.user.role === "user" && currentRouteName === "AdminSignIn") ||
+    //       (data.user.role === "admin" && currentRouteName === "sign-in")
+    //     ) {
+    //       Toast.fire({
+    //         icon: "warning",
+    //         title: "帳號不存在",
+    //       });
+    //       this.isProcessing = false;
+    //       return;
+    //     }
 
-        localStorage.setItem("token", data.token);
-        this.$store.commit("setCurrentUser", data.user);
-        if (data.user.role === "user") this.$router.push({ name: "Home" });
-        if (data.user.role === "admin") this.$router.push({ name: "Admin" });
-      } catch (error) {
-        this.isProcessing = false;
+    //     localStorage.setItem("token", data.token);
+    //     this.$store.commit("setCurrentUser", data.user);
+    //     if (data.user.role === "user") this.$router.push({ name: "Home" });
+    //     if (data.user.role === "admin") this.$router.push({ name: "Admin" });
+    //   } catch (error) {
+    //     this.isProcessing = false;
 
-        this.password = "";
-        Toast.fire({
-          icon: "warning",
-          title: "錯誤的帳號或密碼",
-        });
-        console.log(error);
-      }
-    },
+    //     this.password = "";
+    //     Toast.fire({
+    //       icon: "warning",
+    //       title: "錯誤的帳號或密碼",
+    //     });
+    //     console.log(error);
+    //   }
+    // },
   },
 };
 </script>

@@ -22,6 +22,12 @@ export default {
     PopularBar,
 		PostDetailCard
   },
+	//
+	created() {
+    const { id } = this.$route.params;
+    this.fetchTweet(id);
+    console.log(id);
+  },
 };
 </script>
 <style lang="scss" scoped>
