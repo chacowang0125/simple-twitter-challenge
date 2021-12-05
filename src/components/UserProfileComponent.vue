@@ -3,7 +3,9 @@
     <div class="profile-user-img">
       <img class="profile-user-img cover" :src="user.cover" />
       <img class="profile-user-img avatar" :src="user.avatar" />
-      <button class="btn btn-profile-edit">編輯個人資料</button>
+      <button class="btn btn-profile-edit" @click.prevent.stop="callModal">
+        編輯個人資料
+      </button>
     </div>
 
     <div class="profile-user-content">
@@ -11,7 +13,7 @@
         <span class="profile-user-info name">{{ user.name }}</span>
         <span class="profile-user-info detail">@{{ user.account }}</span>
       </div>
-      <span class="profile-user-info intro">fefefeeefee</span>
+      <span class="profile-user-info intro">{{ user.introduction }}</span>
 
       <div class="profile-follow-wrapper">
         <div class="profile-follow group">
@@ -44,6 +46,12 @@ export default {
     return {
       user: this.initialUser,
     };
+  },
+  methods: {
+    callModal() {
+      this.$store.commit("toggleProfileEditModal");
+      console.log("called");
+    },
   },
 };
 </script>

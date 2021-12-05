@@ -1,0 +1,184 @@
+@import "./variables";
+
+.modal-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 98;
+  background-color: rgba(0,0,0,0.3);
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+#modal {
+  height: 657px;
+  width: 600px;
+  position: absolute;
+  top: 42px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: $white;
+  .modal-nav {
+    height: 59px;
+    display: flex;
+    justify-content: space-between;
+    align-items:center;
+    position: relative;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    &-icon {
+      width: 15px;
+      height: 15px;
+      margin-left: 19.5px;
+      cursor: pointer;
+    }
+    &-title {
+      font-weight: 700;
+      font-size: 1.188rem;
+      position: absolute;
+      left: 79px;
+    }
+    &-button {
+      font-weight: 500;
+      font-size: 1.125rem;
+      color: $white;
+      background-color: $main-orange;
+      padding: 5px 15px;
+      margin-right: 30px;
+      border-radius: 100px;     
+    }
+  }
+  .modal-img {
+    object-fit: cover;
+    position: relative;
+    border: 1px solid #000;
+    &-icon {
+      width: 67px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: absolute;
+      top:90px;
+      left: 264px;
+      &-camera {
+        height: 20px;
+        width: 20px;
+        cursor: pointer;
+      }
+      &-close {
+        height: 15px;
+        width: 15px;
+        cursor: pointer;
+      }
+    } 
+    &-cover {
+      height: 200px;
+    }
+    &-avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 100px;
+      border: 4px solid $white;
+      position: absolute;
+      top: 124px;
+      left: 14px;
+    }
+    &-avatar-camera {
+      height: 20px;
+      width: 20px;
+      cursor: pointer;
+      position: absolute;
+      left: 65px;
+      top: 180px;
+    }
+  }
+  .modal-input{
+    height: 398px;
+    background-color: $white;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    &-group{
+      height: 50px;
+      width: 570px;
+      margin-top: 80px;
+      margin-left: auto;
+      margin-right: auto;
+      .input-error > input {
+            border-bottom: 2px solid $error-red !important;
+      }
+      .input-error > textarea {
+            border-bottom: 2px solid $error-red !important;
+      }
+      &-input {
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+        background-color: $input-background-color;
+        box-shadow: inset 0 0 0 1000px $input-background-color;
+        
+        input {
+          height: 50%;
+          padding-left: 15px;
+          font-size: 1.188rem;
+          font-weight: 500;
+          border: none;
+          background-color: $input-background-color;
+          border-bottom: 2px solid $form-gray;
+          &:hover,&:focus{
+            border-bottom: 2px solid $input-hover-blue;   
+          }
+          
+        }
+        label {
+          @extend %user-account-style;
+          background-color: $input-background-color;
+          margin-left: 15px;
+          margin-right: auto;
+        }
+      }
+      &-input.intro{
+        height: 150px;
+        textarea {
+          resize: none;
+          padding-left: 15px;
+          width: 100%;
+          height: 100%;
+          font-size: 1.188rem;
+          font-weight: 500;
+          background-color: $input-background-color;
+          box-shadow: inset 0 0 0 1000px $input-background-color;
+          border: none;
+          border-bottom: 2px solid $form-gray;
+          &:hover,&:focus{
+            border-bottom: 2px solid $input-hover-blue;   
+          }
+        }
+      }  
+      .input-hint-container {
+        width: 570px;
+        height: 22px;
+        font-size: 0.9375rem;
+        position: relative;
+        color: $form-gray;
+        .error-message {
+          color: $error-red;
+          position: absolute;
+          left:0
+        }
+        .length-hint {
+          position: absolute;
+          right: 0;
+        }
+      }    
+    }   
+  }
+}
+
