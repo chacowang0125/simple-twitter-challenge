@@ -19,8 +19,9 @@
         &-info {
             display: flex;
             &-img {
-                @extend %avatar-img-style;
-                border: 1px solid gray;
+                img {
+                    @extend %avatar-img-style;
+                }
             }
             &-name {
                 margin-left: 15px;
@@ -89,8 +90,9 @@
         font-size: 15px;
         border-bottom: 1px solid $page-divider;
         &-img {
-            @extend %avatar-img-style;
-            border: 1px solid gray;
+            img {
+                @extend %avatar-img-style;
+            }
         }
         &-content {
             flex: 1;

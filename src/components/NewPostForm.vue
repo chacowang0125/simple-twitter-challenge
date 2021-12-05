@@ -3,7 +3,7 @@
     <div class="page-title">首頁</div>
     <div class="page-content">
       <div class="page-content-img">
-        <!-- <img class="page-content-img" :src="currentuser.avatar" alt=""> -->
+        <img class="page-content-img" :src="currentuser.avatar" alt="">
       </div>
       <textarea
         class="page-content-input"
@@ -30,7 +30,7 @@ export default {
     return {
       currentuser: {
         id: -1,
-        avatar: "",
+        avatar: "https://picsum.photos/200",
       },
       inputText: "",
 			isProcessing: false

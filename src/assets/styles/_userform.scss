@@ -1,4 +1,4 @@
-@import './variables';
+@import "./variables";
 .page-title {
     @extend %page-title-style;
 }
@@ -33,10 +33,9 @@
         background-color: $input-background-color;
         font-size: 20px;
         padding: 1.75rem 0rem 0.5rem 10px;
-        &:focus {
-            border-bottom: 2px solid $main-orange; //換顏色
-        }
+        &:focus,
         &:hover {
+            border-bottom: 2px solid $link-blue;
             box-shadow: 0 0 5px #ccc;
         }
     }

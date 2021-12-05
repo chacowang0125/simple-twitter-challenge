@@ -25,8 +25,9 @@
             border-top: 1px solid $page-divider;
             display: flex;
             &-avatar {
-                border: 1px solid gray;
-                @extend %avatar-img-style;
+                img {
+                    @extend %avatar-img-style;
+                }
             }
             &-content {
                 padding: 0 10px;

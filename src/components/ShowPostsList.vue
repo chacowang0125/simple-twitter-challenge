@@ -1,14 +1,16 @@
 <template>
   <div class="container">
-    <div v-for="user in users" :key="user.id" class="tweet-card">
-      <div class="tweet-card-img"></div>
+    <div v-for="user in users" :key="user.id" class="tweet-card" >
+      <div class="tweet-card-img">
+        <img :src="user.avatar" alt="" />
+      </div>
       <div class="tweet-card-content">
         <div class="tweet-card-content-info">
           <span class="name">{{ user.name }}</span>
           <span class="account">{{ user.account }}</span>
-          <span class="created-at">{{ user.createdAt }}</span>
+          <span class="created-at">{{ user.tweet.createdAt }}</span>
         </div>
-        <div class="tweet-card-content-text">
+        <div class="tweet-card-content-text" @click.stop.prevent="openReplyPostModal(user.tweet.id)">
           {{ user.tweet.description }}
         </div>
         <div class="tweet-card-content-reply">
@@ -51,7 +53,7 @@ const dummyData = {
       id: 1,
       name: "Apple",
       account: "@apple",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -65,7 +67,7 @@ const dummyData = {
       id: 2,
       name: "Banana",
       account: "@banana",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -79,7 +81,7 @@ const dummyData = {
       id: 3,
       name: "Cathy",
       account: "@cathy",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -93,7 +95,7 @@ const dummyData = {
       id: 4,
       name: "Cathy",
       account: "@cathy",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -107,7 +109,7 @@ const dummyData = {
       id: 5,
       name: "Cathy",
       account: "@cathy",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -121,7 +123,7 @@ const dummyData = {
       id: 6,
       name: "Cathy",
       account: "@cathy",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -135,7 +137,7 @@ const dummyData = {
       id: 7,
       name: "Cathy",
       account: "@cathy",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -149,7 +151,7 @@ const dummyData = {
       id: 8,
       name: "Cathy",
       account: "@cathy",
-      avatar: "",
+      avatar: "https://picsum.photos/200",
       tweet: {
         id: 1,
         description:
@@ -171,6 +173,10 @@ export default {
     fetchUser() {
       this.users = dummyData.users;
     },
+		openReplyPostModal(id) {
+			console.log(id)
+			this.$store.commit('toggleReplyPostModal')
+		}
   },
   created() {
     this.fetchUser();

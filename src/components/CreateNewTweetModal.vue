@@ -1,22 +1,24 @@
 <template>
-  <div class="container">
-    <div class="modal-header">
-      <img src="../assets/images/close-icon.svg" alt="" />
-    </div>
-    <div class="modal-content">
-      <div class="modal-content-img">
-        <!-- <img class="page-content-img" :src="currentuser.avatar" alt=""> -->
+  <div class="modal-container">
+    <div class="modal">
+      <div class="modal-header">
+        <img src="../assets/images/close-icon.svg" alt="" @click.stop.prevent="closeModal" />
       </div>
-      <textarea
-        class="modal-content-input"
-        placeholder="有什麼新鮮事？"
-        v-model="inputText"
-      >
-      </textarea>
-      <div class="modal-content-button">
-        <button :disabled="!inputText" @click.stop.prevent="handleSubmit">
-        回覆
-        </button>
+      <div class="modal-content">
+        <div class="modal-content-img">
+          <img class="page-content-img" :src="user.avatar" alt="" />
+        </div>
+        <textarea
+          class="modal-content-input"
+          placeholder="有什麼新鮮事？"
+          v-model="inputText"
+        >
+        </textarea>
+        <div class="modal-content-button">
+          <button :disabled="!inputText" @click.stop.prevent="handleSubmit">
+            回覆
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -30,24 +32,39 @@ export default {
       user: {
         id: 1,
         name: "Chaco",
-        avatar: "",
+        avatar: "https://picsum.photos/200",
       },
       inputText: "",
     };
   },
-  setup() {},
+  methods: {
+    handleSubmit() {
+      // this.$emit("after-add-tweet");
+    },
+		closeModal() {
+			this.$store.commit('toggleCreateNewTweetModal')
+		}
+  },
 };
 </script>
 
 
 <style lang="scss" scoped>
 @import "../assets/styles/_variables.scss";
-.container {
+.modal-container {
+  width: 100vw;
+  height: 100vh;
+  padding: 54px;
+  display: flex;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.2);
+}
+.modal {
   width: 600px;
   height: 300px;
   border: 1px solid $page-divider;
   border-radius: 14px;
-  margin: 30px; //cancel
+  background-color: $white;
   display: flex;
   flex-direction: column;
   .modal-header {
@@ -57,6 +74,7 @@ export default {
     img {
       width: 15px;
       height: 15px;
+			cursor: pointer;
     }
   }
 }
@@ -67,8 +85,9 @@ export default {
   display: flex;
   flex: 1;
   &-img {
-    @extend %avatar-img-style;
-    border: 1px solid gray;
+		img {
+			@extend %avatar-img-style;
+		}
   }
   textarea {
     flex: 1;
@@ -82,6 +101,7 @@ export default {
     width: 66px;
     height: 100%;
     position: relative;
+    cursor: pointer;
     button {
       @extend %button-style;
       width: 100%;

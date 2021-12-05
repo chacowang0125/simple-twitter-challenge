@@ -46,7 +46,7 @@
         </li>
         <li class="nav-list">
           <a href="#">
-            <button class="nav-button">推文</button>
+            <button class="nav-button" @click="opencreateNewTweetModal">推文</button>
           </a>
         </li>
         <li class="nav-list nav-list-logout">
@@ -79,6 +79,9 @@ export default {
     showPage(page) {
       this.currentpage = page;
     },
+		opencreateNewTweetModal() {
+			this.$store.commit('toggleCreateNewTweetModal')
+		}
   },
   computed: {
     currentRouteName() {
