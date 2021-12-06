@@ -43,7 +43,7 @@
         </li>
         <li class="nav-list">
           <a href="#">
-            <button class="nav-button" @click="opencreateNewTweetModal">
+            <button class="nav-button" @click.stop.prevent="opencreateNewTweetModal">
               推文
             </button>
           </a>

@@ -57,6 +57,11 @@
 <script>
 export default {
   name: "ReplyPostModal",
+  data() {
+    return {
+      inputText: "",
+    };
+  },
   methods: {
     closeModal() {
       this.$store.commit("toggleReplyPostModal");
@@ -67,5 +72,5 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../assets/styles/_replyPostModal.scss"
+@import "../assets/styles/_replyPostModal.scss";
 </style>

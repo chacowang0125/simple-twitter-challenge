@@ -1,22 +1,23 @@
 <template>
   <div class="container">
-    <NavBar :modal-on="modalTrunOn" />
+    <NavBar />
     <div class="main-container">
-      <PostDetailCard />
-      <div class="newpostform-container">
-        <NewPostForm />
-      </div>
+      <NewPostForm :user="user"/>
       <hr />
       <div class="showpostform-container">
-        <ShowPostsList @after-click-like='afterClickLike'/>
+        <ShowPostsList />
+        <!-- @after-click-like="afterClickLike" 上面-->
       </div>
     </div>
     <div class="popularbar-container">
       <PopularBar />
     </div>
-    <div class="modal" >
-      <ReplyPostModal v-show="openReplyPostModal"/>
-      <CreateNewTweetModal v-show="openCreateNewTweetModal" @after-add-tweet="afterAddTweet" />
+    <div class="modal">
+      <ReplyPostModal v-show="openReplyPostModal" />
+      <CreateNewTweetModal
+        v-show="openCreateNewTweetModal"
+        @after-add-tweet="afterAddTweet"
+      />
     </div>
   </div>
 </template>
@@ -27,7 +28,7 @@ import PopularBar from "./../components/PopularBar.vue";
 import NewPostForm from "./../components/NewPostForm.vue";
 import ShowPostsList from "./../components/ShowPostsList.vue";
 import CreateNewTweetModal from "../components/CreateNewTweetModal.vue";
-import ReplyPostModal from "../components/ReplyPostModal.vue"
+import ReplyPostModal from "../components/ReplyPostModal.vue";
 import { mapState } from "vuex";
 
 export default {
@@ -38,57 +39,29 @@ export default {
     NewPostForm,
     ShowPostsList,
     CreateNewTweetModal,
-    ReplyPostModal
+    ReplyPostModal,
+  },
+  data() {
+    return {
+    };
   },
   methods: {
+
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");
     },
-		// afterClickLike(tweetId) {
-//
-		// }
   },
   computed: {
-    ...mapState(["openCreateNewTweetModal","openReplyPostModal"]),
+    ...mapState([
+      "openCreateNewTweetModal",
+      "openReplyPostModal",
+    ]),
   },
+	// created() {
+	// 	this.fetchUser()
+	// }
 };
 </script>
 <style lang="scss" scoped>
-@import "../assets/styles/_variables.scss";
-.container {
-  position: relative;
-  display: flex;
-  .main-container {
-    height: 100vh;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    hr {
-      width: 100%;
-      height: 10px;
-      margin: 0;
-      border: 0;
-      background-color: $page-divider;
-    }
-    .showpostform-container {
-      flex: 1;
-      overflow-y: auto;
-      &::-webkit-scrollbar {
-        //捲軸寬度
-        width: 3px;
-        background-color: transparent;
-        //捲軸本體顏色
-        &-thumb {
-          border-radius: 10px;
-          background-color: $page-divider;
-        }
-      }
-    }
-  }
-  .modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-  }
-}
+@import "../assets/styles/_userMain.scss";
 </style>
