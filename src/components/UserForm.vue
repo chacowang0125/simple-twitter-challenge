@@ -2,7 +2,7 @@
   <div class="container">
     <div class="page-title">帳戶設定</div>
     <div class="page-content">
-      <form class="page-content-form" action="post">
+      <form class="page-content-form" @submit.stop.prevent="handleSubmit">
         <div class="form-group">
           <label for="account">帳號</label>
           <input
@@ -10,18 +10,12 @@
             id="account"
             name="account"
             v-model.trim="user.account"
-            required
           />
         </div>
-        <div class="form-group">
+        <div class="form-group" :class="{ 'input-error': nameLengthError }">
           <label for="name">名稱</label>
-          <input
-            type="text"
-            id="name"
-            name="name"
-            v-model.trim="user.name"
-            required
-          />
+          <input type="text" id="name" name="name" v-model.trim="user.name" />
+          <div class="error-message" v-show="nameLengthError">字數超出上限</div>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -30,7 +24,6 @@
             id="email"
             name="email"
             v-model.trim="user.email"
-            required
           />
         </div>
         <div class="form-group">
@@ -40,42 +33,31 @@
             id="password"
             name="password"
             v-model.trim="user.password"
-            required
           />
         </div>
         <div class="form-group">
-          <label for="confirmed-password">密碼確認</label>
+          <label for="checkPassword">密碼確認</label>
           <input
             type="password"
-            id="confirmed-password"
-            name="confirmed-password"
-            v-model.trim="user.confirmedPassword"
-            required
+            id="checkPassword"
+            name="checkPassword"
+            v-model.trim="user.checkPassword"
           />
         </div>
+        <div class="button-wrapper">
+          <button type="submit" class="form-button" :disabled="isProcessing">
+            {{ isProcessing ? "處理中" : "儲存" }}
+          </button>
+        </div>
       </form>
-      <div class="button-wrapper">
-        <button class="form-button" @click.stop.prevent="handleSubmit">
-          儲存
-        </button>
-      </div>
     </div>
   </div>
 </template>
 <script>
-// import { Toast } from "./../utils/helpers";
-import usersAPI from "../apis/users"
+import { mapState } from "vuex";
+import { Toast } from "./../utils/helpers";
+import usersAPI from "../apis/users";
 
-// const dummyUser = {
-//   user: {
-//     id: 1,
-//     name: "Johe Doe",
-//     account: "@wonderman",
-//     email: "JohnDoe@gmail.com",
-//     password: 123,
-//     confirmedPassword: 123,
-//   },
-// };
 export default {
   name: "UserForm",
   data() {
@@ -86,26 +68,116 @@ export default {
         account: "",
         email: "",
         password: "",
-        confirmedPassword: "",
+        checkPassword: "",
       },
+      isProcessing: false,
+      nameLengthError: false,
     };
   },
   methods: {
-    async fetchUser() {
-			const { data } = await usersAPI.getCurrentUser()
-			console.log(data)
-      // this.user = dummyUser.user;
+    fetchUser() {
+      const { id, account, name, email } = this.currentUser;
+      this.user = {
+        ...this.user,
+        id,
+        name,
+        email,
+        account,
+      };
     },
-    // handleSubmit() {
-    //   post
-    // },
+    async handleSubmit() {
+      try {
+        //前端錯誤驗證
+        if (!this.user.account) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊帳號",
+          });
+          return;
+        } else if (!this.user.name) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊名稱",
+          });
+          return;
+        } else if (!this.user.email) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊信箱",
+          });
+          return;
+        } else if (this.user.password !== this.user.checkPassword) {
+          Toast.fire({
+            icon: "warning",
+            title: "密碼與密碼確認不同，請重新輸入",
+          });
+          this.user.password = "";
+          this.user.checkPassword = "";
+          return;
+        }
+
+        // const form = e.target;
+        // const formData = new FormData(form);
+        const formData = {
+          account: this.user.account,
+          name: this.user.name,
+          email: this.user.email,
+          password: this.user.password,
+          checkPassword: this.user.checkPassword,
+        };
+        this.isProcessing = true;
+        console.log(this.user.id);
+        const {data} = await usersAPI.update({
+          userId: this.user.id,
+          formData,
+        });
+        this.isProcessing = false;
+        //顯示後端回傳錯誤提示資訊
+        if (data.status !== "success") {
+          // throw new Error(data.message);
+          Toast.fire({
+            icon: "warning",
+            title: data.message,
+          });
+          return;
+        }
+
+        Toast.fire({
+          icon: "success",
+          title: "資料修改成功",
+        });
+
+        this.user.password = "";
+        this.user.checkPassword = "";
+        this.isProcessing = false;
+      } catch (error) {
+        this.isProcessing = false;
+        console.log(error);
+        Toast.fire({
+          icon: "error",
+          title: error,
+        });
+      }
+    },
   },
   created() {
     this.fetchUser();
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+  },
+  watch: {
+    "user.name": function () {
+      if (this.user.name.length > 50) {
+        this.nameLengthError = true;
+      } else {
+        this.nameLengthError = false;
+      }
+    },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-	@import "../assets/styles/_userform.scss";
+@import "../assets/styles/_userform.scss";
 </style>

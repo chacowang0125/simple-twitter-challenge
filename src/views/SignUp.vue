@@ -16,7 +16,7 @@
             required
           />
         </div>
-        <div class="form-group">
+        <div class="form-group" :class="{ 'input-error': nameLengthError }">
           <label for="name">名稱</label>
           <input
             type="text"
@@ -25,6 +25,7 @@
             v-model.trim="user.name"
             required
           />
+          <div class="error-message" v-show="nameLengthError">字數超出上限</div>
         </div>
         <div class="form-group">
           <label for="email">Email</label>
@@ -47,19 +48,23 @@
           />
         </div>
         <div class="form-group">
-          <label for="confirmed-password">密碼確認</label>
+          <label for="checkPassword">密碼確認</label>
           <input
             type="password"
-            id="confirmed-password"
-            name="confirmed-password"
-            v-model.trim="user.confirmedPassword"
+            id="checkPassword"
+            name="checkPassword"
+            v-model.trim="user.checkPassword"
             required
           />
         </div>
       </form>
       <div class="button-wrapper">
-        <button class="form-button" @click.stop.prevent="handleSubmit">
-          註冊
+        <button
+          class="form-button"
+          @click.stop.prevent="handleSubmit"
+          :disabled="isProcessing"
+        >
+          {{ isProcessing ? "發送中" : "註冊" }}
         </button>
         <router-link to="/signin">
           <div class="cancel-button">取消</div>
@@ -70,91 +75,109 @@
 </template>
 
 <script>
+import authorizationAPI from "../apis/authorization";
+import { Toast } from "../utils/helpers";
 export default {
   name: "UserForm",
   data() {
     return {
       user: {
-        id: -1,
         name: "",
         account: "",
         email: "",
         password: "",
-        confirmedPassword: "",
+        checkPassword: "",
       },
+      isProcessing: false,
+      nameLengthError: false,
     };
   },
   methods: {
-    handleSubmit() {
-      //api post data
+    async handleSubmit() {
+      try {
+        //前端錯誤驗證
+        if (!this.user.account) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊帳號",
+          });
+          return;
+        } else if (!this.user.name) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊名稱",
+          });
+          return;
+        } else if (!this.user.email) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊信箱",
+          });
+          return;
+        } else if (!this.user.password || !this.user.checkPassword) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊密碼",
+          });
+          return;
+        } else if (this.user.password !== this.user.checkPassword) {
+          Toast.fire({
+            icon: "warning",
+            title: "密碼與密碼確認不同，請重新輸入",
+          });
+          this.user.password = "";
+          this.user.checkPassword = "";
+          return;
+        }
+        const formData = {
+          name: this.user.name,
+          account: this.user.account,
+          email: this.user.email,
+          password: this.user.password,
+          checkPassword: this.user.checkPassword,
+        };
+        this.isProcessing = true;
+
+        const { data } = await authorizationAPI.signup({ formData });
+
+        this.isProcessing = false;
+
+        if (data.status !== "success") {
+          Toast.fire({
+            icon: "warning",
+            title: data.message,
+          });
+          return;
+        }
+
+        //註冊成功
+        Toast.fire({
+          icon: "success",
+          title: "註冊成功",
+        });
+
+        // this.$router.push({ name: "SignIn" });
+      } catch (error) {
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "error",
+          title: "無法送出註冊，請稍後再試",
+        });
+      }
+    },
+  },
+  watch: {
+    "user.name": function () {
+      if (this.user.name.length > 50) {
+        this.nameLengthError = true;
+      } else {
+        this.nameLengthError = false;
+      }
     },
   },
 };
 </script>
 
 <style lang="scss" scoped>
-@import "../assets/styles/_variables.scss";
-
-.container {
-  margin: 50px auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  .logo {
-    width: 40px;
-    height: 40px;
-  }
-  .signup-title {
-    font-size: 23px;
-    font-weight: 700;
-    color: $main-font-color;
-    margin: 25px 0;
-  }
-}
-
-.form-group {
-  position: relative;
-  label {
-    position: absolute;
-    top: 18px;
-    left: 20px;
-    font-weight: 500;
-    font-size: 14px;
-    color: $input-bottom-color;
-  }
-  input {
-    width: 540px;
-    height: 52px;
-    margin: 15px;
-    border: none;
-    border-bottom: 2px solid $input-bottom-color;
-    border-radius: 4px 4px 0px 0px;
-    background-color: $input-background-color;
-    font-size: 20px;
-    padding: 1.75rem 0rem 0.5rem 10px;
-    box-shadow: inset 0 0 0 1000px $input-background-color;
-    &:hover,
-    &:focus {
-      border-bottom: 2px solid $link-blue;
-    }
-  }
-}
-
-.button-wrapper {
-  height: 46px;
-  margin: 20px;
-  .form-button {
-    width: 100%;
-    height: 100%;
-    @extend %button-style;
-    border-radius: 50px;
-  }
-  .cancel-button {
-    margin: 20px;
-    font-weight: 700;
-    font-size: 18px;
-    color: #0099ff; //改成變數
-    text-decoration: underline;
-  }
-}
+@import "../assets/styles/_signup.scss";
 </style>
