@@ -51,24 +51,24 @@ const routes = [{
     }, {
         path: '/profile/:id',
         component: () =>
-            import ('../views/UserProfile.vue'),
+            import ('../views/User.vue'),
         children: [{
                 path: '/',
                 name: 'tweet',
                 component: () =>
-                    import ('../components/UserTweetFeed.vue')
+                    import ('../views/UserTweets.vue')
             },
             {
                 path: 'comment',
                 name: 'comment',
                 component: () =>
-                    import ('../components/UserCommentFeed.vue')
+                    import ('../views/UserComments.vue')
             },
             {
                 path: 'liked',
                 name: 'liked',
                 component: () =>
-                    import ('../components/UserLikedFeed.vue')
+                    import ('../views/UserLikes.vue')
             },
         ]
     },
