@@ -13,10 +13,10 @@
       <div class="page-content-button">
         <button
           class="page-content-button"
-          :disabled=!inputText
+          :disabled="!inputText"
           @click.stop.prevent="handleSubmit"
         >
-				<!-- disabled isProcessing= true -->
+          <!-- disabled isProcessing= true -->
           {{ isProcessing ? "推文中" : "推文" }}
         </button>
       </div>
@@ -48,26 +48,29 @@ export default {
           userId: this.currentUser.id,
           description: this.inputText,
         };
-				this.isProcessing = true
+        this.isProcessing = true;
         const { data } = await tweetAPI.addNewTweet({ newTweet });
+        console.log(data);
 
-        if (data.status !== "success") {
+        if(data.status !== "success") {
           Toast.fire({
             icon: "warning",
-            title: "無法新增推文，請收後再試",
+            title: data.message,
           });
+					return
         }
-				Toast.fire({
+        console.log(data.message);
+        Toast.fire({
           icon: "success",
           title: "推文發送成功",
         });
-				this.inputText = ""
-				this.isProcessing = false
+        this.inputText = "";
+        this.isProcessing = false;
       } catch {
-				this.isProcessing = false
+        this.isProcessing = false;
         Toast.fire({
           icon: "warning",
-          title: "無法新增推文，請收後再試",
+          title: "無法新增推文，請稍後再試",
         });
       }
       // this.isProcessing = true

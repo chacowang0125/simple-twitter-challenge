@@ -126,11 +126,12 @@ export default {
           checkPassword: this.user.checkPassword,
         };
         this.isProcessing = true;
-        const { data } = await usersAPI.update({
+        console.log(this.user.id);
+        const {data} = await usersAPI.update({
           userId: this.user.id,
           formData,
         });
-				this.isProcessing = false;
+        this.isProcessing = false;
         //顯示後端回傳錯誤提示資訊
         if (data.status !== "success") {
           // throw new Error(data.message);
@@ -151,9 +152,10 @@ export default {
         this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
+        console.log(error);
         Toast.fire({
           icon: "error",
-          title: "無法修改使用者資料，請稍後再試",
+          title: error,
         });
       }
     },
