@@ -41,6 +41,9 @@ sans-serif;
     color: #fff;
     font-weight: 500;
     font-size: 18px;
+    &:disabled {
+        opacity: 0.6
+    }
 }
 
 %logo-style {
@@ -82,13 +85,13 @@ sans-serif;
 }
 
 %navtop-style {
-  font-size: 1.125rem;
-  font-weight: 700;
-  color: $main-font-color;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: $main-font-color;
 }
 
 %name-style {
-  font-size: 1.188rem;
-  font-weight: 900;
-  color: $main-font-color;
+    font-size: 1.188rem;
+    font-weight: 900;
+    color: $main-font-color;
 }
