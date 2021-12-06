@@ -34,23 +34,6 @@ import UserEditModal from "./../components/UserEditModal.vue";
 import usersAPI from "./../apis/users";
 import { Toast } from "./../utils/helpers";
 
-const dummyUser = {
-  user: {
-    id: 3,
-    account: "user3",
-    name: "測試人員",
-    avatar:
-      "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-    cover:
-      "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-    introduction: "我只是一個測試人員",
-    followings: 2,
-    followers: 3,
-    tweetsCounts: 10,
-    isFollowed: 1,
-  },
-};
-
 const dummyData = {
   tweets: [
     {

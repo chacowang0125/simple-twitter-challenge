@@ -88,29 +88,31 @@ export default {
           return;
         }
         this.isProcessing = true;
+
         const response = await authorizationAPI.signIn({
           account: this.account,
           password: this.password,
         });
+
         const { data } = response;
 
         if (data.status !== "success") {
           throw new Error(data.message);
         }
 
-        if (
-          (data.user.role === "user" && this.$route.name === "AdminSignIn") ||
-          (data.user.role === "admin" && this.$route.name === "sign-in")
-        ) {
-          Toast.fire({
-            icon: "warning",
-            title: "帳號不存在",
-          });
-          this.isProcessing = false;
-          return;
-        } else {
-          console.log(data);
-        }
+        // if (
+        //   (data.user.role === "user" && this.$route.name === "AdminSignIn") ||
+        //   (data.user.role === "admin" && this.$route.name === "sign-in")
+        // ) {
+        //   Toast.fire({
+        //     icon: "warning",
+        //     title: "帳號不存在",
+        //   });
+        //   this.isProcessing = false;
+        //   return;
+        // } else {
+        //   console.log(data);
+        // }
 
         localStorage.setItem("token", data.token);
         this.$store.commit("setCurrentUser", data.user);
@@ -122,14 +124,15 @@ export default {
           this.$router.push({ name: "AdminMain" });
         }
       } catch (error) {
+        const { data } = error.response;
         this.isProcessing = false;
 
         this.password = "";
         Toast.fire({
           icon: "warning",
-          title: "錯誤的帳號或密碼",
+          title: data.message,
         });
-        console.log(error);
+        // console.log(error);
       }
     },
   },
