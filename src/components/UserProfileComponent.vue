@@ -20,7 +20,7 @@
           <router-link
             :to="{ name: 'user-followed', params: { id: user.id } }"
             class="profile-follow count"
-            >{{ user.followingCounts }} 個</router-link
+            >{{ user.followings }} 個</router-link
           >
           <router-link
             :to="{ name: 'user-followed', params: { id: user.id } }"
@@ -31,8 +31,8 @@
         <div class="profile-follow group">
           <router-link
             :to="{ name: 'user-following', params: { id: user.id } }"
-            class="profile-follow countt"
-            >{{ user.followerCounts }} 個</router-link
+            class="profile-follow count"
+            >{{ user.followers }} 個</router-link
           >
           <router-link
             :to="{ name: 'user-following', params: { id: user.id } }"
@@ -49,15 +49,10 @@
 export default {
   name: "ProfileUser",
   props: {
-    initialUser: {
+    user: {
       type: Object,
       required: true,
     },
-  },
-  data() {
-    return {
-      user: this.initialUser,
-    };
   },
   methods: {
     callModal() {

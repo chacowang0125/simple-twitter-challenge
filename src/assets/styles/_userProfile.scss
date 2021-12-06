@@ -72,6 +72,10 @@
         font-weight: 400;
         color: $form-gray;
       }
+      &.count {
+        font-weight: 500;
+        color: $main-font-color;
+      }
     }
   }
 }

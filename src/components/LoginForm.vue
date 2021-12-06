@@ -88,20 +88,21 @@ export default {
           return;
         }
         this.isProcessing = true;
+
         const response = await authorizationAPI.signIn({
           account: this.account,
           password: this.password,
         });
+
         const { data } = response;
 
         if (data.status !== "success") {
           throw new Error(data.message);
         }
 
-        //判定user role是否正確登入前台後台
         // if (
-        //   (data.user.role === "user" && currentRouteName === "AdminSignIn") ||
-        //   (data.user.role === "admin" && currentRouteName === "sign-in")
+        //   (data.user.role === "user" && this.$route.name === "AdminSignIn") ||
+        //   (data.user.role === "admin" && this.$route.name === "sign-in")
         // ) {
         //   Toast.fire({
         //     icon: "warning",
@@ -109,8 +110,10 @@ export default {
         //   });
         //   this.isProcessing = false;
         //   return;
+        // } else {
+        //   console.log(data);
         // }
-        console.log("start");
+
         localStorage.setItem("token", data.token);
         this.$store.commit("setCurrentUser", data.user);
         console.log("start");
@@ -121,14 +124,15 @@ export default {
           this.$router.push({ name: "AdminMain" });
         }
       } catch (error) {
+        const { data } = error.response;
         this.isProcessing = false;
 
         this.password = "";
         Toast.fire({
           icon: "warning",
-          title: "錯誤的帳號或密碼",
+          title: data.message,
         });
-        console.log(error);
+        // console.log(error);
       }
     },
   },

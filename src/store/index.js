@@ -21,36 +21,34 @@ export default new Vuex.Store({
         profileEditModal: false
     },
     getters: {
-        getCurrentUser: state => {
-            return state.currentUser
-        }
-    },
+      getCurrentUser: state => {
+        return state.currentUser
+    }},
     mutations: {
-        setCurrentUser(state, currentUser) {
-            state.currentUser = {
-                ...state.currentUser,
-                // 透過 API 取得的 currentUser
-                ...currentUser
-            }
-
-            state.isAuthenticated = true
-            state.token = localStorage.getItem('token')
-        },
-        revokeAuthentication(state) {
-            state.currentUser = {}
-            state.isAuthenticated = false
-            state.token = ''
-            localStorage.removeItem('token')
-        },
-        toggleCreateNewTweetModal(state) {
-            state.openCreateNewTweetModal = !state.openCreateNewTweetModal
-        },
-        toggleReplyPostModal(state) {
-            state.openReplyPostModal = !state.openReplyPostModal
-        },
-        toggleProfileEditModal(state) {
-            state.profileEditModal = !state.profileEditModal
+      setCurrentUser (state, currentUser) {
+        state.currentUser = {
+          ...state.currentUser,
+          // 透過 API 取得的 currentUser
+          ...currentUser
         }
+        state.isAuthenticated = true
+        state.token = localStorage.getItem('token')
+      },
+      revokeAuthentication (state) {
+        state.currentUser = {}
+        state.isAuthenticated = false
+        state.token = ''
+        localStorage.removeItem('token')
+      },
+      toggleCreateNewTweetModal(state) {
+        state.openCreateNewTweetModal = !state.openCreateNewTweetModal
+      },
+      toggleReplyPostModal(state) {
+        state.openReplyPostModal = !state.openReplyPostModal
+      },
+      toggleProfileEditModal (state) {
+        state.profileEditModal = !state.profileEditModal
+      }
     },
     actions: {
         async fetchCurrentUser({ commit }) {
@@ -77,5 +75,6 @@ export default new Vuex.Store({
             }
         }
     },
+   
     modules: {}
 })
