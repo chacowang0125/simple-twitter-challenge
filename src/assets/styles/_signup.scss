@@ -18,6 +18,9 @@
 
 .form-group {
     position: relative;
+    &.input-error>input {
+        border-bottom: 2px solid $error-red !important;
+    }
     label {
         position: absolute;
         top: 18px;
@@ -41,6 +44,15 @@
         &:focus {
             border-bottom: 2px solid $link-blue;
         }
+    }
+    .error-message {
+        position: absolute;
+        left: 15px;
+        bottom: -5px;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 15px;
+        color: $error-red;
     }
 }
 

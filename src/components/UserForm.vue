@@ -87,23 +87,26 @@ export default {
     },
     async handleSubmit() {
       try {
-        //前端錯誤提示
-        if (
-          !this.user.name ||
-          !this.user.account ||
-          !this.user.email ||
-          !this.user.password ||
-          !this.user.checkPassword
-        ) {
+        //前端錯誤驗證
+        if (!this.user.account) {
           Toast.fire({
             icon: "warning",
-            title: "請輸入完整資料",
+            title: "請填寫註冊帳號",
           });
-          this.user.password = "";
-          this.user.checkPassword = "";
           return;
-        }
-        if (this.user.password !== this.user.checkPassword) {
+        } else if (!this.user.name) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊名稱",
+          });
+          return;
+        } else if (!this.user.email) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊信箱",
+          });
+          return;
+        } else if (this.user.password !== this.user.checkPassword) {
           Toast.fire({
             icon: "warning",
             title: "密碼與密碼確認不同，請重新輸入",
@@ -112,19 +115,7 @@ export default {
           this.user.checkPassword = "";
           return;
         }
-        if (this.user.name.length > 50) {
-          Toast.fire({
-            icon: "warning",
-            title: "字數超出上限",
-          });
-          this.user.password = "";
-          this.user.checkPassword = "";
-          this.nameLengthError = true;
-          return;
-        }
 
-        this.nameLengthError = false;
-        this.isProcessing = false;
         // const form = e.target;
         // const formData = new FormData(form);
         const formData = {
@@ -134,11 +125,12 @@ export default {
           password: this.user.password,
           checkPassword: this.user.checkPassword,
         };
-
+        this.isProcessing = true;
         const { data } = await usersAPI.update({
           userId: this.user.id,
           formData,
         });
+				this.isProcessing = false;
         //顯示後端回傳錯誤提示資訊
         if (data.status !== "success") {
           // throw new Error(data.message);
@@ -154,9 +146,9 @@ export default {
           title: "資料修改成功",
         });
 
-        (this.user.password = ""),
-          (this.user.checkPassword = ""),
-          (this.isProcessing = false);
+        this.user.password = "";
+        this.user.checkPassword = "";
+        this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
         Toast.fire({
@@ -171,6 +163,15 @@ export default {
   },
   computed: {
     ...mapState(["currentUser"]),
+  },
+  watch: {
+    "user.name": function () {
+      if (this.user.name.length > 50) {
+        this.nameLengthError = true;
+      } else {
+        this.nameLengthError = false;
+      }
+    },
   },
 };
 </script>
