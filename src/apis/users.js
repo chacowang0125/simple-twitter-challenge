@@ -7,4 +7,9 @@ export default {
     getUser ({ userId }) {
     return apiHelper.get(`/users/${userId}`)
   },
+    update({ userId, formData }) {
+        return apiHelper.put(`/users/${userId}/setting`,
+            formData
+        )
+    }
 }

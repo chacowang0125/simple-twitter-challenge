@@ -6,14 +6,14 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-      currentUser: {
-        id: -1,
-        account: "",
-        name:"",
-        avatar: "",
-        cover: "",
-        introduction: "",
-      },
+        currentUser: {
+            id: -1,
+            account: "",
+            name: "",
+            avatar: "",
+            cover: "",
+            introduction: "",
+        },
         isAuthenticated: false,
         token: '',
         openCreateNewTweetModal: false,
@@ -51,27 +51,31 @@ export default new Vuex.Store({
       }
     },
     actions: {
-    async fetchCurrentUser ({ commit }) {
-      try {
-        const { data } = await usersAPI.getCurrentUser()
-        const { id, name, account, avatar, cover, introduction } = data
-        commit('setCurrentUser', {
-          id,
-          account,
-          name,
-          avatar,
-          cover,
-          introduction,
-          })
+        async fetchCurrentUser({ commit }) {
+            try {
+                const { data } = await usersAPI.getCurrentUser()
 
-        return true
-      } catch (error) {
-        console.error(error.message)
-        commit('revokeAuthentication')
-        return false
-      }
-    }
-  },
+                const { id, name, account, avatar, cover, introduction, email } = data
+
+                commit('setCurrentUser', {
+                    id,
+                    account,
+                    name,
+                    avatar,
+                    cover,
+                    introduction,
+                    email
+                })
+
+                return true
+            } catch (error) {
+                console.error(error.message)
+                commit('revokeAuthentication')
+                return false
+            }
+        }
+    },
+   
     modules: {}
 })
 

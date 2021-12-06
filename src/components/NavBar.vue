@@ -43,7 +43,7 @@
         </li>
         <li class="nav-list">
           <a href="#">
-            <button class="nav-button" @click="opencreateNewTweetModal">
+            <button class="nav-button" @click.stop.prevent="opencreateNewTweetModal">
               推文
             </button>
           </a>
@@ -55,7 +55,8 @@
               src="../assets/images/logout-icon.svg"
               alt="logout"
             />
-            <span class="nav-title">登出</span>
+            <span class="nav-title"
+						@click="logout">登出</span>
           </router-link>
         </li>
       </ul>
@@ -84,6 +85,10 @@ export default {
     opencreateNewTweetModal() {
       this.$store.commit("toggleCreateNewTweetModal");
     },
+		logout() {
+			this.$store.commit('revokeAuthentication')
+			this.$router.push('/signin')
+		}
   },
   computed: {
     currentRouteName() {

@@ -1,16 +1,19 @@
-@import "./variables";
-.page-title {
-    @extend %page-title-style;
-}
-
+@import "../styles/variables";
 .container {
+    margin: 50px auto;
     display: flex;
     flex-direction: column;
-    align-items: start;
-}
-
-.page-content {
-    padding: 15px 0;
+    align-items: center;
+    .logo {
+        width: 40px;
+        height: 40px;
+    }
+    .signup-title {
+        font-size: 23px;
+        font-weight: 700;
+        color: $main-font-color;
+        margin: 25px 0;
+    }
 }
 
 .form-group {
@@ -24,23 +27,22 @@
         left: 20px;
         font-weight: 500;
         font-size: 14px;
-        color: #657786;
+        color: $input-bottom-color;
     }
     input {
-        width: 642px;
+        width: 540px;
         height: 52px;
         margin: 15px;
-        padding: 1.75rem 0rem 0.5rem 10px;
         border: none;
         border-bottom: 2px solid $input-bottom-color;
         border-radius: 4px 4px 0px 0px;
-        font-size: 20px;
         background-color: $input-background-color;
+        font-size: 20px;
+        padding: 1.75rem 0rem 0.5rem 10px;
         box-shadow: inset 0 0 0 1000px $input-background-color;
-        &:focus,
-        &:hover {
+        &:hover,
+        &:focus {
             border-bottom: 2px solid $link-blue;
-            box-shadow: inset 0 0 0 1000px $input-background-color;
         }
     }
     .error-message {
@@ -55,16 +57,19 @@
 }
 
 .button-wrapper {
-    position: relative;
     height: 46px;
     margin: 20px;
     .form-button {
-        position: absolute;
-        bottom: 0;
-        right: 0;
-        width: 116px;
+        width: 100%;
         height: 100%;
         @extend %button-style;
         border-radius: 50px;
+    }
+    .cancel-button {
+        margin: 20px;
+        font-weight: 700;
+        font-size: 18px;
+        color: #0099ff; //改成變數
+        text-decoration: underline;
     }
 }
