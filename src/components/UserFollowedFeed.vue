@@ -1,7 +1,11 @@
 <template>
   <div class="container">
     <div class="page-title">
-      <img class="profile-topnav-icon" src="./../assets/images/exit-icon.svg" @click.stop.prevent="routerBack"/>
+      <img
+        class="profile-topnav-icon"
+        src="./../assets/images/exit-icon.svg"
+        @click.stop.prevent="routerBack"
+      />
       <div class="page-title-name">
         <div class="name">{{ user.name }}</div>
         <div class="tweets">{{ userTweetsCount }}推文</div>
@@ -9,12 +13,12 @@
     </div>
     <div class="page-banner">
       <router-link
-        :to="{ name: 'user-followed', params: { id: currentUser.id } }"
+        :to="{ name: 'user-followed', params: { id: user.id } }"
       >
         <div class="page-banner-followed active">跟隨者</div>
       </router-link>
       <router-link
-        :to="{ name: 'user-following', params: { id: currentUser.id } }"
+        :to="{ name: 'user-following', params: { id: user.id } }"
       >
         <div class="page-banner-following">正在跟隨</div>
       </router-link>
@@ -22,7 +26,9 @@
     <div class="page-list">
       <li v-for="follower in followers" :key="follower.id" class="list-card">
         <div class="list-card-avatar">
-          <router-link :to="{ name: 'tweet', params: { id: follower.followerId } }">
+          <router-link
+            :to="{ name: 'tweet', params: { id: follower.followerId } }"
+          >
             <img :src="follower.avatar" alt="user-avatar" />
           </router-link>
         </div>
@@ -59,33 +65,28 @@
 </style>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "UserFollowingFeed",
-  props: {
-    initialFollowers: {
-      type: Array,
-      required: false, //
-    },
-    userTweetsCount: {
-      type: Number, //Number
-      required: false,
-    },
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+  props: ["followers", "userTweetsCount", "user"],
+  // initialFollowers: {
+  //   type: Array, //Number
+  //   required: false,
+  // },
+  // userTweetsCount: {
+  //   type: Number, //Number
+  //   required: false,
+  // },
+  // user: {
+  //   type: Object,
+  //   required: true,
+  // },
   data() {
     return {
       currentRouteName: "followed",
-      followers: "",
     };
   },
   methods: {
-    fetchFollowers() {
-      this.followers = [...this.initialFollowers]
-    },
+
     isFollowed(id) {
       //API post
       this.followers = this.followers.map((follower) => {
@@ -104,15 +105,9 @@ export default {
     toggleTab(value) {
       this.currentRouteName = value;
     },
-		routerBack() {
-			this.$router.back()
-		}
-  },
-  created() {
-    this.fetchFollowers();
-  },
-  computed: {
-    ...mapState(["currentUser"]),
+    routerBack() {
+      this.$router.back();
+    },
   },
 };
 </script>

@@ -3,7 +3,7 @@
     <Navbar />
     <div class="main-container">
       <UserFollowedFeed
-        :initial-followers="followers"
+        :followers="followers"
         :userTweetsCount="userTweetsCount"
         :user="user"
       />
