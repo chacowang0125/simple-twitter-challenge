@@ -43,7 +43,6 @@
 <style lang="scss">
 @import "./../assets/styles/_signin.scss";
 </style>
-
 <script>
 import adminAPI from "./../apis/admin";
 import { Toast } from "./../utils/helpers";

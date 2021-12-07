@@ -84,7 +84,6 @@ export default {
         }
         this.$store.commit("toggleProfileEditModal");
         this.$router.go();
-        // this.$router.push({ name: "tweet", params: { id: this.user.id } });
       } catch (error) {
         this.isProcessing = false;
         const { data } = error.response;
