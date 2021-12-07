@@ -7,8 +7,6 @@ import AdminSignIn from '../views/AdminSignIn.vue'
 import store from '../store'
 // import usersAPI from './../apis/users'
 
-
-
 Vue.use(VueRouter)
 
 const routes = [{
@@ -101,16 +99,18 @@ const router = new VueRouter({
 router.beforeEach(async(to, from, next) => {
     // 從 localStorage 取出 token
     const token = localStorage.getItem('token')
+    const admin = localStorage.getItem('admin')
     const tokenInStore = store.state.token
 
     let isAuthenticated = store.state.isAuthenticated
     let isAdmin = store.state.isAdmin
 
     // 有 token 的情況下，才向後端驗證
-    if (token && token !== tokenInStore) {
+    if (token && token !== tokenInStore && !admin) {
         isAuthenticated = await store.dispatch('fetchCurrentUser')
-
-    }
+    } else if (token && token !== tokenInStore && admin) {
+        isAuthenticated = await store.dispatch('fetchAdminUser')
+    };
 
     const pathsWithoutAuthentication = ['SignIn', 'sign-up', 'AdminSignIn']
     const adminPath = ['AdminUsers','AdminMain' ]
@@ -119,7 +119,7 @@ router.beforeEach(async(to, from, next) => {
     if (!isAuthenticated && !isAdmin && !pathsWithoutAuthentication.includes(to.name)) {
         next('/signin')
         return
-    }
+    } 
 
     // 如果 token 無效，且要去除了admin登入以外的其他頁面，是admin，則轉址到admin登入頁
     if (!isAuthenticated && isAdmin && !pathsWithoutAuthentication.includes(to.name)) {
@@ -129,6 +129,8 @@ router.beforeEach(async(to, from, next) => {
 
     // 如果 token 有效，且是admin，且要去user頁面，則轉址到admin首頁
      if (isAuthenticated && isAdmin && !adminPath.includes(to.name)) {
+                 console.log(to.name)
+
          next('/admin/main')
          return
     }

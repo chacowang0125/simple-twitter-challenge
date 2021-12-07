@@ -1,4 +1,4 @@
-@import './variables';
+@import "./variables";
 * {
     font-size: 15px;
     font-weight: 500;
@@ -26,8 +26,8 @@
             border-radius: 10px;
             background-color: $page-divider;
         }
-     }     
- }
+    }
+}
 .tweet-card {
     border-bottom: 1px solid $page-divider;
     width: 100%;
@@ -72,8 +72,8 @@
         .content-reply {
             display: flex;
             align-items: center;
-            width: 80px; 
-            cursor: pointer;           
+            width: 80px;
+            cursor: pointer;
             img {
                 width: 15px;
                 height: 15px;
@@ -83,10 +83,8 @@
                 color: $label-font-color;
             }
             .active {
-              color: $like-red;
+                color: $like-red;
             }
-
         }
-        
     }
 }

@@ -31,11 +31,11 @@
       </div>
       <div class="admin-follow-wrapper">
         <div class="admin-follow group">
-          <span class="admin-follow count">{{ user.followingCounts }} 個</span>
+          <span class="admin-follow count">{{ user.followings }} 個</span>
           <span class="admin-follow text">跟隨中</span>
         </div>
         <div class="admin-follow group">
-          <span class="admin-follow count">{{ user.followerCounts }} 位</span>
+          <span class="admin-follow count">{{ user.followers }} 位</span>
           <span class="admin-follow text">跟隨者</span>
         </div>
       </div>
@@ -55,11 +55,6 @@ export default {
       required: true,
     },
   },
-  // methods: {
-  //   handleDeleteTweet(tweetId) {
-  //     this.$emit("after-delete-tweet", tweetId);
-  //   },
-  // },
 };
 </script>
 

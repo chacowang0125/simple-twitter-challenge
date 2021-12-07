@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import usersAPI from './../apis/users'
+import adminAPI from './../apis/admin'
+
 
 Vue.use(Vuex)
 
@@ -39,8 +41,10 @@ export default new Vuex.Store({
         revokeAuthentication(state) {
             state.currentUser = {}
             state.isAuthenticated = false
+            state.isAdmin = false
             state.token = ''
             localStorage.removeItem('token')
+            localStorage.removeItem('admin')
         },
         toggleCreateNewTweetModal(state) {
             state.openCreateNewTweetModal = !state.openCreateNewTweetModal
@@ -52,7 +56,6 @@ export default new Vuex.Store({
             state.profileEditModal = !state.profileEditModal
         },
       setAdmin (state) {
-        state.isAuthenticated = true
         state.isAdmin = true
         state.token = localStorage.getItem('token')
       },
@@ -61,9 +64,7 @@ export default new Vuex.Store({
         async fetchCurrentUser({ commit }) {
             try {
                 const { data } = await usersAPI.getCurrentUser()
-
                 const { id, name, account, avatar, cover, introduction, email } = data
-
                 commit('setCurrentUser', {
                     id,
                     account,
@@ -73,11 +74,31 @@ export default new Vuex.Store({
                     introduction,
                     email
                 })
-
                 return true
             } catch (error) {
                 console.error(error.message)
-                console.log("error")
+                commit('revokeAuthentication')
+                return false
+            }
+        },
+        async fetchAdminUser({ commit }) {
+            try {
+                const { data } = await adminAPI.getAdminCurrentUser()
+                const { id, name, account, avatar, cover, introduction, email } = data
+                commit('setAdmin')
+                commit('setCurrentUser', {
+                    id,
+                    account,
+                    name,
+                    avatar,
+                    cover,
+                    introduction,
+                    email
+                })
+                return true    
+            } catch (error) {
+                console.error(error.message)
+                commit('revokeAuthentication')
                 return false
             }
         },

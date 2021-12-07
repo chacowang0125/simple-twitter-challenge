@@ -44,7 +44,7 @@ export default {
     },
     async fetchFollowings(userId) {
       try {
-        const { data } = await usersAPI.getFollowings(userId);
+        const { data } = await usersAPI.getFollowings({ userId });
         this.followings = data;
         console.log(data);
       } catch (error) {
