@@ -5,8 +5,7 @@
       <NewPostForm />
       <hr />
       <div class="showpostform-container">
-        <ShowPostsList :tweets="tweets" @toggle-like-click="toggleLikeClick" />
-        <!-- @after-click-like="afterClickLike" 上面-->
+        <ShowPostsList :tweets="tweets" @update-tweets="updateTweets" />
       </div>
     </div>
     <div class="popularbar-container">
@@ -55,7 +54,7 @@ export default {
     async getAllTweets() {
       try {
         const response = await tweetAPI.getAllTweets();
-				this.tweets = response.data
+        this.tweets = response.data;
       } catch {
         Toast.fire({
           icon: "warning",
@@ -63,10 +62,10 @@ export default {
         });
       }
     },
-		//toggle like
-		toggleLikeClick(tweetId) {
-			console.log(tweetId)
-		}
+    //子層改變時重新抓取資料
+    updateTweets() {
+      this.getAllTweets();
+    },
   },
   computed: {
     ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),
