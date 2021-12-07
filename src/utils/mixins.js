@@ -28,4 +28,13 @@ export const emptyImageFilter = {
             return src || 'https://cdn-icons-png.flaticon.com/512/483/483361.png'
         }
     }
+  }
+}
+
+export const emptyCoverFilter = {
+  filters: {
+    emptyCoverImage (src) {
+      return src || 'https://via.placeholder.com/350x220/DFDFDF?text=No+Image'
+    }
+  }
 }

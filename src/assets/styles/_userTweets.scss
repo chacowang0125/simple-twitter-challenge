@@ -5,11 +5,29 @@
     text-align: left;
 }
 
+.empty-message {
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 20px;
+    font-size: 2rem;
+}
+
 .container {
     display: flex;
     flex-direction: column;
-}
-
+    flex: 1;
+    overflow-y: auto !important;
+    &::-webkit-scrollbar {
+        //捲軸寬度
+        width: 3px;
+        background-color: transparent;
+        //捲軸本體顏色
+        &-thumb {
+            border-radius: 10px;
+            background-color: $page-divider;
+        }
+     }     
+ }
 .tweet-card {
     border-bottom: 1px solid $page-divider;
     width: 100%;
@@ -54,8 +72,8 @@
         .content-reply {
             display: flex;
             align-items: center;
-            width: 80px;
-            
+            width: 80px; 
+            cursor: pointer;           
             img {
                 width: 15px;
                 height: 15px;

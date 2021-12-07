@@ -31,16 +31,19 @@ export default {
     const { id } = this.$route.params;
     this.fetchUser(id);
   },
+  beforeRouteUpdate(to, from, next) {
+    const { id } = to.params;
+    this.fetchUser(id);
+    next();
+  },
   methods: {
     async fetchUser(userId) {
       try {
         const response = await usersAPI.getUser({
           userId,
         });
-        console.log(response);
         const { data } = response;
         const { name, tweetsCounts } = data;
-        console.log(userId);
         this.user = {
           name,
           tweetsCounts,

@@ -19,8 +19,10 @@ export default {
     getAllTweets() {
         return apiHelper.get('/tweets')
     },
-    addLike(id) {
-        return apiHelper.post(`/tweets/${id}/like`)
-    }
-
+    addLike ({ tweetId }) {
+        return apiHelper.post(`/tweets/${tweetId}/like`, null)
+    },
+    deleteLike ({ tweetId }) {
+        return apiHelper.post(`/tweets/${tweetId}/unlike`, null)
+    },
 }

@@ -15,8 +15,9 @@
             type="submit"
             class="btn modal-nav-button"
           >
-            <!-- :disabled="isProcessing" -->
+
             儲存
+            {{ isProcessing ? "處理中..." : "儲存" }}
           </button>
         </div>
         <!-- pic edit -->
@@ -26,19 +27,42 @@
               class="modal-img-icon-camera"
               src="@/assets/images/camera-icon.svg"
               alt="close modal"
+              @click="uploadCover"
             />
             <img
               class="modal-img-icon-close"
               src="@/assets/images/close-img-icon.svg"
               alt="close modal"
+              @click="removeCover"
             />
           </div>
-          <img class="modal-img-cover" :src="cover" />
-          <img class="modal-img-avatar" :src="avatar" />
+          <img class="modal-img-cover" :src="user.cover | emptyCoverImage" />
+          <input
+            id="cover"
+            type="file"
+            ref="cover"
+            name="cover"
+            accept="image/*"
+            class="img-control"
+            hidden
+            @change="handleCoverChange"
+          />
           <img
             class="modal-img-avatar-camera"
             src="@/assets/images/camera-icon.svg"
             alt="close modal"
+            @click="uploadAvatar"
+          />
+          <img class="modal-img-avatar" :src="user.avatar" />
+          <input
+            id="avatar"
+            type="file"
+            ref="avatar"
+            name="avatar"
+            accept="image/*"
+            class="img-control"
+            hidden
+            @change="handleAvatarChange"
           />
         </div>
         <!-- name, introduction edit -->
@@ -49,7 +73,12 @@
               :class="{ 'input-error': nameLengthError }"
             >
               <label for="name">名稱</label>
-              <input type="text" id="name" name="name" v-model.trim="name" />
+              <input
+                type="text"
+                id="name"
+                name="name"
+                v-model.trim="user.name"
+              />
             </div>
             <div class="input-hint-container">
               <div class="error-message" v-show="nameLengthError">
@@ -68,7 +97,7 @@
               <textarea
                 name="introduction"
                 id="introduction"
-                v-model.trim="introduction"
+                v-model.trim="user.introduction"
               ></textarea>
             </div>
             <div class="input-hint-container">
@@ -86,62 +115,101 @@
 
 <script>
 import { mapState } from "vuex";
-import { mapGetters } from "vuex";
+import { Toast } from "../utils/helpers";
+import { emptyCoverFilter } from "./../utils/mixins";
 
 export default {
-  name: "ProfileUser",
-  // props: {
-  //   initialUser: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  // },
+  name: "UserEditModal",
+  mixins: [emptyCoverFilter],
+  props: {
+    initialUser: {
+      type: Object,
+      default: () => ({
+        name: "",
+        account: "",
+        avatar: "",
+        cover: "",
+        followers: "",
+        followings: "",
+        tweetsCounts: "",
+      }),
+    },
+    isProcessing: {
+      type: Boolean,
+      default: false,
+    },
+  },
   data() {
     return {
+      user: {
+        ...this.initialUser,
+      },
       nameLengthError: false,
       introLengthError: false,
-      id: -1,
-      name: "",
-      cover: "",
-      avatar: "",
-      introduction: "",
     };
   },
-  created() {
-    this.cover = this.getCurrentUser.cover || "";
-    this.avatar = this.getCurrentUser.avatar || "";
-    this.name = this.getCurrentUser.name || "";
-    this.introduction = this.getCurrentUser.introduction || "";
-    this.userId = this.getCurrentUser.id;
-  },
-
   methods: {
     closeModal() {
       this.$store.commit("toggleProfileEditModal");
       this.name = this.getCurrentUser.name || "";
       this.introduction = this.getCurrentUser.introduction || "";
     },
+    uploadCover() {
+      this.$refs.cover.click();
+    },
+    removeCover() {
+      this.user.cover = "";
+    },
+    handleCoverChange(e) {
+      const { files } = e.target;
+      const imgURL = window.URL.createObjectURL(files[0]);
+      this.user.cover = imgURL;
+    },
+    uploadAvatar() {
+      this.$refs.avatar.click();
+    },
+    handleAvatarChange(e) {
+      const { files } = e.target;
+      const imgURL = window.URL.createObjectURL(files[0]);
+      this.user.avatar = imgURL;
+    },
+    handleSubmit(e) {
+      if (!this.user.name) {
+        Toast.fire({
+          icon: "warning",
+          title: "請填寫姓名",
+        });
+        return;
+      }
+      const formData = new FormData(e.target);
+      this.$emit("after-submit", formData);
+    },
   },
   computed: {
     ...mapState(["profileEditModal"]),
-    ...mapGetters(["getCurrentUser"]),
     nameLength() {
-      return this.name.length;
+      return this.user.name.length;
     },
     introLength() {
-      return this.introduction.length;
+      return this.user.introduction.length;
     },
   },
   watch: {
-    name() {
-      if (this.name.length > 50) {
+    initialUser(newValue) {
+      this.user = {
+        ...this.user,
+        ...newValue,
+      };
+    },
+    nameLength(val) {
+      if (val > 50) {
         this.nameLengthError = true;
       } else {
         this.nameLengthError = false;
       }
     },
-    introduction() {
-      if (this.introduction.length > 160) {
+    introLength(val) {
+      if (val > 160) {
         this.introLengthError = true;
       } else {
         this.introLengthError = false;

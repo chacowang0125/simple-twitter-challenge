@@ -33,6 +33,18 @@ export default {
     },
     getTotalTweets(userId) {
         return apiHelper(`/users/${userId}/tweets`)
+    },
+    getUserTweets({ userId }) {
+        return apiHelper.get(`users/${userId}/tweets`)
+    },
+    getUserComments({ userId }) {
+        return apiHelper.get(`users/${userId}/replied_tweets`)
+    },
+    getUserLikes({ userId }) {
+        return apiHelper.get(`users/${userId}/likes`)
+    },
+    updateUserProfile({ userId,formData }) {
+        return apiHelper.put(`users/${userId}`,formData)
     }
 
 }
