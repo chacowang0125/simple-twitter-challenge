@@ -1,25 +1,29 @@
 <template>
   <div class="container">
     <div class="page-title">
-      <img class="profile-topnav-icon" src="./../assets/images/exit-icon.svg" />
+      <img class="profile-topnav-icon" src="./../assets/images/exit-icon.svg" @click.stop.prevent="routerBack"/>
       <div class="page-title-name">
-        <div class="name">{{ currentUser.name }}</div>
-        <div class="tweets">{{ currentUser.posts.length }}推文</div>
+        <div class="name">{{ user.name }}</div>
+        <div class="tweets">{{ userTweetsCount }}推文</div>
       </div>
     </div>
     <div class="page-banner">
-      <router-link :to="{name:'user-followed',params:{id: currentUser.id}}">
+      <router-link
+        :to="{ name: 'user-followed', params: { id: currentUser.id } }"
+      >
         <div class="page-banner-followed active">跟隨者</div>
       </router-link>
-      <router-link :to="{name:'user-following',params:{id: currentUser.id}}">
+      <router-link
+        :to="{ name: 'user-following', params: { id: currentUser.id } }"
+      >
         <div class="page-banner-following">正在跟隨</div>
       </router-link>
     </div>
     <div class="page-list">
       <li v-for="follower in followers" :key="follower.id" class="list-card">
         <div class="list-card-avatar">
-          <router-link :to="{ name: 'tweet', params: { id: follower.id } }">
-            <img :src="follower.avatar" alt="user-avatar">
+          <router-link :to="{ name: 'tweet', params: { id: follower.followerId } }">
+            <img :src="follower.avatar" alt="user-avatar" />
           </router-link>
         </div>
         <div class="list-card-content">
@@ -29,14 +33,14 @@
             <button
               class="list-card-button following"
               v-if="follower.isFollowed"
-              @click.stop.prevent="isFollowed(follower.id)"
+              @click.stop.prevent="isFollowed(follower.followerId)"
             >
               正在跟隨
             </button>
             <button
               class="list-card-button follow"
               v-else
-              @click.stop.prevent="isFollowed(follower.id)"
+              @click.stop.prevent="isFollowed(follower.followerId)"
             >
               跟隨
             </button>
@@ -55,45 +59,33 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "UserFollowingFeed",
+  props: {
+    initialFollowers: {
+      type: Array,
+      required: false, //
+    },
+    userTweetsCount: {
+      type: Number, //Number
+      required: false,
+    },
+    user: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       currentRouteName: "followed",
-      currentUser: {
-        id: 1,
-        name: "JohnDoe",
-        posts: [{ id: 1 }, { id: 2 }, { id: 3 }],
-      },
-      followers: [
-        {
-          id: 1,
-          name: "Apple",
-          account: "@apple",
-          avatar: "https://picsum.photos/200",
-          introduction: "I am Apple.",
-          isFollowed: true,
-        },
-        {
-          id: 2,
-          name: "Apple",
-          account: "@apple",
-          avatar: "https://picsum.photos/200",
-          introduction: "I am Apple.",
-          isFollowed: false,
-        },
-        {
-          id: 3,
-          name: "Apple",
-          account: "@apple",
-          avatar: "https://picsum.photos/200",
-          introduction: "I am Apple.",
-          isFollowed: true,
-        },
-      ],
+      followers: "",
     };
   },
   methods: {
+    fetchFollowers() {
+      this.followers = [...this.initialFollowers]
+    },
     isFollowed(id) {
       //API post
       this.followers = this.followers.map((follower) => {
@@ -112,6 +104,15 @@ export default {
     toggleTab(value) {
       this.currentRouteName = value;
     },
+		routerBack() {
+			this.$router.back()
+		}
+  },
+  created() {
+    this.fetchFollowers();
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
 };
 </script>

@@ -67,6 +67,7 @@
                 width: 25px;
                 height: 25px;
                 margin: 0 100px 0 3px;
+                cursor: pointer;
             }
             &:last-child {
                 padding-bottom: 0;
@@ -87,41 +88,47 @@
             background-color: $page-divider;
         }
     }
-    .tweet-reply {
-        padding: 15px;
-        display: flex;
-        flex-direction: row;
-        font-size: 15px;
-        border-bottom: 1px solid $page-divider;
-        &-img {
-            img {
-                @extend %avatar-img-style;
-            }
-        }
-        &-content {
-            flex: 1;
-            padding: 0 10px;
-            text-align: left;
-            line-height: 23px;
-            font-weight: 500;
-            &-info {
-                @extend %user-name-style;
-                .info {
-                    margin-left: 5px;
-                    font-weight: 700;
-                    color: $label-font-color;
-                    letter-spacing: 0.5px;
-                }
-            }
-            &-avatar {
-                color: $label-font-color;
-                span {
-                    color: $main-orange;
-                }
-            }
-            &-comment {
-                color: $main-font-color;
-            }
+    .no-replies {
+    margin-top :20px;
+}
+
+.tweet-reply {
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    font-size: 15px;
+    border-bottom: 1px solid $page-divider;
+    &-img {
+        img {
+            @extend %avatar-img-style;
         }
     }
+    &-content {
+        flex: 1;
+        padding: 0 10px;
+        text-align: left;
+        line-height: 23px;
+        font-weight: 500;
+        &-info {
+            @extend %user-name-style;
+            .info {
+                margin-left: 5px;
+                font-weight: 700;
+                color: $label-font-color;
+                letter-spacing: 0.5px;
+            }
+        }
+        &-avatar {
+            color: $label-font-color;
+            span {
+                color: $main-orange;
+            }
+        }
+        &-comment {
+            color: $main-font-color;
+        }
+    }
+}
+
+
 }

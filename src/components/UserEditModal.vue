@@ -14,8 +14,8 @@
           <button
             type="submit"
             class="btn modal-nav-button"
-            :disabled="isProcessing"
           >
+            <!-- :disabled="isProcessing" -->
             儲存
           </button>
         </div>

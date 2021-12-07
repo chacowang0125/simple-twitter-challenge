@@ -47,6 +47,13 @@
         border: none;
         resize: none; //取消右下角三角形
     }
+    span {
+        position: absolute;
+        bottom: 20px;
+        right: 100px;
+        color: $error-red;
+        font-weight: 500;
+    }
     &-button {
         width: 66px;
         height: 100%;

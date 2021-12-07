@@ -8,8 +8,19 @@ export default {
             newTweet
         )
     },
+    getTweet(tweetId) {
+        return apiHelper.get(`/tweets/${tweetId}`)
+    },
+    getTweetReplies(
+        tweetId
+    ) {
+        return apiHelper.get(`/tweets/${tweetId}/replies`)
+    },
     getAllTweets() {
         return apiHelper.get('/tweets')
+    },
+    addLike(id) {
+        return apiHelper.post(`/tweets/${id}/like`)
     }
 
 }

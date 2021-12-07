@@ -45,7 +45,7 @@
         }
     }
     &-text {
-        margin: 5px 0;
+        margin: 10px 0;
         color: $main-font-color;
     }
     &-reply {
@@ -61,6 +61,9 @@
                 cursor: pointer;
             }
             &-number {
+                &.islike {
+                    color: $like-red !important
+                }
                 color: $label-font-color;
             }
         }

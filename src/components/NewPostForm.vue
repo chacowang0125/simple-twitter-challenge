@@ -3,20 +3,20 @@
     <div class="page-title">首頁</div>
     <div class="page-content">
       <div class="page-content-img">
-        <img class="page-content-img" :src="currentUser.avatar" alt="" />
+        <img :src="currentUser.avatar | emptyImage" alt="avatar-img" />
       </div>
       <textarea
         class="page-content-input"
         placeholder="有什麼新鮮事？"
         v-model="inputText"
       ></textarea>
+			<span v-show="inputLengthError">字數不可超過140字</span>
       <div class="page-content-button">
         <button
           class="page-content-button"
-          :disabled="!inputText"
+          :disabled="inputLengthError || !inputText || isProcessing"
           @click.stop.prevent="handleSubmit"
         >
-          <!-- disabled isProcessing= true -->
           {{ isProcessing ? "推文中" : "推文" }}
         </button>
       </div>
@@ -30,60 +30,68 @@
 
 <script>
 import tweetAPI from "../apis/tweet";
+import { emptyImageFilter } from "../utils/mixins";
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 
 export default {
   name: "NewPostForm",
+  mixins: [emptyImageFilter],
   data() {
     return {
       inputText: "",
       isProcessing: false,
+			inputLengthError: false,
     };
   },
   methods: {
     async handleSubmit() {
       try {
+				//前端錯誤訊息提示
+        if (!this.inputText || this.inputText.length > 140) {
+          Toast.fire({
+            icon: "warning",
+            title: "內容長度錯誤，請稍後再試",
+          });
+        }
+        //前端驗證內容長度後送後端
+					this.isProcessing = true;
         const newTweet = {
           userId: this.currentUser.id,
           description: this.inputText,
         };
-        this.isProcessing = true;
-        const { data } = await tweetAPI.addNewTweet({ newTweet });
-        console.log(data);
 
-        if(data.status !== "success") {
-          Toast.fire({
-            icon: "warning",
-            title: data.message,
-          });
-					return
-        }
-        console.log(data.message);
+        const { data } = await tweetAPI.addNewTweet({ newTweet });
+
+        if (data.status !== "success") throw new Error(data.message);
         Toast.fire({
           icon: "success",
           title: "推文發送成功",
         });
+
         this.inputText = "";
         this.isProcessing = false;
-      } catch {
+      } catch (error) {
         this.isProcessing = false;
+        const { data } = error.response;
         Toast.fire({
           icon: "warning",
-          title: "無法新增推文，請稍後再試",
+          title: data.message,
         });
       }
-      // this.isProcessing = true
-      // API
-      // if( data.status !== 'success'){
-      // 	throw new Error(data.message)
-      // }
-      // this.inputText = ""
-      // this.isProcessing = false
     },
   },
   computed: {
     ...mapState(["currentUser"]),
+  },
+	watch: {
+    inputText: function () {
+      if (this.inputText.length > 140) {
+        this.inputLengthError = true;
+      } else {
+        this.inputLengthError = false;
+      }
+    },
   },
 };
 </script>

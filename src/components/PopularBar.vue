@@ -6,11 +6,8 @@
       <li v-for="user in users" :key="user.id" class="list-card">
         <!-- router-link -->
         <div class="list-card-avatar">
-          <router-link :to="{name: 'tweet', params: { id: user.id}}" >
-            <img
-              :src="user.avatar"
-              alt="user-avatar"
-            />
+          <router-link :to="{ name: 'tweet', params: { id: user.id } }">
+            <img :src="user.avatar" alt="user-avatar" />
           </router-link>
         </div>
         <div class="list-card-content">
@@ -20,14 +17,14 @@
         <button
           class="list-card-button following"
           v-if="user.isFollowed"
-          @click.stop.prevent="isFollowed(user.id)"
+          @click.stop.prevent="deleteFollow(user.id)"
         >
           正在跟隨
         </button>
         <button
           class="list-card-button follow"
           v-else
-          @click.stop.prevent="isFollowed(user.id)"
+          @click.stop.prevent="addFollow(user.id)"
         >
           跟隨
         </button>
@@ -41,38 +38,9 @@
 </style>
 
 <script>
-const dummydata = {
-  users: [
-    {
-      id: 1,
-      name: "Chaco",
-      account: "@chaco123",
-      avatar: "https://picsum.photos/200",
-      isFollowed: true,
-    },
-    {
-      id: 2,
-      name: "Vince",
-      account: "@vince123",
-      avatar: "https://picsum.photos/200",
-      isFollowed: false,
-    },
-    {
-      id: 3,
-      name: "小鹿",
-      account: "@deer123",
-      avatar: "https://picsum.photos/200",
-      isFollowed: true,
-    },
-    {
-      id: 4,
-      name: "Ya Chu",
-      account: "@yachu123",
-      avatar: "https://picsum.photos/200",
-      isFollowed: false,
-    },
-  ],
-};
+import { Toast } from "../utils/helpers";
+import usersAPI from "../apis/users";
+
 export default {
   name: "PopularBar",
   data() {
@@ -81,23 +49,77 @@ export default {
     };
   },
   methods: {
-    fetchUsers() {
-      this.users = dummydata.users;
+    async fetchUsers() {
+      try {
+        const { data } = await usersAPI.getTopUsers();
+        this.users = data;
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取得資料請稍後再試",
+        });
+      }
     },
-    isFollowed(id) {
-      //API post
-      this.users = this.users.map((user) => {
-        if (user.id === id) {
-          return {
-            ...user,
-            isFollowed: !user.isFollowed,
-          };
-        } else {
-          return {
-            ...user,
-          };
+    async addFollow(userId) {
+      try {
+        const { data } = await usersAPI.addFollow(userId);
+        if (data.status !== "success") {
+          throw new Error(data.message);
         }
-      });
+        console.log(data);
+        this.users = this.users.map((user) => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              isFollowed: 1,
+            };
+          }
+          return {
+            user,
+          };
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "成功追蹤此使用者",
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法追蹤此使用者，請稍後再試",
+        });
+      }
+    },
+    async deleteFollow(userId) {
+      try {
+        // console.log(userId);
+        const { data } = await usersAPI.deleteFollow(userId);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        console.log(data);
+        this.users = this.users.map((user) => {
+          if (user.id === userId) {
+            return {
+              ...user,
+              isFollowed: 0,
+            };
+          }
+          return {
+            user,
+          };
+        });
+
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤此使用者",
+        });
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取消追蹤此使用者，請稍後再試",
+        });
+      }
     },
   },
   created() {
