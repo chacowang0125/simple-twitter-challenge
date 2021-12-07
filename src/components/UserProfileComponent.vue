@@ -3,9 +3,33 @@
     <div class="profile-user-img">
       <img class="profile-user-img cover" :src="user.cover" />
       <img class="profile-user-img avatar" :src="user.avatar" />
-      <button class="btn btn-profile-edit" @click.prevent.stop="callModal">
+      <button
+        class="btn btn-profile-edit"
+        @click.prevent.stop="callModal"
+        v-show="currentUser.id !== user.id"
+      >
         編輯個人資料
       </button>
+      <div class="btn other-user" v-show="currentUser.id === user.id">
+        <img class="other-user-icon" src="../assets/images/btn-messege.svg" />
+        <img class="other-user-icon" src="../assets/images/btn-noti.svg" />
+        <div class="other-user-btn">
+          <button
+            class="other-user-btn-item following"
+            v-if="user.isFollowed"
+            @click.stop.prevent="isFollowed(user.id)"
+          >
+            正在跟隨
+          </button>
+          <button
+            class="other-user-btn-item follow"
+            v-else
+            @click.stop.prevent="isFollowed(user.id)"
+          >
+            跟隨
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="profile-user-content">
@@ -46,6 +70,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   name: "ProfileUser",
   props: {
@@ -59,6 +84,9 @@ export default {
       this.$store.commit("toggleProfileEditModal");
       console.log("called");
     },
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
 };
 </script>

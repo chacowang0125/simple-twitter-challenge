@@ -1,21 +1,25 @@
   <template>
-  <div class="container">
-    <div class="tweet-card" v-for="tweet in tweets" :key="tweet.id">
-      <router-link :to="{ name: 'tweet', params: { id: user.id } }" class="tweet-card-img"></router-link>
-      <router-link
-        :to="{ name: 'tweet-detail', params: { id: tweet.id } }"
-        class="tweet-card-content"
-      >
-        <div
-          class="tweet-card-content-info">
-          <span class="name">{{ user.name }}</span>
-          <span class="account">@{{ user.account }}</span>
-          <span class="created-at">{{ tweet.createdAt | fromNow }}</span>
-        <div class="tweet-card-content-text">
-          {{ tweet.description }}
-        </div>
+  <div class="tweet-card">
+    <router-link
+      :to="{ name: 'tweet', params: { id: tweet.User.id } }"
+      class="tweet-card-img"
+      ><img class="tweet-card-img" :src="tweet.User.avatar"
+    /></router-link>
+    <div class="tweet-card-content">
+      <div class="tweet-card-content-info">
+        <span class="name">{{ tweet.User.name }}</span>
+        <span class="account">@{{ tweet.User.account }}</span>
+        <span class="created-at">{{ tweet.createdAt | fromNow }}</span>
+        <router-link :to="{ name: 'tweets-detail', params: { id: tweet.id } }">
+          <div class="tweet-card-content-text">
+            {{ tweet.description }}
+          </div>
+        </router-link>
+
         <div class="tweet-card-content-reply">
-          <a href="#">
+          <router-link
+            :to="{ name: 'tweets-detail', params: { id: tweet.id } }"
+          >
             <div class="content-reply">
               <img
                 class="content-reply-icon"
@@ -25,8 +29,9 @@
                 tweet.commentCounts
               }}</span>
             </div>
-          </a>
-          <div class="content-reply">
+          </router-link>
+
+          <div class="content-reply" @click.prevent.stop="likeToggle(tweet.id)">
             <img
               v-if="tweet.isLiked !== 1"
               class="content-reply-icon"
@@ -40,37 +45,90 @@
             <span
               class="content-reply-number"
               :class="{ active: tweet.isLiked === 1 }"
-              >{{ tweet.likeCounts }}</span
-            >
+              :disabled="isProcessing"
+              >{{ tweet.likeCounts }}
+            </span>
           </div>
         </div>
-				</div>
-      </router-link>
+      </div>
     </div>
   </div>
-
 </template>
 
 <script>
+import tweetAPI from "../apis/tweet";
+import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "./../utils/mixins";
 
 export default {
   mixins: [fromNowFilter],
-  name: "ProfileUser",
+  name: "UserTweetFeed",
   props: {
-    initialTweets: {
-      type: Array,
-      required: true,
-    },
-    user: {
+    initialTweet: {
       type: Object,
       required: true,
     },
   },
   data() {
     return {
-      tweets: this.initialTweets,
+      tweet: this.initialTweet,
+      isProcessing: false,
     };
+  },
+  methods: {
+    async likeToggle(tweetId) {
+      try {
+        this.isProcessing = true;
+        let like = !this.tweet.isLiked;
+        let response = {};
+        if (like) {
+          response = await tweetAPI.addLike({ tweetId });
+        } else {
+          response = await tweetAPI.deleteLike({ tweetId });
+        }
+
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        if (like) {
+          like = 1;
+        } else {
+          like = 0;
+        }
+        this.tweet = {
+          ...this.tweet,
+          isLiked: like,
+        };
+        if (like === 1) {
+          this.tweet = {
+            ...this.tweet,
+            likeCounts: this.tweet.likeCounts + 1,
+          };
+        } else {
+          this.tweet = {
+            ...this.tweet,
+            likeCounts: this.tweet.likeCounts - 1,
+          };
+        }
+
+        this.isProcessing = false;
+      } catch (err) {
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "warning",
+          title: err.message,
+        });
+      }
+    },
+  },
+  watch: {
+    initialTweets(newValue) {
+      this.tweets = {
+        ...this.tweets,
+        ...newValue,
+      };
+    },
   },
 };
 </script>

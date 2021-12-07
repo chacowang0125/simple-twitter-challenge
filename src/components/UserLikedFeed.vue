@@ -1,45 +1,48 @@
   <template>
-  <div class="container">
-    <div class="tweet-card" v-for="like in liked" :key="like.id">
-      <div class="tweet-card-img"></div>
-      <div class="tweet-card-content">
-        <div class="tweet-card-content-info">
-          <span class="name">{{ like.Tweet.User.name }}</span>
-          <span class="account">@{{ like.Tweet.User.account }}</span>
-          <span class="created-at">{{ like.createdAt | fromNow }}</span>
-        </div>
+  <div class="tweet-card">
+    <router-link
+      :to="{ name: 'tweet', params: { id: likedTweet.Tweet.User.id } }"
+      class="tweet-card-img"
+      ><img class="tweet-card-img" :src="likedTweet.Tweet.User.avatar"
+    /></router-link>
+    <div class="tweet-card-content">
+      <div class="tweet-card-content-info">
+        <span class="name">{{ likedTweet.Tweet.User.name }}</span>
+        <span class="account">@{{ likedTweet.Tweet.User.account }}</span>
+        <span class="created-at">{{ likedTweet.createdAt | fromNow }}</span>
+      </div>
+      <router-link
+        :to="{ name: 'tweets-detail', params: { id: likedTweet.TweetId } }"
+      >
         <div class="tweet-card-content-text">
-          {{ like.Tweet.description }}
+          {{ likedTweet.Tweet.description }}
         </div>
-        <div class="tweet-card-content-reply">
-          <a href="#">
-            <div class="content-reply">
-              <img
-                class="content-reply-icon"
-                src="./../assets/images/comment-icon.svg"
-              />
-              <span class="content-reply-number">{{
-                like.Tweet.commentCounts
-              }}</span>
-            </div>
-          </a>
+      </router-link>
+
+      <div class="tweet-card-content-reply">
+        <router-link
+          :to="{ name: 'tweets-detail', params: { id: likedTweet.TweetId } }"
+        >
           <div class="content-reply">
             <img
-              v-if="like.Tweet.isLiked !== 1"
               class="content-reply-icon"
-              src="./../assets/images/like-icon.svg"
+              src="./../assets/images/comment-icon.svg"
             />
-            <img
-              v-else
-              class="content-reply-icon"
-              src="./../assets/images/active-like-icon.svg"
-            />
-            <span
-              class="content-reply-number"
-              :class="{ active: like.Tweet.isLiked === 1 }"
-              >{{ like.Tweet.likeCounts }}</span
-            >
+            <span class="content-reply-number">{{
+              likedTweet.Tweet.commentCounts
+            }}</span>
           </div>
+        </router-link>
+        <div class="content-reply" @click="unlike(likedTweet.TweetId)">
+          <img
+            class="content-reply-icon"
+            src="./../assets/images/active-like-icon.svg"
+          />
+          <span
+            class="content-reply-number"
+            :class="{ active: likedTweet.Tweet.isLiked === 1 }"
+            >{{ likedTweet.Tweet.likeCounts }}</span
+          >
         </div>
       </div>
     </div>
@@ -47,25 +50,54 @@
 </template>
 
 <script>
+import tweetAPI from "../apis/tweet";
+import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "./../utils/mixins";
 
 export default {
   mixins: [fromNowFilter],
-  name: "ProfileUser",
+  name: "UserLikedFeed",
   props: {
-    initialLiked: {
-      type: Array,
-      required: true,
-    },
-    user: {
+    initialLikedTweet: {
       type: Object,
       required: true,
     },
   },
   data() {
     return {
-      liked: this.initialLiked,
+      likedTweet: this.initialLikedTweet,
     };
+  },
+  methods: {
+    async unlike(tweetId) {
+      try {
+        this.isProcessing = true;
+        const { data } = await tweetAPI.deleteLike({ tweetId });
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        // this.likedTweet = {
+        //   ...this.likedTweet,
+        //   isLiked: 0,
+        // };
+        this.$emit("after-unlike-tweet");
+        this.isProcessing = false;
+      } catch (err) {
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "warning",
+          title: err.message,
+        });
+      }
+    },
+  },
+  watch: {
+    initialLikedTweet(newValue) {
+      this.likedTweet = {
+        ...this.likedTweet,
+        ...newValue,
+      };
+    },
   },
 };
 </script>
