@@ -5,7 +5,7 @@ export default {
         return apiHelper.get('/users/current_user')
     },
     getUser(
-        userId
+        {userId}
     ) {
         return apiHelper.get(`/users/${userId}`)
     },
@@ -25,16 +25,13 @@ export default {
     }) {
         return apiHelper.delete(`/followships/${userId}`)
     },
-    getFollowers(userId) {
-        return apiHelper(`/users/${userId}/followers`)
+    getFollowers({userId}) {
+        return apiHelper.get(`/users/${userId}/followers`)
     },
-    getFollowings(userId) {
-        return apiHelper(`/users/${userId}/followings`)
+    getFollowings({userId}) {
+        return apiHelper.get(`/users/${userId}/followings`)
     },
-    getTotalTweets(userId) {
-        return apiHelper(`/users/${userId}/tweets`)
-    },
-    getUserTweets({ userId }) {
+    getTotalTweets({ userId }) {
         return apiHelper.get(`users/${userId}/tweets`)
     },
     getUserComments({ userId }) {

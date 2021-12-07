@@ -30,17 +30,9 @@
 
     <div class="links">
       <ul class="link-list">
-        <li v-show="currentRouteName === 'SignIn'">
-          <router-link to="/signup" class="link-list-item text">
-            註冊Alphitter
-          </router-link>
-        </li>
-        <span class="link-list-item" v-show="currentRouteName === 'SignIn'"
-          >&bull;</span
-        >
         <li>
-          <router-link to="/admin/signin" class="link-list-item text">
-            後台登入
+          <router-link to="/signin" class="link-list-item text">
+            前台登入
           </router-link>
         </li>
       </ul>
@@ -51,13 +43,12 @@
 <style lang="scss">
 @import "./../assets/styles/_signin.scss";
 </style>
-
 <script>
-import authorizationAPI from "./../apis/authorization";
+import adminAPI from "./../apis/admin";
 import { Toast } from "./../utils/helpers";
 
 export default {
-  name: "LoginForm",
+  name: "AdminLoginForm",
   data() {
     return {
       account: "",
@@ -81,51 +72,28 @@ export default {
           return;
         }
         this.isProcessing = true;
-
-        const response = await authorizationAPI.signIn({
+        const response = await adminAPI.adminSignIn({
           account: this.account,
           password: this.password,
         });
 
         const { data } = response;
+        localStorage.setItem("token", data.token);
+        this.$store.commit("setCurrentUser", data.user);
+        this.$store.commit("setAdmin");
 
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-
-        // if (
-        //   (data.user.role === "user" && this.$route.name === "AdminSignIn") ||
-        //   (data.user.role === "admin" && this.$route.name === "sign-in")
-        // ) {
-        //   Toast.fire({
-        //     icon: "warning",
-        //     title: "帳號不存在",
-        //   });
-        //   this.isProcessing = false;
-        //   return;
-        // } else {
-        //   console.log(data);
-        // }
-
-        localStorage.setItem("token", data.token);
-        this.$store.commit("setCurrentUser", data.user);
-        console.log("start");
-        if (data.user.role === "user") {
-          this.$router.push({ name: "home" });
-        }
-        if (data.user.role === "admin") {
-          this.$router.push({ name: "AdminMain" });
-        }
+        this.$router.push({ name: "AdminMain" });
       } catch (error) {
         const { data } = error.response;
         this.isProcessing = false;
-
         this.password = "";
         Toast.fire({
           icon: "warning",
           title: data.message,
         });
-        // console.log(error);
       }
     },
   },

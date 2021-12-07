@@ -29,7 +29,6 @@ export const emptyImageFilter = {
         }
     }
   }
-}
 
 export const emptyCoverFilter = {
   filters: {

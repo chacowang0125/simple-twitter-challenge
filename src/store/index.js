@@ -15,6 +15,7 @@ export default new Vuex.Store({
             introduction: "",
         },
         isAuthenticated: false,
+        isAdmin: false,
         token: '',
         openCreateNewTweetModal: false,
         openReplyPostModal: false,
@@ -49,7 +50,12 @@ export default new Vuex.Store({
         },
         toggleProfileEditModal(state) {
             state.profileEditModal = !state.profileEditModal
-        }
+        },
+      setAdmin (state) {
+        state.isAuthenticated = true
+        state.isAdmin = true
+        state.token = localStorage.getItem('token')
+      },
     },
     actions: {
         async fetchCurrentUser({ commit }) {
@@ -71,10 +77,10 @@ export default new Vuex.Store({
                 return true
             } catch (error) {
                 console.error(error.message)
-                commit('revokeAuthentication')
+                console.log("error")
                 return false
             }
-        }
+        },
     },
 
     modules: {}

@@ -104,6 +104,7 @@ router.beforeEach(async(to, from, next) => {
     const tokenInStore = store.state.token
 
     let isAuthenticated = store.state.isAuthenticated
+    let isAdmin = store.state.isAdmin
 
     // 有 token 的情況下，才向後端驗證
     if (token && token !== tokenInStore) {
@@ -111,21 +112,46 @@ router.beforeEach(async(to, from, next) => {
 
     }
 
-    const pathsWithoutAuthentication = ['SignIn', 'sign-up']
+    const pathsWithoutAuthentication = ['SignIn', 'sign-up', 'AdminSignIn']
+    const adminPath = ['AdminUsers','AdminMain' ]
 
-    // 如果 token 無效，且要去除了登入和註冊以外的其他頁面，則轉址到登入頁
-    if (!isAuthenticated && !pathsWithoutAuthentication.includes(to.name)) {
-        console.log('checked')
+    // 如果 token 無效，且要去除了登入和註冊以外的其他頁面，且不是admin，則轉址到user登入頁
+    if (!isAuthenticated && !isAdmin && !pathsWithoutAuthentication.includes(to.name)) {
         next('/signin')
         return
     }
 
-    // 如果 token 有效，且要去登入和註冊頁，則轉址到餐廳論壇首頁
-    if (isAuthenticated && pathsWithoutAuthentication.includes(to.name)) {
+    // 如果 token 無效，且要去除了admin登入以外的其他頁面，是admin，則轉址到admin登入頁
+    if (!isAuthenticated && isAdmin && !pathsWithoutAuthentication.includes(to.name)) {
+        next('/admin/signin')
+        return
+    }
+
+    // 如果 token 有效，且是admin，且要去user頁面，則轉址到admin首頁
+     if (isAuthenticated && isAdmin && !adminPath.includes(to.name)) {
+         next('/admin/main')
+         return
+    }
+
+    // 如果 token 有效，且不是admin，且要去admin頁面，則轉址到user首頁
+    if (isAuthenticated && !isAdmin && adminPath.includes(to.name)) {
         next('/home')
         return
     }
 
+    // 如果 token 有效，且不是admin，且要去登入和註冊頁，則轉址到首頁
+    if (isAuthenticated && !isAdmin && pathsWithoutAuthentication.includes(to.name)) {
+        next('/home')
+        return
+    }
+
+    // 如果 token 有效，是admin，且要去登入和註冊頁，則轉址到admin首頁
+    if (isAuthenticated && isAdmin && pathsWithoutAuthentication.includes(to.name)) {
+         next('/admin/main')
+         return
+    }
+
+   
     next()
 })
 

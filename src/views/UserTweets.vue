@@ -43,9 +43,10 @@ export default {
   methods: {
     async fetchTweets(userId) {
       try {
-        const response = await usersAPI.getUserTweets({
+        const response = await usersAPI.getTotalTweets({
           userId,
         });
+        console.log("gang");
         const { data } = response;
         this.tweets = data;
         this.isLoading = false;
