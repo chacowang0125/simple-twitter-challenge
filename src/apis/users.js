@@ -11,5 +11,17 @@ export default {
         return apiHelper.put(`/users/${userId}/setting`,
             formData
         )
+    },
+    getUserTweets({ userId }) {
+        return apiHelper.get(`users/${userId}/tweets`)
+    },
+    getUserComments({ userId }) {
+        return apiHelper.get(`users/${userId}/replied_tweets`)
+    },
+    getUserLikes({ userId }) {
+        return apiHelper.get(`users/${userId}/likes`)
+    },
+    updateUserProfile({ userId,formData }) {
+        return apiHelper.put(`users/${userId}`,formData)
     }
 }

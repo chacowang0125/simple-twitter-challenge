@@ -1,13 +1,19 @@
   <template>
-  <div class="container">
-    <div class="tweet-card" v-for="comment in comments" :key="comment.id">
-      <div class="tweet-card-img"></div>
-      <div class="tweet-card-content">
-        <div class="tweet-card-content-info">
-          <span class="name">{{ user.name }}</span>
-          <span class="account">@{{ user.account }}</span>
-          <span class="created-at">{{ comment.createdAt | fromNow }}</span>
-        </div>
+  <div class="tweet-card">
+    <router-link
+      :to="{ name: 'tweet', params: { id: comment.User.id } }"
+      class="tweet-card-img"
+      ><img class="tweet-card-img" :src="comment.User.avatar"
+    /></router-link>
+    <div class="tweet-card-content">
+      <div class="tweet-card-content-info">
+        <span class="name">{{ comment.User.name }}</span>
+        <span class="account">@{{ comment.User.account }}</span>
+        <span class="created-at">{{ comment.createdAt | fromNow }}</span>
+      </div>
+      <router-link
+        :to="{ name: 'tweets-detail', params: { id: comment.Tweet.id } }"
+      >
         <div class="tweet-card-content-reply">
           <span class="replied">回覆</span>
           <span class="account">@{{ comment.Tweet.User.account }}</span>
@@ -15,7 +21,7 @@
         <div class="tweet-card-content-text">
           {{ comment.comment }}
         </div>
-      </div>
+      </router-link>
     </div>
   </div>
 </template>
@@ -25,13 +31,9 @@ import { fromNowFilter } from "./../utils/mixins";
 
 export default {
   mixins: [fromNowFilter],
-  name: "UserComments",
+  name: "UserCommentsFeed",
   props: {
-    comments: {
-      type: Array,
-      required: true,
-    },
-    user: {
+    comment: {
       type: Object,
       required: true,
     },
