@@ -1,21 +1,23 @@
 <template>
-  <div class="tweet">
-    <div class="tweet-avatar">
-      <img class="avatar-img" :src="tweet.User.avatar" alt="user avatar" />
-    </div>
-    <div class="tweet-description">
-      <span class="tweet-user-name">{{ tweet.User.name }}</span>
-      <span class="tweet-user-detail">@{{ tweet.User.account }}</span>
-      <span class="tweet-user-detail">&bull;</span>
-      <span class="tweet-user-detail">{{ tweet.createdAt | fromNow }}</span>
-      <div class="tweet-text">{{ tweet.description }}</div>
-    </div>
-    <div class="tweet-delete-btn">
-      <img
-        class="tweet-delete-icon"
-        src="@/assets/images/tweet-delete.svg"
-        alt="tweet delete icon"
-      />
+  <div>
+    <div class="tweet" v-for="tweet in tweets" :key="tweet.id">
+      <div class="tweet-avatar">
+        <img class="avatar-img" :src="tweet.User.avatar" alt="user avatar" />
+      </div>
+      <div class="tweet-description">
+        <span class="tweet-user-name">{{ tweet.User.name }}</span>
+        <span class="tweet-user-detail">@{{ tweet.User.account }}</span>
+        <span class="tweet-user-detail">&bull;</span>
+        <span class="tweet-user-detail">{{ tweet.createdAt | fromNow }}</span>
+        <div class="tweet-text">{{ tweet.description }}</div>
+      </div>
+      <div class="tweet-delete-btn">
+        <img
+          class="tweet-delete-icon"
+          src="@/assets/images/tweet-delete.svg"
+          alt="tweet delete icon"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -39,13 +41,14 @@ export default {
   methods: {
     async fetchTweetss() {
       try {
-        const { data } = await adminAPI.adminTweets;
+        const { data } = await adminAPI.adminTweets();
         this.tweets = data;
       } catch (error) {
-        console.log("error", error);
+        this.isProcessing = false;
+        const { data } = error.response;
         Toast.fire({
-          icon: "error",
-          title: "can't add to favorite",
+          icon: "warning",
+          title: data.message,
         });
       }
     },
