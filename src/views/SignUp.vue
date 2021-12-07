@@ -142,13 +142,7 @@ export default {
 
         this.isProcessing = false;
 
-        if (data.status !== "success") {
-          Toast.fire({
-            icon: "warning",
-            title: data.message,
-          });
-          return;
-        }
+        if (data.status !== "success") throw new Error(data.message);
 
         //註冊成功
         Toast.fire({
@@ -156,12 +150,13 @@ export default {
           title: "註冊成功",
         });
 
-        // this.$router.push({ name: "SignIn" });
+        this.$router.push({ name: "SignIn" });
       } catch (error) {
         this.isProcessing = false;
+        const { data } = error.response;
         Toast.fire({
           icon: "error",
-          title: "無法送出註冊，請稍後再試",
+          title: data.message,
         });
       }
     },
