@@ -22,21 +22,52 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
+import adminAPI from "./../apis/admin";
+import { Toast } from "./../utils/helpers";
 
 export default {
   mixins: [fromNowFilter],
   name: "AdminTweetList",
-  props: {
-    tweet: {
-      type: Object,
-      required: true,
+  data() {
+    return {
+      tweets: [],
+    };
+  },
+  created() {
+    this.fetchTweetss();
+  },
+  methods: {
+    async fetchTweetss() {
+      try {
+        const { data } = await adminAPI.adminTweets;
+        this.tweets = data;
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "can't add to favorite",
+        });
+      }
+    },
+    async deleteRestaurant(restaurantId) {
+      try {
+        const { data } = await adminAPI.restaurants.delete(restaurantId);
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+
+        this.restaurants = this.restaurants.filter(
+          (restaurant) => restaurant.id !== restaurantId
+        );
+      } catch (error) {
+        console.log("error", error);
+        Toast.fire({
+          icon: "error",
+          title: "can't add to favorite",
+        });
+      }
     },
   },
-  // methods: {
-  //   handleDeleteTweet(tweetId) {
-  //     this.$emit("after-delete-tweet", tweetId);
-  //   },
-  // },
 };
 </script>
 

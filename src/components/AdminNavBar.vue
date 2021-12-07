@@ -34,7 +34,7 @@
           </router-link>
         </li>
 
-        <li class="nav-list nav-list-logout">
+        <li class="nav-list nav-list-logout" @click.stop.prevent="logout">
           <div class="nav-link">
             <img
               class="nav-icon"
@@ -55,6 +55,12 @@ export default {
   computed: {
     currentRouteName() {
       return this.$route.name;
+    },
+  },
+  methods: {
+    logout() {
+      this.$store.commit("revokeAuthentication");
+      this.$router.push("/admin/signin");
     },
   },
 };

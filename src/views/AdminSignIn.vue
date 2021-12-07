@@ -4,17 +4,17 @@
       <img class="logo-image" src="./../assets/images/logo.svg" alt="" />
       <h2 class="logo-text">後台登入</h2>
     </div>
-    <LoginForm />
+    <AdminLoginForm />
   </div>
 </template>
 
 <script>
-import LoginForm from "./../components/LoginForm";
+import AdminLoginForm from "./../components/AdminLoginForm";
 
 export default {
   name: "AdminSignIn",
   components: {
-    LoginForm,
+    AdminLoginForm,
   },
 };
 </script>

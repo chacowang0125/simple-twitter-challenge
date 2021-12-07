@@ -15,6 +15,7 @@ export default new Vuex.Store({
             introduction: "",
         },
         isAuthenticated: false,
+        isAdmin: false,
         token: '',
         openCreateNewTweetModal: false,
         openReplyPostModal: false,
@@ -34,9 +35,15 @@ export default new Vuex.Store({
         state.isAuthenticated = true
         state.token = localStorage.getItem('token')
       },
+      setAdmin (state) {
+        state.isAuthenticated = true
+        state.isAdmin = true
+        state.token = localStorage.getItem('token')
+      },
       revokeAuthentication (state) {
         state.currentUser = {}
         state.isAuthenticated = false
+        state.isAdmin = false
         state.token = ''
         localStorage.removeItem('token')
       },
