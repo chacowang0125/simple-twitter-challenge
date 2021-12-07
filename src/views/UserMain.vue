@@ -5,7 +5,7 @@
       <NewPostForm />
       <hr />
       <div class="showpostform-container">
-        <ShowPostsList :tweets="tweets"/>
+        <ShowPostsList :tweets="tweets" @toggle-like-click="toggleLikeClick" />
         <!-- @after-click-like="afterClickLike" 上面-->
       </div>
     </div>
@@ -56,8 +56,6 @@ export default {
       try {
         const response = await tweetAPI.getAllTweets();
 				this.tweets = response.data
-				console.log(this.tweets)
-        console.log(response);
       } catch {
         Toast.fire({
           icon: "warning",
@@ -65,6 +63,10 @@ export default {
         });
       }
     },
+		//toggle like
+		toggleLikeClick(tweetId) {
+			console.log(tweetId)
+		}
   },
   computed: {
     ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),

@@ -106,6 +106,12 @@ export default {
             title: "請填寫註冊信箱",
           });
           return;
+        } else if (!this.user.password || !this.user.checkPassword) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫密碼",
+          });
+          return;
         } else if (this.user.password !== this.user.checkPassword) {
           Toast.fire({
             icon: "warning",
@@ -116,8 +122,7 @@ export default {
           return;
         }
 
-        // const form = e.target;
-        // const formData = new FormData(form);
+        this.isProcessing = true;
         const formData = {
           account: this.user.account,
           name: this.user.name,
@@ -125,22 +130,14 @@ export default {
           password: this.user.password,
           checkPassword: this.user.checkPassword,
         };
-        this.isProcessing = true;
-        console.log(this.user.id);
-        const {data} = await usersAPI.update({
+
+        const { data } = await usersAPI.update({
           userId: this.user.id,
           formData,
         });
         this.isProcessing = false;
         //顯示後端回傳錯誤提示資訊
-        if (data.status !== "success") {
-          // throw new Error(data.message);
-          Toast.fire({
-            icon: "warning",
-            title: data.message,
-          });
-          return;
-        }
+        if (data.status !== "success") throw new Error(data.message);
 
         Toast.fire({
           icon: "success",
@@ -149,13 +146,12 @@ export default {
 
         this.user.password = "";
         this.user.checkPassword = "";
-        this.isProcessing = false;
       } catch (error) {
         this.isProcessing = false;
-        console.log(error);
+        const { data } = error.response;
         Toast.fire({
           icon: "error",
-          title: error,
+          title: data.message,
         });
       }
     },

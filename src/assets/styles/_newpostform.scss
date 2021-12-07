@@ -9,14 +9,13 @@
 }
 
 .page-content {
+    position: relative;
     width: 100%;
     height: 120px;
     padding: 10px 15px;
     display: flex;
-    &-img {
-        img {
-            @extend %avatar-img-style
-        }
+    img {
+        @extend %avatar-img-style;
     }
     textarea {
         flex: 1;
@@ -30,6 +29,13 @@
         font-size: 18px;
         color: #9197a3;
         font-weight: 700;
+    }
+    span {
+        position: absolute;
+        bottom: 15px;
+        right: 100px;
+        color: $error-red;
+        font-weight: 500;
     }
     &-button {
         position: relative;

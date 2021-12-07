@@ -7,7 +7,7 @@
       <UserForm />
     </div>
 		<div class="modal" >
-      <CreateNewTweetModal v-show="openCreateNewTweetModal" @after-add-tweet="afterAddTweet" />
+      <CreateNewTweetModal v-show="openCreateNewTweetModal" />
     </div>
   </div>
 </template>
