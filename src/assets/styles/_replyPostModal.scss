@@ -101,6 +101,13 @@
             border: none;
             resize: none; //取消右下角三角形
         }
+        span {
+            position: absolute;
+            bottom: 25px;
+            right: 100px;
+            color: $error-red;
+            font-weight: 500;
+        }
     }
     &-button {
         position: relative;

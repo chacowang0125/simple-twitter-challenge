@@ -2,13 +2,17 @@
   <div class="container">
     <NavBar />
     <div class="main-container">
-      <PostDetailCard :tweet="tweet" :replies="replies" />
+      <PostDetailCard :initial-tweet="tweet" :replies="replies" />
     </div>
     <div class="popularbar-container">
       <PopularBar />
     </div>
     <div class="modal">
-      <ReplyPostModal v-show="openReplyPostModal" />
+      <ReplyPostModal
+        v-show="openReplyPostModal"
+        :tweet="tweet"
+        @after-submit="handleAfterSubmit"
+      />
     </div>
   </div>
 </template>
@@ -63,6 +67,33 @@ export default {
         Toast.fire({
           icon: "warning",
           title: "無法取得推文回覆資料請稍後再試",
+        });
+      }
+    },
+    async handleAfterSubmit(formData) {
+      try {
+        console.log(formData);
+        console.log(this.tweet.id);
+        this.isProcessing = true;
+        const { data } = await tweetAPI.addTweetReply({
+          tweetId: this.tweet.id,
+          comment: formData,
+        });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+				Toast.fire({
+					icon: "success",
+					title: "新增回覆成功"
+				})
+        this.$store.commit("toggleReplyPostModal");
+        this.$router.go(); //跳頁
+      } catch (error) {
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "warning",
+          title: "無法新增回覆，請稍後再試",
         });
       }
     },

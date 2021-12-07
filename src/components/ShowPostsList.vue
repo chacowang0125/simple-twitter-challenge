@@ -65,7 +65,6 @@
 
 <script>
 import { emptyImageFilter, fromNowFilter } from "../utils/mixins";
-import moment from "moment";
 
 export default {
   name: "ShowPostsList",
@@ -90,14 +89,6 @@ export default {
     toggleLike(tweetId) {
       this.$emit("toggle-like-click", tweetId);
 			this.Like = !this.Like
-    },
-  },
-  filters: {
-    fromNow(datetime) {
-      if (!datetime) {
-        return "-";
-      }
-      return moment(datetime).fromNow();
     },
   },
 };
