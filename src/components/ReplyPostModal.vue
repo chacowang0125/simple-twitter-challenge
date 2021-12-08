@@ -39,7 +39,7 @@
           </div>
           <textarea
             class="modal-content-reply-input"
-            placeholder="有什麼新鮮事？"
+            placeholder="推你的回覆"
             v-model="inputText"
           >
           </textarea>

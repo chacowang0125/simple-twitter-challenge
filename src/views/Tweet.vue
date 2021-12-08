@@ -9,6 +9,9 @@
         <PopularBar />
       </div>
       <div class="modal">
+				<CreateNewTweetModal
+				v-show="openCreateNewTweetModal"
+        @after-add-tweet="afterAddTweet"/>
         <ReplyPostModal
           v-show="openReplyPostModal"
           :tweet="tweet"
@@ -23,6 +26,7 @@ import NavBar from "./../components/NavBar.vue";
 import PopularBar from "./../components/PopularBar.vue";
 import PostDetailCard from "./../components/PostDetailCard.vue";
 import ReplyPostModal from "./../components/ReplyPostModal.vue";
+import CreateNewTweetModal from "./../components/CreateNewTweetModal.vue"
 import Spinner from "../components/Spinner.vue"
 import tweetAPI from "../apis/tweet";
 import { mapState } from "vuex";
@@ -35,6 +39,7 @@ export default {
     PopularBar,
     PostDetailCard,
     ReplyPostModal,
+		CreateNewTweetModal,
 		Spinner
   },
   data() {
@@ -104,9 +109,13 @@ export default {
         });
       }
     },
+		afterAddTweet() {
+      this.$store.commit("toggleCreateNewTweetModal");
+			this.$router.push('/')
+    },
   },
   computed: {
-    ...mapState(["openReplyPostModal"]),
+    ...mapState(["openReplyPostModal","openCreateNewTweetModal"]),
   },
   created() {
     const { id } = this.$route.params;

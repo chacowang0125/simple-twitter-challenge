@@ -68,7 +68,6 @@ export default {
     },
     async getAllTweets() {
       try {
-				this.isLoading = true;
         const response = await tweetAPI.getAllTweets();
         this.tweets = response.data;
 				this.isLoading = false
