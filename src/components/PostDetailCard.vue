@@ -39,22 +39,16 @@
         </span>
       </div>
       <div class="tweet-card-reply">
-        <span @click.stop.prevent="openReplyPostModal(tweet.id)">
+        <span @click.stop.prevent="openReplyPostModal">
           <img src="../assets/images/comment-icon.svg" alt="comment-icon" />
         </span>
-        <span>
+        <span @click.prevent.stop="likeToggle(tweet.id)" :disabled="isProcessing">
           <img
-            v-if="isLike"
-            @click.stop.prevent="deleteLike(tweet.id)"
+            v-if="tweet.isLiked === 1"
             src="../assets/images/liked-icon.svg"
             alt="liked-icon"
           />
-          <img
-            v-else
-            @click.stop.prevent="addLike(tweet.id)"
-            src="../assets/images/like-icon.svg"
-            alt="like-icon"
-          />
+          <img v-else src="../assets/images/like-icon.svg" alt="like-icon" />
         </span>
       </div>
     </div>
@@ -92,41 +86,89 @@
   </div>
 </template>
 <script>
+import tweetAPI from "../apis/tweet";
+import { Toast } from "../utils/helpers";
 import { emptyImageFilter, fromNowFilter } from "../utils/mixins";
 
 export default {
   name: "PostDetailCard",
   mixins: [emptyImageFilter, fromNowFilter],
-  props: {
-    tweet: {
-      type: Object,
-      required: true,
-    },
-    replies: {
-      type: Array,
-      required: true, //false
-    },
-  },
+props: ["initialTweet", "replies"],
+  // props: {
+  //   initialTweet: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  //   replies: {
+  //     type: Array,
+  //     required: true,
+  //   },
+  // },
   data() {
     return {
-      isLike: true,
+      tweet: this.initialTweet,
+			isProcessing : false
     };
   },
   methods: {
-    openReplyPostModal(id) {
-      console.log(id);
+    openReplyPostModal() {
       this.$store.commit("toggleReplyPostModal");
     },
     routerBack() {
       this.$router.back();
     },
-    deleteLike(tweetId) {
-      console.log(tweetId);
-      this.isLike = !this.isLike;
+    async likeToggle(tweetId) {
+      try {
+        this.isProcessing = true;
+        let like = !this.tweet.isLiked;
+        let response = {};
+        if (like) {
+          response = await tweetAPI.addLike({ tweetId });
+        } else {
+          response = await tweetAPI.deleteLike({ tweetId });
+        }
+
+        const { data } = response;
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        if (like) {
+          like = 1;
+        } else {
+          like = 0;
+        }
+        this.tweet = {
+          ...this.tweet,
+          isLiked: like,
+        };
+        if (like === 1) {
+          this.tweet = {
+            ...this.tweet,
+            likeCounts: this.tweet.likeCounts + 1,
+          };
+        } else {
+          this.tweet = {
+            ...this.tweet,
+            likeCounts: this.tweet.likeCounts - 1,
+          };
+        }
+
+        this.isProcessing = false;
+      } catch (err) {
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "warning",
+          title: err.message,
+        });
+      }
     },
-    addLike(tweetId) {
-      console.log(tweetId);
-      this.isLike = !this.isLike;
+  },
+  watch: {
+    initialTweet(newValue) {
+      this.tweet = {
+        ...this.tweet,
+        ...newValue,
+      };
     },
   },
   filters: {

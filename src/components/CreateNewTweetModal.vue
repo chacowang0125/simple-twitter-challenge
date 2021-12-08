@@ -79,6 +79,9 @@ export default {
 
         this.inputText = "";
         this.isProcessing = false;
+				this.$store.commit("toggleCreateNewTweetModal")
+				//刷新頁面//
+				this.$router.go()
       } catch (error) {
         this.isProcessing = false;
         const { data } = error.response;

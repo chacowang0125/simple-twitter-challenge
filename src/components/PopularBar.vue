@@ -62,11 +62,10 @@ export default {
     },
     async addFollow(userId) {
       try {
-        const { data } = await usersAPI.addFollow(userId);
+        const { data } = await usersAPI.addFollow({ userId });
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        console.log(data);
         this.users = this.users.map((user) => {
           if (user.id === userId) {
             return {
@@ -83,6 +82,7 @@ export default {
           icon: "success",
           title: "成功追蹤此使用者",
         });
+				// this.$router.go()
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -92,12 +92,10 @@ export default {
     },
     async deleteFollow(userId) {
       try {
-        // console.log(userId);
-        const { data } = await usersAPI.deleteFollow(userId);
+        const { data } = await usersAPI.deleteFollow({ userId });
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        console.log(data);
         this.users = this.users.map((user) => {
           if (user.id === userId) {
             return {
@@ -114,6 +112,7 @@ export default {
           icon: "success",
           title: "成功取消追蹤此使用者",
         });
+				// this.$router.go()
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -124,6 +123,15 @@ export default {
   },
   created() {
     this.fetchUsers();
+  },
+	// 跳轉畫面
+  watch: {
+    users: {
+      handler: function () {
+        this.fetchUsers();
+      },
+      deep: true,
+    },
   },
 };
 </script>

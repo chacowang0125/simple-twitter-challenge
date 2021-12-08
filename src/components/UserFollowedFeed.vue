@@ -1,25 +1,22 @@
 <template>
   <div class="container">
     <div class="page-title">
-      <img
-        class="profile-topnav-icon"
-        src="./../assets/images/exit-icon.svg"
-        @click.stop.prevent="routerBack"
-      />
+      <router-link :to="{ name: 'tweet', params: { id: user.id } }">
+        <img
+          class="profile-topnav-icon"
+          src="./../assets/images/exit-icon.svg"
+        />
+      </router-link>
       <div class="page-title-name">
         <div class="name">{{ user.name }}</div>
         <div class="tweets">{{ userTweetsCount }}推文</div>
       </div>
     </div>
     <div class="page-banner">
-      <router-link
-        :to="{ name: 'user-followed', params: { id: user.id } }"
-      >
+      <router-link :to="{ name: 'user-followed', params: { id: user.id } }">
         <div class="page-banner-followed active">跟隨者</div>
       </router-link>
-      <router-link
-        :to="{ name: 'user-following', params: { id: user.id } }"
-      >
+      <router-link :to="{ name: 'user-following', params: { id: user.id } }">
         <div class="page-banner-following">正在跟隨</div>
       </router-link>
     </div>
@@ -37,16 +34,16 @@
             <div class="name">{{ follower.name }}</div>
             <div class="account">{{ follower.account }}</div>
             <button
-              class="list-card-button following"
               v-if="follower.isFollowed"
-              @click.stop.prevent="isFollowed(follower.followerId)"
+              class="list-card-button following"
+              @click.stop.prevent="deleteFollow(follower.followerId)"
             >
               正在跟隨
             </button>
             <button
-              class="list-card-button follow"
               v-else
-              @click.stop.prevent="isFollowed(follower.followerId)"
+              class="list-card-button follow"
+              @click.stop.prevent="addFollow(follower.followerId)"
             >
               跟隨
             </button>
@@ -65,6 +62,8 @@
 </style>
 
 <script>
+import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
 export default {
   name: "UserFollowingFeed",
   props: ["followers", "userTweetsCount", "user"],
@@ -86,28 +85,51 @@ export default {
     };
   },
   methods: {
-
-    isFollowed(id) {
-      //API post
-      this.followers = this.followers.map((follower) => {
-        if (follower.id === id) {
-          return {
-            ...follower,
-            isFollowed: !follower.isFollowed,
-          };
-        } else {
-          return {
-            ...follower,
-          };
+    async addFollow(userId) {
+      try {
+        console.log(userId);
+        const { data } = await usersAPI.addFollow({ userId });
+        if (data.status !== "success") {
+          throw new Error(data.message);
         }
-      });
+        console.log("add");
+
+        Toast.fire({
+          icon: "success",
+          title: "成功追蹤此使用者",
+        });
+				this.$emit("update-followed");
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法追蹤此使用者，請稍後再試",
+        });
+      }
     },
-    toggleTab(value) {
-      this.currentRouteName = value;
+    async deleteFollow(userId) {
+      try {
+        console.log(userId);
+        const { data } = await usersAPI.deleteFollow({ userId });
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        console.log("del");
+
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤此使用者",
+        });
+				this.$emit("update-followed");
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取消追蹤此使用者，請稍後再試",
+        });
+      }
     },
-    routerBack() {
-      this.$router.back();
-    },
+  },
+  toggleTab(value) {
+    this.currentRouteName = value;
   },
 };
 </script>

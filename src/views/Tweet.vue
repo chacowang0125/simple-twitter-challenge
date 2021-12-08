@@ -2,13 +2,17 @@
   <div class="container">
     <NavBar />
     <div class="main-container">
-      <PostDetailCard :tweet="tweet" :replies="replies" />
+      <PostDetailCard :initial-tweet="tweet" :replies="replies" />
     </div>
     <div class="popularbar-container">
       <PopularBar />
     </div>
     <div class="modal">
-      <ReplyPostModal v-show="openReplyPostModal" />
+      <ReplyPostModal
+        v-show="openReplyPostModal"
+        :tweet="tweet"
+        @after-submit="handleAfterSubmit"
+      />
     </div>
   </div>
 </template>
@@ -37,9 +41,9 @@ export default {
     };
   },
   methods: {
-    async fetchTweet(tweetid) {
+    async fetchTweet(tweetId) {
       try {
-        const response = await tweetAPI.getTweet(tweetid);
+        const response = await tweetAPI.getTweet({tweetId});
         if (response.status !== 200) {
           throw new Error(response.statusText);
         }
@@ -51,10 +55,9 @@ export default {
         });
       }
     },
-    async fetchReplies(tweetid) {
+    async fetchReplies(tweetId) {
       try {
-        const response = await tweetAPI.getTweetReplies(tweetid);
-        console.log(response);
+        const response = await tweetAPI.getTweetReplies({tweetId});
         if (response.status !== 200) {
           throw new Error(response.statusText);
         }
@@ -66,6 +69,31 @@ export default {
         });
       }
     },
+    async handleAfterSubmit(id,inputData) {
+      try {
+        this.isProcessing = true;
+        const { data } = await tweetAPI.addTweetReply({
+          tweetId: id,
+          comment: inputData,
+        });
+
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "新增回覆成功",
+        });
+        this.$store.commit("toggleReplyPostModal");
+        this.$router.go(); //跳頁
+      } catch (error) {
+        this.isProcessing = false;
+        Toast.fire({
+          icon: "warning",
+          title: "無法新增回覆，請稍後再試",
+        });
+      }
+    },
   },
   computed: {
     ...mapState(["openReplyPostModal"]),
@@ -74,6 +102,7 @@ export default {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
+    console.log(id);
   },
 };
 </script>

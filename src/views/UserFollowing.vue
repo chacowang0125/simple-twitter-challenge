@@ -6,6 +6,7 @@
         :followings="followings"
         :userTweetsCount="userTweetsCount"
         :user="user"
+				@update-following="updateFollowing"
       />
     </div>
     <PopularBar />
@@ -36,17 +37,19 @@ export default {
   methods: {
     async getUser(userId) {
       try {
-        const { data } = await usersAPI.getUser(userId);
-        this.user = data;
+        const response = await usersAPI.getUser({ userId });
+				console.log(response)
+        this.user = response.data;
       } catch (error) {
         Toast.fire({ icon: "warning", title: "無法取得使用者資料請後再試" });
       }
     },
     async fetchFollowings(userId) {
       try {
-        const { data } = await usersAPI.getFollowings({ userId });
-        this.followings = data;
-        console.log(data);
+        const response = await usersAPI.getFollowings({ userId });
+        console.log(response, "!");
+        this.followings = response.data;
+        console.log(this.followings);
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -56,7 +59,7 @@ export default {
     },
     async fetchTotaltweets(userId) {
       try {
-        const { data } = await usersAPI.getTotalTweets(userId);
+        const { data } = await usersAPI.getTotalTweets({ userId });
         this.userTweetsCount = data.length;
       } catch (error) {
         Toast.fire({
@@ -65,6 +68,11 @@ export default {
         });
       }
     },
+		//子層觸發渲染畫面
+		updateFollowing() {
+			const { id } = this.$route.params;
+			this.fetchFollowings(id)
+		}
   },
   created() {
     const { id } = this.$route.params;
