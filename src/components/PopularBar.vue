@@ -12,7 +12,7 @@
         </div>
         <div class="list-card-content">
           <div class="list-card-content-name">{{ user.name }}</div>
-          <div class="list-card-content-account">{{ user.account }}</div>
+          <div class="list-card-content-account">@{{ user.account }}</div>
         </div>
         <template v-if="user.id !== currentUser.id">
           <button
@@ -84,7 +84,7 @@ export default {
           icon: "success",
           title: "成功追蹤此使用者",
         });
-        // this.$router.go()
+				this.$emit('after-follow-click')
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -113,7 +113,7 @@ export default {
           icon: "success",
           title: "成功取消追蹤此使用者",
         });
-        // this.$router.go()
+				this.$emit('after-follow-click')
       } catch (error) {
         Toast.fire({
           icon: "warning",
