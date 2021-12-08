@@ -2,7 +2,9 @@
   <div class="container">
     <Navbar />
     <div class="main-container">
+			<Spinner v-if="isLoading"/>
       <UserFollowedFeed
+			v-if="!isLoading"
         :followers="followers"
         :userTweetsCount="userTweetsCount"
         :user="user"
@@ -17,6 +19,7 @@
 import Navbar from "../components/NavBar.vue";
 import PopularBar from "../components/PopularBar.vue";
 import UserFollowedFeed from "../components/UserFollowedFeed.vue";
+import Spinner from "../components/Spinner.vue"
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 
@@ -26,18 +29,20 @@ export default {
     Navbar,
     UserFollowedFeed,
     PopularBar,
+		Spinner
   },
   data() {
     return {
       user: "",
       followers: [],
       userTweetsCount: "",
+			isLoading: true
     };
   },
   methods: {
     async getUser(userId) {
       try {
-        console.log("userId", userId);
+
         const response = await usersAPI.getUser({ userId });
         this.user = response.data;
       } catch (error) {
@@ -46,8 +51,10 @@ export default {
     },
     async fetchFollowers(userId) {
       try {
+				this.isLoading= true
         const { data } = await usersAPI.getFollowers({ userId });
         this.followers = data;
+				this.isLoading= false
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -57,8 +64,10 @@ export default {
     },
     async fetchTotaltweets(userId) {
       try {
+				this.isLoading= true
         const { data } = await usersAPI.getTotalTweets({ userId });
         this.userTweetsCount = data.length;
+				this.isLoading= false
       } catch (error) {
         Toast.fire({
           icon: "warning",

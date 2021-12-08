@@ -2,7 +2,9 @@
   <div class="container">
     <Navbar />
     <div class="main-container">
+			<Spinner v-if="isLoading"/>
       <UserFollowingFeed
+			v-if="!isLoading"
         :followings="followings"
         :userTweetsCount="userTweetsCount"
         :user="user"
@@ -17,6 +19,7 @@
 import Navbar from "../components/NavBar.vue";
 import PopularBar from "../components/PopularBar.vue";
 import UserFollowingFeed from "../components/UserFollowingFeed.vue";
+import Spinner from "../components/Spinner.vue"
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 
@@ -26,12 +29,14 @@ export default {
     Navbar,
     UserFollowingFeed,
     PopularBar,
+		Spinner
   },
   data() {
     return {
       user: "",
       followings: [],
       userTweetsCount: "",
+			isLoading: true
     };
   },
   methods: {
@@ -45,8 +50,11 @@ export default {
     },
     async fetchFollowings(userId) {
       try {
+				this.isLoading = true
         const response = await usersAPI.getFollowings({ userId });
         this.followings = response.data;
+				this.isLoading = false
+
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -56,8 +64,10 @@ export default {
     },
     async fetchTotaltweets(userId) {
       try {
+				this.isLoading = true
         const { data } = await usersAPI.getTotalTweets({ userId });
         this.userTweetsCount = data.length;
+				this.isLoading = true
       } catch (error) {
         Toast.fire({
           icon: "warning",

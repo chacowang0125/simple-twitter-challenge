@@ -17,7 +17,8 @@
           <div class="modal-content-info">
             <div class="modal-content-info-name">
               <span class="name">{{ tweet.User.name }}</span>
-              <span>@{{ tweet.User.account }}</span>
+							<span>@</span>
+              <span>{{ tweet.User.account }}</span>
               <span> • {{ tweet.createdAt | fromNow }}</span>
             </div>
             <div class="modal-content-info-text">
