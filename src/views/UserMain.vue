@@ -59,7 +59,7 @@ export default {
   methods: {
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");
-      this.this.getAllTweets();
+      this.getAllTweets();
     },
     async getAllTweets() {
       try {

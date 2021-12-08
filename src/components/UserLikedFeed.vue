@@ -3,7 +3,9 @@
     <router-link
       :to="{ name: 'tweet', params: { id: likedTweet.Tweet.User.id } }"
       class="tweet-card-img"
-      ><img class="tweet-card-img" :src="likedTweet.Tweet.User.avatar"
+      ><img
+        class="tweet-card-img"
+        :src="likedTweet.Tweet.User.avatar | emptyImage"
     /></router-link>
     <div class="tweet-card-content">
       <div class="tweet-card-content-info">
@@ -53,9 +55,10 @@
 import tweetAPI from "../apis/tweet";
 import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "./../utils/mixins";
+import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter],
+  mixins: [fromNowFilter, emptyImageFilter],
   name: "UserLikedFeed",
   props: {
     initialLikedTweet: {
@@ -76,10 +79,6 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        // this.likedTweet = {
-        //   ...this.likedTweet,
-        //   isLiked: 0,
-        // };
         this.$emit("after-unlike-tweet");
         this.isProcessing = false;
       } catch (err) {

@@ -3,7 +3,7 @@
     <router-link
       :to="{ name: 'tweet', params: { id: comment.User.id } }"
       class="tweet-card-img"
-      ><img class="tweet-card-img" :src="comment.User.avatar"
+      ><img class="tweet-card-img" :src="comment.User.avatar | emptyImage"
     /></router-link>
     <div class="tweet-card-content">
       <div class="tweet-card-content-info">
@@ -28,9 +28,10 @@
 
 <script>
 import { fromNowFilter } from "./../utils/mixins";
+import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter],
+  mixins: [fromNowFilter, emptyImageFilter],
   name: "UserCommentsFeed",
   props: {
     comment: {
