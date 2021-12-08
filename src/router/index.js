@@ -110,7 +110,7 @@ router.beforeEach(async(to, from, next) => {
         isAuthenticated = await store.dispatch('fetchCurrentUser')
     } else if (token && token !== tokenInStore && admin) {
         isAuthenticated = await store.dispatch('fetchAdminUser')
-    };
+    }
 
     const pathsWithoutAuthentication = ['SignIn', 'sign-up', 'AdminSignIn']
     const adminPath = ['AdminUsers','AdminMain' ]
