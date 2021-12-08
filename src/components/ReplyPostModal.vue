@@ -63,7 +63,6 @@
 import { Toast } from "../utils/helpers";
 import { mapState } from "vuex";
 import { emptyImageFilter, fromNowFilter } from "../utils/mixins";
-
 export default {
   name: "ReplyPostModal",
   mixins: [emptyImageFilter, fromNowFilter],

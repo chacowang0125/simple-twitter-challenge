@@ -1,4 +1,4 @@
-  <template>
+ <template>
   <div>
     <Spinner v-show="isLoading" />
     <div class="container" v-show="!isLoading">
@@ -30,7 +30,6 @@ import Spinner from "./../components/Spinner.vue";
 import { mapGetters } from "vuex";
 import ReplyPostModal from "../components/ReplyPostModal.vue";
 import tweetAPI from "../apis/tweet";
-
 export default {
   mixins: [fromNowFilter],
   name: "UserLikedView",
@@ -80,7 +79,6 @@ export default {
       try {
         this.$store.commit("toggleReplyPostModal");
         const { data } = await tweetAPI.getTweet({ tweetId });
-
         this.modaltweet = data;
         console.log(data);
       } catch {
@@ -121,7 +119,6 @@ export default {
       deep: true,
       handler() {
         const { id } = this.$route.params;
-
         this.fetchLikedTweets(id);
       },
     },

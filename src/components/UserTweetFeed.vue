@@ -126,9 +126,9 @@ export default {
     },
   },
   watch: {
-    initialTweets(newValue) {
-      this.tweets = {
-        ...this.tweets,
+    initialTweet(newValue) {
+      this.tweet = {
+        ...this.tweet,
         ...newValue,
       };
     },

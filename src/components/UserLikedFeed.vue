@@ -9,7 +9,7 @@
     /></router-link>
     <div class="tweet-card-content">
       <div class="tweet-card-content-info">
-        <span class="name">{{ likedTweet.Tweet.User.name }}</span>
+        <span class="name">{{ likedTweet.Tweet.User.name | nameLength }}</span>
         <span class="account">@{{ likedTweet.Tweet.User.account }}</span>
         <span class="created-at">{{ likedTweet.createdAt | fromNow }}</span>
       </div>
@@ -55,9 +55,10 @@ import tweetAPI from "../apis/tweet";
 import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "./../utils/mixins";
 import { emptyImageFilter } from "./../utils/mixins";
+import { nameLengthFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter, emptyImageFilter],
+  mixins: [fromNowFilter, emptyImageFilter, nameLengthFilter],
   name: "UserLikedFeed",
   props: {
     initialLikedTweet: {

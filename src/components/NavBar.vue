@@ -19,9 +19,11 @@
         </li>
         <li
           class="nav-list"
-          :class="{
-            active: currentRouteName === 'tweet' || 'comment' || 'liked',
-          }"
+          :class="[
+            { active: this.$route.name === 'tweet' },
+            { active: this.$route.name === 'comment' },
+            { active: this.$route.name === 'liked' },
+          ]"
         >
           <!-- link user tweet -->
           <router-link
