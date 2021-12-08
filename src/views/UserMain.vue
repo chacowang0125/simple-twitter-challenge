@@ -5,15 +5,22 @@
       <NewPostForm />
       <hr />
       <div class="showpostform-container">
-        <ShowPostsList :tweets="tweets" @toggle-like-click="toggleLikeClick" />
-        <!-- @after-click-like="afterClickLike" 上面-->
+        <ShowPostsList
+          :tweets="tweets"
+          @update-tweets="updateTweets"
+          @after-reply-modal-click="afterReplyModalClick"
+        />
       </div>
     </div>
     <div class="popularbar-container">
       <PopularBar />
     </div>
     <div class="modal">
-      <ReplyPostModal v-show="openReplyPostModal" />
+      <ReplyPostModal
+        v-show="openReplyPostModal"
+        :tweet="modaltweet"
+        @after-submit="afterReplySubmit"
+      />
       <CreateNewTweetModal
         v-show="openCreateNewTweetModal"
         @after-add-tweet="afterAddTweet"
@@ -46,6 +53,7 @@ export default {
   data() {
     return {
       tweets: [],
+      modaltweet: "",
     };
   },
   methods: {
@@ -55,7 +63,7 @@ export default {
     async getAllTweets() {
       try {
         const response = await tweetAPI.getAllTweets();
-				this.tweets = response.data
+        this.tweets = response.data;
       } catch {
         Toast.fire({
           icon: "warning",
@@ -63,10 +71,43 @@ export default {
         });
       }
     },
-		//toggle like
-		toggleLikeClick(tweetId) {
-			console.log(tweetId)
-		}
+    //子層改變時重新抓取資料
+    updateTweets() {
+      this.getAllTweets();
+    },
+    //監聽showpostlist裡面按鈕
+    async afterReplyModalClick(tweetId) {
+      try {
+        this.$store.commit("toggleReplyPostModal");
+        const { data } = await tweetAPI.getTweet({ tweetId });
+        console.log(data);
+        this.modaltweet = data;
+      } catch {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取得推文資料，請稍後再試",
+        });
+      }
+    },
+    async afterReplySubmit(id, comment) {
+      try {
+				console.log('here!!!!!')
+				console.log('tweetId:', id,
+          'comment:', comment,)
+        const { data } = await tweetAPI.addTweetReply({
+          tweetId: id,
+          comment: comment,
+        });
+
+        console.log(data);
+				this.$router.go(0); //頁面跳轉
+      } catch {
+        Toast.fire({
+          icon: "warning",
+          title: "無法回覆留言，請稍後再試",
+        });
+      }
+    },
   },
   computed: {
     ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),

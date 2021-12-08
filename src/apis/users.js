@@ -3,6 +3,7 @@ import { apiHelper } from './../utils/helpers'
 export default {
     getCurrentUser() {
         return apiHelper.get('/users/current_user')
+
     }, 
     getUser(
         {userId}
@@ -15,20 +16,16 @@ export default {
     update({ userId, formData }) {
         return apiHelper.put(`/users/${userId}/setting`, formData)
     },
-    addFollow({
-        userId
-    }) {
-        return apiHelper.post('/followships', { userId })
+    addFollow({ userId }) {
+        return apiHelper.post('/followships', { id: userId })
     },
-    deleteFollow({
-        userId
-    }) {
+    deleteFollow({ userId }) {
         return apiHelper.delete(`/followships/${userId}`)
     },
-    getFollowers({userId}) {
+    getFollowers({ userId }) {
         return apiHelper.get(`/users/${userId}/followers`)
     },
-    getFollowings({userId}) {
+    getFollowings({ userId }) {
         return apiHelper.get(`/users/${userId}/followings`)
     },
     getTotalTweets({ userId }) {
@@ -40,8 +37,8 @@ export default {
     getUserLikes({ userId }) {
         return apiHelper.get(`users/${userId}/likes`)
     },
-    updateUserProfile({ userId,formData }) {
-        return apiHelper.put(`users/${userId}`,formData)
+    updateUserProfile({ userId, formData }) {
+        return apiHelper.put(`users/${userId}`, formData)
     }
 
 }

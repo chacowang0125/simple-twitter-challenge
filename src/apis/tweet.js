@@ -8,21 +8,30 @@ export default {
             newTweet
         )
     },
-    getTweet(tweetId) {
+    getTweet({ tweetId }) {
+
         return apiHelper.get(`/tweets/${tweetId}`)
     },
-    getTweetReplies(
-        tweetId
-    ) {
+    getTweetReplies({ tweetId }) {
         return apiHelper.get(`/tweets/${tweetId}/replies`)
     },
     getAllTweets() {
         return apiHelper.get('/tweets')
     },
-    addLike ({ tweetId }) {
+    addLike({ tweetId }) {
         return apiHelper.post(`/tweets/${tweetId}/like`, null)
     },
-    deleteLike ({ tweetId }) {
+    deleteLike({ tweetId }) {
         return apiHelper.post(`/tweets/${tweetId}/unlike`, null)
     },
+    addTweetReply({
+        tweetId,
+        comment
+    }) {
+        console.log('後', tweetId,
+            comment)
+        return apiHelper.post(`/tweets/${tweetId}/replies`, {
+            comment: comment
+        })
+    }
 }
