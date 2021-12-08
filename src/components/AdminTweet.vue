@@ -5,12 +5,12 @@
     </div>
     <div class="tweet-description">
       <div class="tweet-user">
-        <span class="tweet-user-name">{{ tweet.User.name }}</span>
+        <span class="tweet-user-name">{{ tweet.User.name | nameLength }}</span>
         <span class="tweet-user-detail">@{{ tweet.User.account }}</span>
         <span class="tweet-user-detail">&bull;</span>
         <span class="tweet-user-detail">{{ tweet.createdAt | fromNow }}</span>
       </div>
-      <div class="tweet-text">{{ tweet.description | limiter }}</div>
+      <div class="tweet-text">{{ tweet.description | tweetLength }}</div>
     </div>
     <div class="tweet-delete-btn">
       <img
@@ -30,9 +30,11 @@
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 import Spinner from "./Spinner.vue";
+import { tweetLengthFilter } from "./../utils/mixins";
+import { nameLengthFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter],
+  mixins: [fromNowFilter, nameLengthFilter, tweetLengthFilter],
   name: "AdminTweetList",
   components: {
     Spinner,
@@ -63,14 +65,6 @@ export default {
         ...this.tweet,
         ...newValue,
       };
-    },
-  },
-  filters: {
-    limiter(val) {
-      if (val.length > 50) {
-        return val.slice(0, 50) + "...";
-      }
-      return val;
     },
   },
 };

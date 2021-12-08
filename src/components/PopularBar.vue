@@ -11,7 +11,9 @@
           </router-link>
         </div>
         <div class="list-card-content">
-          <div class="list-card-content-name">{{ user.name | limiter }}</div>
+          <div class="list-card-content-name">
+            {{ user.name | nameLength }}
+          </div>
           <div class="list-card-content-account">@{{ user.account }}</div>
         </div>
         <template v-if="user.id !== currentUser.id">
@@ -44,10 +46,11 @@ import { mapState } from "vuex";
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
 import { emptyImageFilter } from "./../utils/mixins";
+import { nameLengthFilter } from "./../utils/mixins";
 
 export default {
   name: "PopularBar",
-  mixins: [emptyImageFilter],
+  mixins: [emptyImageFilter, nameLengthFilter],
   data() {
     return {
       users: [],
@@ -138,14 +141,6 @@ export default {
   },
   computed: {
     ...mapState(["currentUser"]),
-  },
-  filters: {
-    limiter(val) {
-      if (val.length > 15) {
-        return val.slice(0, 15) + "...";
-      }
-      return val;
-    },
   },
 };
 </script>
