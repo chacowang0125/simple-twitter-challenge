@@ -20,11 +20,14 @@
         <li
           class="nav-list"
           :class="{
-            active: currentRouteName === 'tweet' || 'comment' || 'liked',
+            active: currentRouteName === 'tweet',
           }"
         >
           <!-- link user tweet -->
-          <router-link to="/profile/1" class="nav-link">
+          <router-link
+            :to="{ name: 'tweet', params: { id: currentUser.id } }"
+            class="nav-link"
+          >
             <img
               class="nav-icon"
               src="../assets/images/person-icon.svg"
@@ -76,14 +79,12 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "NavBar",
   data() {
-    return {
-      currentUser: {
-        id: 1,
-      },
-    };
+    return {};
   },
   methods: {
     showPage(page) {
@@ -101,6 +102,7 @@ export default {
     currentRouteName() {
       return this.$route.name;
     },
+    ...mapState(["currentUser"]),
   },
 };
 </script>

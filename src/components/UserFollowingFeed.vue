@@ -24,7 +24,7 @@
       <li v-for="following in followings" :key="following.id" class="list-card">
         <div class="list-card-avatar">
           <router-link :to="{ name: 'tweet', params: { id: following.id } }">
-            <img :src="following.avatar" alt="user-avatar" />
+            <img :src="following.avatar | emptyImage" alt="user-avatar" />
           </router-link>
         </div>
         <div class="list-card-content">
@@ -62,9 +62,11 @@
 <script>
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { emptyImageFilter } from "../utils/mixins";
 
 export default {
   name: "UserFollowingFeed",
+	mixins: [emptyImageFilter],
   props: ["followings", "userTweetsCount", "user"],
   data() {
     return {
@@ -74,7 +76,6 @@ export default {
   methods: {
     async addFollow(userId) {
       try {
-        console.log(userId);
         const { data } = await usersAPI.addFollow({ userId });
         if (data.status !== "success") {
           throw new Error(data.message);
@@ -93,7 +94,6 @@ export default {
     },
     async deleteFollow(userId) {
       try {
-        console.log(userId);
         const { data } = await usersAPI.deleteFollow({ userId });
         if (data.status !== "success") {
           throw new Error(data.message);

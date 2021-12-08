@@ -62,7 +62,7 @@
         <button
           class="form-button"
           @click.stop.prevent="handleSubmit"
-          :disabled="isProcessing"
+          :disabled="isProcessing || nameLengthError"
         >
           {{ isProcessing ? "發送中" : "註冊" }}
         </button>
@@ -108,6 +108,18 @@ export default {
             title: "請填寫註冊名稱",
           });
           return;
+        } else if (this.user.name.length > 50) {
+          Toast.fire({
+            icon: "warning",
+            title: "名稱超過字數上限",
+          });
+          return;
+        } else if (!this.user.email) {
+          Toast.fire({
+            icon: "warning",
+            title: "請填寫註冊信箱",
+          });
+          return;
         } else if (!this.user.email) {
           Toast.fire({
             icon: "warning",
@@ -129,6 +141,16 @@ export default {
           this.user.checkPassword = "";
           return;
         }
+        //email驗證
+        let emailRegxp = /[\w-]+@([\w-]+\.)+[\w-]+/;
+        if (emailRegxp.test(this.user.email) != true) {
+          Toast.fire({
+            icon: "warning",
+            title: "email格式錯誤",
+          });
+					return
+        }
+
         const formData = {
           name: this.user.name,
           account: this.user.account,
@@ -136,13 +158,14 @@ export default {
           password: this.user.password,
           checkPassword: this.user.checkPassword,
         };
+
         this.isProcessing = true;
 
         const { data } = await authorizationAPI.signup({ formData });
-
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
         this.isProcessing = false;
-
-        if (data.status !== "success") throw new Error(data.message);
 
         //註冊成功
         Toast.fire({

@@ -45,7 +45,11 @@
           />
         </div>
         <div class="button-wrapper">
-          <button type="submit" class="form-button" :disabled="isProcessing">
+          <button
+            type="submit"
+            class="form-button"
+            :disabled="isProcessing || nameLengthError"
+          >
             {{ isProcessing ? "處理中" : "儲存" }}
           </button>
         </div>
@@ -100,6 +104,12 @@ export default {
             title: "請填寫註冊名稱",
           });
           return;
+        } else if (this.user.name.length > 50) {
+          Toast.fire({
+            icon: "warning",
+            title: "名稱字數超出上限",
+          });
+          return;
         } else if (!this.user.email) {
           Toast.fire({
             icon: "warning",
@@ -121,6 +131,15 @@ export default {
           this.user.checkPassword = "";
           return;
         }
+        //email驗證
+        let emailRegxp = /[\w-]+@([\w-]+\.)+[\w-]+/;
+        if (emailRegxp.test(this.user.email) != true) {
+          Toast.fire({
+            icon: "warning",
+            title: "email格式錯誤",
+          });
+          return;
+        }
 
         this.isProcessing = true;
         const formData = {
@@ -135,9 +154,11 @@ export default {
           userId: this.user.id,
           formData,
         });
+        //後端回傳錯誤提示資訊
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
         this.isProcessing = false;
-        //顯示後端回傳錯誤提示資訊
-        if (data.status !== "success") throw new Error(data.message);
 
         Toast.fire({
           icon: "success",

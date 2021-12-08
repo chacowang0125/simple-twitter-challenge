@@ -1,80 +1,80 @@
 @import "./variables";
-
 #admin-main {
-  display: grid;
-  grid-template-columns: auto 1fr;
+    display: grid;
+    grid-template-columns: auto 1fr;
 }
+
 .container {
-  flex: 1;
-  overflow-y: auto !important;
-  &::-webkit-scrollbar {
-    //捲軸寬度
-    width: 3px;
-    background-color: transparent;
-    //捲軸本體顏色
-    &-thumb {
-      border-radius: 10px;
-      background-color: $page-divider;
+    flex: 1;
+    overflow-y: auto !important;
+    &::-webkit-scrollbar {
+        //捲軸寬度
+        width: 3px;
+        background-color: transparent;
+        //捲軸本體顏色
+        &-thumb {
+            border-radius: 10px;
+            background-color: $page-divider;
+        }
     }
-  }
 }
 
 #tweet-list {
-  display: flex;
-  flex-direction: column;
-  justify-content: start;
-  height: 100vh;
-  overflow: hidden;
-  .nav-top {
-    height: 55px;
-    border: 1px solid $page-divider;
-    padding: 15px 0px 14px 27px;
     display: flex;
+    flex-direction: column;
     justify-content: start;
-    h3 {
-      @extend %navtop-style;
-    }
-  }
-  .tweet {
-    height: 80px;
-    border-bottom: 1px solid $page-divider;
-    padding: 15px;
-    display: flex;
-    position: relative;
-    .avatar-img {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      margin-right: 15px;
-    }
-    .tweet-description {
-      line-height: 1.8;
-      font-size: 0.9375rem;
-      font-family: $main-font;
-      .tweet-user {
+    height: 100vh;
+    overflow: hidden;
+    .nav-top {
+        height: 55px;
+        border-bottom: 1px solid $page-divider;
+        padding: 15px 0px 14px 27px;
         display: flex;
         justify-content: start;
-        &-name {
-          font-weight: 700;
-          margin-right: 5px;
+        h3 {
+            @extend %navtop-style;
         }
-        &-detail {
-          color: $form-gray;
+    }
+    .tweet {
+        height: 80px;
+        border-bottom: 1px solid $page-divider;
+        padding: 15px;
+        display: flex;
+        position: relative;
+        .avatar-img {
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+            margin-right: 15px;
         }
-      }
-      .tweet-text {
-        text-align: left;
-      }
+        .tweet-description {
+            line-height: 1.8;
+            font-size: 0.9375rem;
+            font-family: $main-font;
+            .tweet-user {
+                display: flex;
+                justify-content: start;
+                &-name {
+                    font-weight: 700;
+                    margin-right: 5px;
+                }
+                &-detail {
+                    color: $form-gray;
+                }
+            }
+            .tweet-text {
+                text-align: left;
+            }
+        }
+        .tweet-delete-btn {
+            position: absolute;
+            right: 19px;
+            cursor: pointer;
+        }
+        .spinner-container {
+            position: absolute;
+            right: 19px;
+            top: 50%;
+        }
     }
-    .tweet-delete-btn {
-      position: absolute;
-      right: 19px;
-      cursor: pointer;
-    }
-    .spinner-container {
-      position: absolute;
-      right: 19px;
-      top: 50%;
-    }
-  }
 }

@@ -14,20 +14,22 @@
           <div class="list-card-content-name">{{ user.name }}</div>
           <div class="list-card-content-account">{{ user.account }}</div>
         </div>
-        <button
-          class="list-card-button following"
-          v-if="user.isFollowed"
-          @click.stop.prevent="deleteFollow(user.id)"
-        >
-          正在跟隨
-        </button>
-        <button
-          class="list-card-button follow"
-          v-else
-          @click.stop.prevent="addFollow(user.id)"
-        >
-          跟隨
-        </button>
+        <template v-if="user.id !== currentUser.id">
+          <button
+            class="list-card-button following"
+            v-if="user.isFollowed"
+            @click.stop.prevent="deleteFollow(user.id)"
+          >
+            正在跟隨
+          </button>
+          <button
+            class="list-card-button follow"
+            v-else
+            @click.stop.prevent="addFollow(user.id)"
+          >
+            跟隨
+          </button>
+        </template>
       </li>
     </ul>
   </div>
@@ -38,6 +40,7 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
 
@@ -77,12 +80,11 @@ export default {
             user,
           };
         });
-
         Toast.fire({
           icon: "success",
           title: "成功追蹤此使用者",
         });
-				// this.$router.go()
+        // this.$router.go()
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -107,12 +109,11 @@ export default {
             user,
           };
         });
-
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤此使用者",
         });
-				// this.$router.go()
+        // this.$router.go()
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -124,7 +125,7 @@ export default {
   created() {
     this.fetchUsers();
   },
-	// 跳轉畫面
+  // 跳轉畫面
   watch: {
     users: {
       handler: function () {
@@ -132,6 +133,9 @@ export default {
       },
       deep: true,
     },
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
 };
 </script>

@@ -92,24 +92,8 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-
-        // if (
-        //   (data.user.role === "user" && this.$route.name === "AdminSignIn") ||
-        //   (data.user.role === "admin" && this.$route.name === "sign-in")
-        // ) {
-        //   Toast.fire({
-        //     icon: "warning",
-        //     title: "帳號不存在",
-        //   });
-        //   this.isProcessing = false;
-        //   return;
-        // } else {
-        //   console.log(data);
-        // }
-
         localStorage.setItem("token", data.token);
         this.$store.commit("setCurrentUser", data.user);
-        console.log("start");
         if (data.user.role === "user") {
           this.$router.push({ name: "home" });
         }
@@ -125,7 +109,6 @@ export default {
           icon: "warning",
           title: data.message,
         });
-        // console.log(error);
       }
     },
   },

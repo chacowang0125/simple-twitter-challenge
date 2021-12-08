@@ -85,9 +85,6 @@ export default {
         });
         return;
       }
-      console.log("modal");
-      console.log(this.tweet.id);
-      console.log(this.inputText);
       this.$emit("after-submit", this.tweet.id, this.inputText);
       this.inputText = "";
     },
