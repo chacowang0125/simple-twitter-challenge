@@ -113,10 +113,9 @@
 </template>
 
 <script>
-import { mapState, mapActions, mapGetters } from "vuex";
+import { mapState, mapActions } from "vuex";
 import { Toast } from "../utils/helpers";
 import { emptyCoverFilter } from "./../utils/mixins";
-import usersAPI from "../apis/users";
 
 export default {
   name: "UserEditModal",
@@ -148,27 +147,6 @@ export default {
       introLengthError: false,
     };
   },
-  // data() {
-  //   return {
-  //     cover: "",
-  //     avatar: "",
-  //     name: "",
-  //     introduction: "",
-  //     isProcessing: false,
-  //     nameLengthError: false,
-  //     introLengthError: false,
-  //   };
-  // },
-  // mounted() {
-  //   this.cover = this.getCurrentUser.cover || "";
-  //   this.avatar = this.getCurrentUser.avatar || "";
-  //   this.name = this.getCurrentUser.name || "";
-  //   this.introduction = this.getCurrentUser.introduction || "";
-  // },
-  // beforeRouteUpdate(to, from, next) {
-  //   this.$data = { ...this.$data };
-  //   next();
-  // },
   methods: {
     ...mapActions(["setCurrentUser"]),
     closeModal() {
@@ -193,7 +171,7 @@ export default {
       const imgURL = window.URL.createObjectURL(files[0]);
       this.avatar = imgURL;
     },
-    handleSubmit(e) {
+    handleSubmit() {
       if (!this.user.name) {
         Toast.fire({
           icon: "warning",
