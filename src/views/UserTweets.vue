@@ -1,14 +1,17 @@
   <template>
-  <div class="container" v-show="!isLoading">
-    <div v-if="this.tweets.length === 0" class="empty-message">
-      使用者沒有任何推文 (ノ▼Д▼)ノ
-    </div>
-    <div class="user-tweet-container">
-      <UserTweetFeed
-        v-for="tweet in tweets"
-        :key="tweet.id"
-        :initial-tweet="tweet"
-      />
+  <div>
+    <Spinner v-show="isLoading" />
+    <div class="container" v-show="!isLoading">
+      <div v-if="this.tweets.length === 0" class="empty-message">
+        使用者沒有任何推文 (ノ▼Д▼)ノ
+      </div>
+      <div class="user-tweet-container">
+        <UserTweetFeed
+          v-for="tweet in tweets"
+          :key="tweet.id"
+          :initial-tweet="tweet"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -18,12 +21,14 @@ import { fromNowFilter } from "./../utils/mixins";
 import UserTweetFeed from "../components/UserTweetFeed.vue";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import Spinner from "./../components/Spinner.vue";
 
 export default {
   mixins: [fromNowFilter],
   name: "UserTweetView",
   components: {
     UserTweetFeed,
+    Spinner,
   },
   data() {
     return {

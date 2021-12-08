@@ -1,9 +1,5 @@
-#admin-main{
- display: grid;
-  grid-template-columns:auto 1fr; 
+#admin-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
 }
 
-.admin-user {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}

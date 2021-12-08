@@ -1,13 +1,16 @@
   <template>
-  <div class="container" v-show="!isLoading">
-    <div v-if="this.comments.length === 0" class="empty-message">
-      使用者沒有任何回復(ノ▼Д▼)ノ
+  <div>
+    <Spinner v-show="isLoading" />
+    <div class="container" v-show="!isLoading">
+      <div v-if="this.comments.length === 0" class="empty-message">
+        使用者沒有任何回復(ノ▼Д▼)ノ
+      </div>
+      <UserCommentFeed
+        v-for="comment in comments"
+        :key="comment.id"
+        :comment="comment"
+      />
     </div>
-    <UserCommentFeed
-      v-for="comment in comments"
-      :key="comment.id"
-      :comment="comment"
-    />
   </div>
 </template>
 
@@ -15,11 +18,13 @@
 import UserCommentFeed from "../components/UserCommentFeed.vue";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import Spinner from "./../components/Spinner.vue";
 
 export default {
   name: "UserCommentsView",
   components: {
     UserCommentFeed,
+    Spinner,
   },
   data() {
     return {

@@ -1,9 +1,30 @@
-@import './variables';
+@import "./variables";
+
+#admin-main {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+.container {
+  flex: 1;
+  overflow-y: auto !important;
+  &::-webkit-scrollbar {
+    //捲軸寬度
+    width: 3px;
+    background-color: transparent;
+    //捲軸本體顏色
+    &-thumb {
+      border-radius: 10px;
+      background-color: $page-divider;
+    }
+  }
+}
 
 #tweet-list {
   display: flex;
   flex-direction: column;
   justify-content: start;
+  height: 100vh;
+  overflow: hidden;
   .nav-top {
     height: 55px;
     border: 1px solid $page-divider;
@@ -11,7 +32,7 @@
     display: flex;
     justify-content: start;
     h3 {
-      @extend %navtop-style
+      @extend %navtop-style;
     }
   }
   .tweet {
@@ -29,13 +50,17 @@
     .tweet-description {
       line-height: 1.8;
       font-size: 0.9375rem;
-      font-family: $main-font; 
-      .tweet-user-name {
-        font-weight: 700;
-        margin-right: 5px;
-      }
-      .tweet-user-detail {
-        color: $form-gray;
+      font-family: $main-font;
+      .tweet-user {
+        display: flex;
+        justify-content: start;
+        &-name {
+          font-weight: 700;
+          margin-right: 5px;
+        }
+        &-detail {
+          color: $form-gray;
+        }
       }
       .tweet-text {
         text-align: left;
@@ -44,6 +69,12 @@
     .tweet-delete-btn {
       position: absolute;
       right: 19px;
+      cursor: pointer;
+    }
+    .spinner-container {
+      position: absolute;
+      right: 19px;
+      top: 50%;
     }
   }
 }

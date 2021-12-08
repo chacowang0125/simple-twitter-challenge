@@ -2,9 +2,9 @@
   <div class="container">
     <NavBar />
     <div id="profile">
-      <UserTopNav />
+      <UserTopNav :user="user" />
       <div id="profile-user">
-        <UserProfileComponent :user="user" />
+        <UserProfileComponent :initialUser="user" />
       </div>
       <div id="stepper">
         <UserStepper />
@@ -14,11 +14,8 @@
     <div class="popularbar-container">
       <PopularBar />
     </div>
-    <UserEditModal
-      :initialUser="user"
-      :is-processing="isProcessing"
-      @after-submit="handleAfterSubmit"
-    />
+    <UserEditModal :initialUser="user" :is-processing="isProcessing" />
+    <!-- @after-submit="handleAfterSubmit" -->
   </div>
 </template>
 
@@ -109,6 +106,7 @@ export default {
           followings,
           introduction,
           isFollowed,
+          tweetsCounts,
         } = data;
         this.user = {
           id,
@@ -120,12 +118,13 @@ export default {
           followings,
           introduction,
           isFollowed,
+          tweetsCounts,
         };
       } catch (error) {
-        console.log("error", error);
+        const { data } = error.response;
         Toast.fire({
-          icon: "error",
-          title: "無法取得使用者，請稍後再試",
+          icon: "warning",
+          title: data.message,
         });
       }
     },

@@ -1,15 +1,18 @@
   <template>
-  <div class="container" v-show="!isLoading">
-    <div v-if="this.likedTweets.length === 0" class="empty-message">
-      使用者沒有任何喜歡推文 (ノ▼Д▼)ノ
-    </div>
-    <div class="user-tweet-container">
-      <UserLikedFeed
-        v-for="likedTweet in likedTweets"
-        :key="likedTweet.id"
-        :initial-liked-tweet="likedTweet"
-        @after-unlike-tweet="afterUnlikeTweet"
-      />
+  <div>
+    <Spinner v-show="isLoading" />
+    <div class="container" v-show="!isLoading">
+      <div v-if="this.likedTweets.length === 0" class="empty-message">
+        使用者沒有任何喜歡推文 (ノ▼Д▼)ノ
+      </div>
+      <div class="user-tweet-container">
+        <UserLikedFeed
+          v-for="likedTweet in likedTweets"
+          :key="likedTweet.id"
+          :initial-liked-tweet="likedTweet"
+          @after-unlike-tweet="afterUnlikeTweet"
+        />
+      </div>
     </div>
   </div>
 </template>
@@ -19,12 +22,14 @@ import { fromNowFilter } from "./../utils/mixins";
 import UserLikedFeed from "../components/UserLikedFeed.vue";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import Spinner from "./../components/Spinner.vue";
 
 export default {
   mixins: [fromNowFilter],
   name: "UserLikedView",
   components: {
     UserLikedFeed,
+    Spinner,
   },
   data() {
     return {

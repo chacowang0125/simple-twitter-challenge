@@ -6,25 +6,25 @@
       <button
         class="btn btn-profile-edit"
         @click.prevent.stop="callModal"
-        v-show="currentUser.id !== user.id"
+        v-show="currentUser.id === user.id"
       >
         編輯個人資料
       </button>
-      <div class="btn other-user" v-show="currentUser.id === user.id">
+      <div class="btn other-user" v-show="currentUser.id !== user.id">
         <img class="other-user-icon" src="../assets/images/btn-messege.svg" />
         <img class="other-user-icon" src="../assets/images/btn-noti.svg" />
         <div class="other-user-btn">
           <button
             class="other-user-btn-item following"
             v-if="user.isFollowed"
-            @click.stop.prevent="isFollowed(user.id)"
+            @click.stop.prevent="deleteFollow(user.id)"
           >
             正在跟隨
           </button>
           <button
             class="other-user-btn-item follow"
             v-else
-            @click.stop.prevent="isFollowed(user.id)"
+            @click.stop.prevent="addFollow(user.id)"
           >
             跟隨
           </button>
@@ -71,22 +71,80 @@
 
 <script>
 import { mapState } from "vuex";
+import usersAPI from "./../apis/users";
+import { Toast } from "./../utils/helpers";
+
 export default {
   name: "ProfileUser",
   props: {
-    user: {
+    initialUser: {
       type: Object,
       required: true,
     },
   },
+  data() {
+    return {
+      user: this.initialUser,
+    };
+  },
   methods: {
     callModal() {
       this.$store.commit("toggleProfileEditModal");
-      console.log("called");
+    },
+    async addFollow(userId) {
+      try {
+        const { data } = await usersAPI.addFollow({ userId });
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.user = {
+          ...this.user,
+          isFollowed: 1,
+        };
+        Toast.fire({
+          icon: "success",
+          title: "成功追蹤此使用者",
+        });
+      } catch (err) {
+        Toast.fire({
+          icon: "warning",
+          title: err.message,
+        });
+      }
+    },
+    async deleteFollow(userId) {
+      try {
+        // console.log(userId);
+        const { data } = await usersAPI.deleteFollow({ userId });
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        this.user = {
+          ...this.user,
+          isFollowed: 0,
+        };
+        Toast.fire({
+          icon: "success",
+          title: "成功取消追蹤此使用者",
+        });
+      } catch (err) {
+        Toast.fire({
+          icon: "warning",
+          title: err.message,
+        });
+      }
     },
   },
   computed: {
     ...mapState(["currentUser"]),
+  },
+  watch: {
+    initialUser(newValue) {
+      this.user = {
+        ...this.user,
+        ...newValue,
+      };
+    },
   },
 };
 </script>
