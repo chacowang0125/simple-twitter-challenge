@@ -37,7 +37,7 @@
             />
           </div>
           <textarea
-            class="mmodal-content-reply-input"
+            class="modal-content-reply-input"
             placeholder="有什麼新鮮事？"
             v-model="inputText"
           >
@@ -70,6 +70,7 @@ export default {
     return {
       inputText: "",
       inputLengthError: false,
+      isProcessing: false,
     };
   },
   methods: {
@@ -84,7 +85,10 @@ export default {
         });
         return;
       }
-      this.$emit("after-submit", this.inputText);
+      console.log("modal");
+      console.log(this.tweet.id);
+      console.log(this.inputText);
+      this.$emit("after-submit", this.tweet.id, this.inputText);
       this.inputText = "";
     },
   },

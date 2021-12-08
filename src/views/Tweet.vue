@@ -41,9 +41,9 @@ export default {
     };
   },
   methods: {
-    async fetchTweet(tweetid) {
+    async fetchTweet(tweetId) {
       try {
-        const response = await tweetAPI.getTweet(tweetid);
+        const response = await tweetAPI.getTweet({tweetId});
         if (response.status !== 200) {
           throw new Error(response.statusText);
         }
@@ -55,10 +55,9 @@ export default {
         });
       }
     },
-    async fetchReplies(tweetid) {
+    async fetchReplies(tweetId) {
       try {
-        const response = await tweetAPI.getTweetReplies(tweetid);
-        console.log(response);
+        const response = await tweetAPI.getTweetReplies({tweetId});
         if (response.status !== 200) {
           throw new Error(response.statusText);
         }
@@ -70,23 +69,21 @@ export default {
         });
       }
     },
-    async handleAfterSubmit(formData) {
+    async handleAfterSubmit(id,inputData) {
       try {
-        console.log(formData);
-        console.log(this.tweet.id);
         this.isProcessing = true;
         const { data } = await tweetAPI.addTweetReply({
-          tweetId: this.tweet.id,
-          comment: formData,
+          tweetId: id,
+          comment: inputData,
         });
 
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-				Toast.fire({
-					icon: "success",
-					title: "新增回覆成功"
-				})
+        Toast.fire({
+          icon: "success",
+          title: "新增回覆成功",
+        });
         this.$store.commit("toggleReplyPostModal");
         this.$router.go(); //跳頁
       } catch (error) {
@@ -105,6 +102,7 @@ export default {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
+    console.log(id);
   },
 };
 </script>

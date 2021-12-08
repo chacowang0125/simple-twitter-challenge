@@ -21,7 +21,7 @@
           <a href="#">
             <div
               class="content-reply"
-              @click.stop.prevent="openReplyPostModal(tweet.id)"
+              @click.stop.prevent="replyModalClick(tweet.id)"
             >
               <img
                 class="content-reply-icon"
@@ -33,25 +33,25 @@
             </div>
           </a>
           <a href="#">
-            <div
-              class="content-reply"
-            >
+            <div class="content-reply">
               <img
                 v-if="tweet.isLiked"
                 class="content-reply-icon"
                 src="./../assets/images/liked-icon.svg"
-								@click.stop.prevent="deleteLike(tweet.id)"
+                @click.stop.prevent="deleteLike(tweet.id)"
               />
               <img
                 v-else
                 class="content-reply-icon"
                 src="./../assets/images/like-icon.svg"
-								@click.stop.prevent="addLike(tweet.id)"
+                @click.stop.prevent="addLike(tweet.id)"
               />
 
-              <span class="content-reply-number" :class="{islike:isLiked}">{{
-                tweet.likeCounts || 0
-              }}</span>
+              <span
+                class="content-reply-number"
+                :class="{ islike: tweet.isLiked }"
+                >{{ tweet.likeCounts || 0 }}</span
+              >
             </div>
           </a>
         </div>
@@ -84,11 +84,11 @@ export default {
     };
   },
   methods: {
-    openReplyPostModal(id) {
-      console.log(id);
-      this.$store.commit("toggleReplyPostModal");
-    },
-		async addLike(tweetId) {
+    // openReplyPostModal(id) {
+    //   console.log(id);
+    //   this.$store.commit("toggleReplyPostModal");
+    // },
+    async addLike(tweetId) {
       try {
         const { data } = await tweetAPI.addLike({ tweetId });
         if (data.status !== "success") {
@@ -103,13 +103,12 @@ export default {
       }
     },
     async deleteLike(tweetId) {
-      console.log("delete", tweetId);
       try {
         const { data } = await tweetAPI.deleteLike({ tweetId });
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-				//呼叫父層重新抓取畫面
+        //呼叫父層重新抓取畫面
         this.$emit("update-tweets", tweetId);
       } catch {
         Toast.fire({
@@ -118,6 +117,9 @@ export default {
         });
       }
     },
+		replyModalClick(tweetId) {
+			this.$emit('after-reply-modal-click',tweetId)
+		}
   },
 };
 </script>

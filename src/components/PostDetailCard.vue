@@ -93,17 +93,17 @@ import { emptyImageFilter, fromNowFilter } from "../utils/mixins";
 export default {
   name: "PostDetailCard",
   mixins: [emptyImageFilter, fromNowFilter],
-
-  props: {
-    initialTweet: {
-      type: Object,
-      required: true,
-    },
-    replies: {
-      type: Array,
-      required: true, //false
-    },
-  },
+props: ["initialTweet", "replies"],
+  // props: {
+  //   initialTweet: {
+  //     type: Object,
+  //     required: true,
+  //   },
+  //   replies: {
+  //     type: Array,
+  //     required: true,
+  //   },
+  // },
   data() {
     return {
       tweet: this.initialTweet,

@@ -8,12 +8,11 @@ export default {
             newTweet
         )
     },
-    getTweet(tweetId) {
+    getTweet({ tweetId }) {
+
         return apiHelper.get(`/tweets/${tweetId}`)
     },
-    getTweetReplies(
-        tweetId
-    ) {
+    getTweetReplies({ tweetId }) {
         return apiHelper.get(`/tweets/${tweetId}/replies`)
     },
     getAllTweets() {
@@ -29,6 +28,8 @@ export default {
         tweetId,
         comment
     }) {
+        console.log('後', tweetId,
+            comment)
         return apiHelper.post(`/tweets/${tweetId}/replies`, {
             comment: comment
         })
