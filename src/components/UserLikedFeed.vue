@@ -9,7 +9,7 @@
     /></router-link>
     <div class="tweet-card-content">
       <div class="tweet-card-content-info">
-        <span class="name">{{ likedTweet.Tweet.User.name }}</span>
+        <span class="name">{{ likedTweet.Tweet.User.name | nameLength }}</span>
         <span class="account">@{{ likedTweet.Tweet.User.account }}</span>
         <span class="created-at">{{ likedTweet.createdAt | fromNow }}</span>
       </div>
@@ -21,20 +21,19 @@
         </div>
       </router-link>
 
-      <div class="tweet-card-content-reply">
-        <router-link
-          :to="{ name: 'tweets-detail', params: { id: likedTweet.TweetId } }"
-        >
-          <div class="content-reply">
-            <img
-              class="content-reply-icon"
-              src="./../assets/images/comment-icon.svg"
-            />
-            <span class="content-reply-number">{{
-              likedTweet.Tweet.commentCounts
-            }}</span>
-          </div>
-        </router-link>
+      <div
+        class="tweet-card-content-reply"
+        @click.stop.prevent="replyModalClick(likedTweet.TweetId)"
+      >
+        <div class="content-reply">
+          <img
+            class="content-reply-icon"
+            src="./../assets/images/comment-icon.svg"
+          />
+          <span class="content-reply-number">{{
+            likedTweet.Tweet.commentCounts
+          }}</span>
+        </div>
         <div class="content-reply" @click="unlike(likedTweet.TweetId)">
           <img
             class="content-reply-icon"
@@ -56,9 +55,10 @@ import tweetAPI from "../apis/tweet";
 import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "./../utils/mixins";
 import { emptyImageFilter } from "./../utils/mixins";
+import { nameLengthFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter, emptyImageFilter],
+  mixins: [fromNowFilter, emptyImageFilter, nameLengthFilter],
   name: "UserLikedFeed",
   props: {
     initialLikedTweet: {
@@ -88,6 +88,10 @@ export default {
           title: err.message,
         });
       }
+    },
+    replyModalClick(tweetId) {
+      this.$emit("after-reply-modal-click", tweetId);
+      console.log(tweetId);
     },
   },
   watch: {

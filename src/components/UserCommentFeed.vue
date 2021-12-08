@@ -7,7 +7,7 @@
     /></router-link>
     <div class="tweet-card-content">
       <div class="tweet-card-content-info">
-        <span class="name">{{ comment.User.name }}</span>
+        <span class="name">{{ comment.User.name | nameLength }}</span>
         <span class="account">@{{ comment.User.account }}</span>
         <span class="created-at">{{ comment.createdAt | fromNow }}</span>
       </div>
@@ -29,9 +29,10 @@
 <script>
 import { fromNowFilter } from "./../utils/mixins";
 import { emptyImageFilter } from "./../utils/mixins";
+import { nameLengthFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter, emptyImageFilter],
+  mixins: [fromNowFilter, emptyImageFilter, nameLengthFilter],
   name: "UserCommentsFeed",
   props: {
     comment: {

@@ -7,7 +7,7 @@
     /></router-link>
     <div class="tweet-card-content">
       <div class="tweet-card-content-info">
-        <span class="name">{{ tweet.User.name }}</span>
+        <span class="name">{{ tweet.User.name | nameLength }}</span>
         <span class="account">@{{ tweet.User.account }}</span>
         <span class="created-at">{{ tweet.createdAt | fromNow }}</span>
         <router-link :to="{ name: 'tweets-detail', params: { id: tweet.id } }">
@@ -16,20 +16,17 @@
           </div>
         </router-link>
 
-        <div class="tweet-card-content-reply">
-          <router-link
-            :to="{ name: 'tweets-detail', params: { id: tweet.id } }"
-          >
-            <div class="content-reply">
-              <img
-                class="content-reply-icon"
-                src="./../assets/images/comment-icon.svg"
-              />
-              <span class="content-reply-number">{{
-                tweet.commentCounts
-              }}</span>
-            </div>
-          </router-link>
+        <div
+          class="tweet-card-content-reply"
+          @click.stop.prevent="replyModalClick(tweet.id)"
+        >
+          <div class="content-reply">
+            <img
+              class="content-reply-icon"
+              src="./../assets/images/comment-icon.svg"
+            />
+            <span class="content-reply-number">{{ tweet.commentCounts }}</span>
+          </div>
 
           <div class="content-reply" @click.prevent.stop="likeToggle(tweet.id)">
             <img
@@ -60,9 +57,10 @@ import tweetAPI from "../apis/tweet";
 import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "./../utils/mixins";
 import { emptyImageFilter } from "./../utils/mixins";
+import { nameLengthFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter, emptyImageFilter],
+  mixins: [fromNowFilter, emptyImageFilter, nameLengthFilter],
   name: "UserTweetFeed",
   props: {
     initialTweet: {
@@ -122,11 +120,15 @@ export default {
         });
       }
     },
+    replyModalClick(tweetId) {
+      this.$emit("after-reply-modal-click", tweetId);
+      console.log(tweetId);
+    },
   },
   watch: {
-    initialTweets(newValue) {
-      this.tweets = {
-        ...this.tweets,
+    initialTweet(newValue) {
+      this.tweet = {
+        ...this.tweet,
         ...newValue,
       };
     },

@@ -19,9 +19,11 @@
         </li>
         <li
           class="nav-list"
-          :class="{
-            active: currentRouteName === 'tweet',
-          }"
+          :class="[
+            { active: currentRouteName === 'tweet' },
+            { active: currentRouteName === 'comment' },
+            { active: currentRouteName === 'liked' },
+          ]"
         >
           <!-- link user tweet -->
           <router-link
@@ -60,7 +62,7 @@
           </a>
         </li>
         <li class="nav-list nav-list-logout">
-          <router-link to="/signin" class="nav-link ">
+          <router-link to="/signin" class="nav-link">
             <img
               class="nav-icon"
               src="../assets/images/logout-icon.svg"
