@@ -45,7 +45,7 @@
           />
         </div>
         <div class="button-wrapper">
-          <button type="submit" class="form-button" :disabled="isProcessing">
+          <button type="submit" class="form-button" :disabled="isProcessing || nameLengthError">
             {{ isProcessing ? "處理中" : "儲存" }}
           </button>
         </div>
@@ -98,6 +98,12 @@ export default {
           Toast.fire({
             icon: "warning",
             title: "請填寫註冊名稱",
+          });
+          return;
+        }else if (this.user.name.length > 50) {
+          Toast.fire({
+            icon: "warning",
+            title: "名稱字數超出上限",
           });
           return;
         } else if (!this.user.email) {
