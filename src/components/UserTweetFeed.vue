@@ -3,7 +3,7 @@
     <router-link
       :to="{ name: 'tweet', params: { id: tweet.User.id } }"
       class="tweet-card-img"
-      ><img class="tweet-card-img" :src="tweet.User.avatar"
+      ><img class="tweet-card-img" :src="tweet.User.avatar | emptyImage"
     /></router-link>
     <div class="tweet-card-content">
       <div class="tweet-card-content-info">
@@ -59,9 +59,10 @@
 import tweetAPI from "../apis/tweet";
 import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "./../utils/mixins";
+import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [fromNowFilter],
+  mixins: [fromNowFilter, emptyImageFilter],
   name: "UserTweetFeed",
   props: {
     initialTweet: {

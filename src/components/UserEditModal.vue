@@ -52,7 +52,7 @@
             alt="close modal"
             @click="uploadAvatar"
           />
-          <img class="modal-img-avatar" :src="user.avatar" />
+          <img class="modal-img-avatar" :src="user.avatar | emptyImage" />
           <input
             id="avatar"
             type="file"
@@ -116,10 +116,11 @@
 import { mapState, mapActions } from "vuex";
 import { Toast } from "../utils/helpers";
 import { emptyCoverFilter } from "./../utils/mixins";
+import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
   name: "UserEditModal",
-  mixins: [emptyCoverFilter],
+  mixins: [emptyCoverFilter, emptyImageFilter],
   props: {
     initialUser: {
       type: Object,
@@ -169,7 +170,7 @@ export default {
     handleAvatarChange(e) {
       const { files } = e.target;
       const imgURL = window.URL.createObjectURL(files[0]);
-      this.avatar = imgURL;
+      this.user.avatar = imgURL;
     },
     handleSubmit() {
       if (!this.user.name) {
@@ -188,7 +189,11 @@ export default {
       return this.user.name.length;
     },
     introLength() {
-      return this.user.introduction.length;
+      if (!this.user.introduction) {
+        return;
+      } else {
+        return this.user.introduction.length;
+      }
     },
   },
   watch: {

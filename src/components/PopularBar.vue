@@ -7,11 +7,11 @@
         <!-- router-link -->
         <div class="list-card-avatar">
           <router-link :to="{ name: 'tweet', params: { id: user.id } }">
-            <img :src="user.avatar" alt="user-avatar" />
+            <img :src="user.avatar | emptyImage" alt="user-avatar" />
           </router-link>
         </div>
         <div class="list-card-content">
-          <div class="list-card-content-name">{{ user.name }}</div>
+          <div class="list-card-content-name">{{ user.name | limiter }}</div>
           <div class="list-card-content-account">@{{ user.account }}</div>
         </div>
         <template v-if="user.id !== currentUser.id">
@@ -43,9 +43,11 @@
 import { mapState } from "vuex";
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
+import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
   name: "PopularBar",
+  mixins: [emptyImageFilter],
   data() {
     return {
       users: [],
@@ -84,7 +86,7 @@ export default {
           icon: "success",
           title: "成功追蹤此使用者",
         });
-				this.$emit('after-follow-click')
+        this.$emit("after-follow-click");
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -113,7 +115,7 @@ export default {
           icon: "success",
           title: "成功取消追蹤此使用者",
         });
-				this.$emit('after-follow-click')
+        this.$emit("after-follow-click");
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -136,6 +138,14 @@ export default {
   },
   computed: {
     ...mapState(["currentUser"]),
+  },
+  filters: {
+    limiter(val) {
+      if (val.length > 15) {
+        return val.slice(0, 15) + "...";
+      }
+      return val;
+    },
   },
 };
 </script>
