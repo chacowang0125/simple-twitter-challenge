@@ -16,7 +16,7 @@
             src="./../assets/images/comment-icon.svg"
           />
           <span class="admin-user-data number">{{
-            user.commentCounts | formatNumber
+            user.tweetCounts | formatNumber
           }}</span>
         </div>
         <div class="admin-user-data group">
