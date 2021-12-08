@@ -71,6 +71,7 @@ export default {
 
         this.inputText = "";
         this.isProcessing = false;
+				this.$emit("update-tweets")
       } catch (error) {
         this.isProcessing = false;
         const { data } = error.response;

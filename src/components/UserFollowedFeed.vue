@@ -26,7 +26,7 @@
           <router-link
             :to="{ name: 'tweet', params: { id: follower.followerId } }"
           >
-            <img :src="follower.avatar" alt="user-avatar" />
+            <img :src="follower.avatar | emptyImage" alt="user-avatar" />
           </router-link>
         </div>
         <div class="list-card-content">
@@ -64,21 +64,12 @@
 <script>
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { emptyImageFilter } from "../utils/mixins";
+
 export default {
   name: "UserFollowingFeed",
   props: ["followers", "userTweetsCount", "user"],
-  // initialFollowers: {
-  //   type: Array, //Number
-  //   required: false,
-  // },
-  // userTweetsCount: {
-  //   type: Number, //Number
-  //   required: false,
-  // },
-  // user: {
-  //   type: Object,
-  //   required: true,
-  // },
+	mixins: [emptyImageFilter],
   data() {
     return {
       currentRouteName: "followed",
@@ -87,12 +78,10 @@ export default {
   methods: {
     async addFollow(userId) {
       try {
-        console.log(userId);
         const { data } = await usersAPI.addFollow({ userId });
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        console.log("add");
 
         Toast.fire({
           icon: "success",
@@ -108,12 +97,10 @@ export default {
     },
     async deleteFollow(userId) {
       try {
-        console.log(userId);
         const { data } = await usersAPI.deleteFollow({ userId });
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        console.log("del");
 
         Toast.fire({
           icon: "success",

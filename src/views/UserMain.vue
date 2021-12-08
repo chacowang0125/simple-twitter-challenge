@@ -2,7 +2,7 @@
   <div class="container">
     <NavBar />
     <div class="main-container">
-      <NewPostForm />
+      <NewPostForm @update-tweets="updateTweets" />
       <hr />
       <div class="showpostform-container">
         <ShowPostsList
@@ -59,6 +59,7 @@ export default {
   methods: {
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");
+      this.this.getAllTweets();
     },
     async getAllTweets() {
       try {
@@ -78,9 +79,10 @@ export default {
     //監聽showpostlist裡面按鈕
     async afterReplyModalClick(tweetId) {
       try {
+        console.log(tweetId);
         this.$store.commit("toggleReplyPostModal");
         const { data } = await tweetAPI.getTweet({ tweetId });
-        console.log(data);
+
         this.modaltweet = data;
       } catch {
         Toast.fire({
@@ -91,16 +93,19 @@ export default {
     },
     async afterReplySubmit(id, comment) {
       try {
-				console.log('here!!!!!')
-				console.log('tweetId:', id,
-          'comment:', comment,)
         const { data } = await tweetAPI.addTweetReply({
           tweetId: id,
           comment: comment,
         });
-
-        console.log(data);
-				this.$router.go(0); //頁面跳轉
+        if (data.status !== "success") {
+          throw new Error(data.message);
+        }
+        Toast.fire({
+          icon: "success",
+          title: "回覆推文成功",
+        });
+        this.$store.commit("toggleReplyPostModal");
+        this.getAllTweets();
       } catch {
         Toast.fire({
           icon: "warning",

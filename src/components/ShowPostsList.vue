@@ -84,10 +84,6 @@ export default {
     };
   },
   methods: {
-    // openReplyPostModal(id) {
-    //   console.log(id);
-    //   this.$store.commit("toggleReplyPostModal");
-    // },
     async addLike(tweetId) {
       try {
         const { data } = await tweetAPI.addLike({ tweetId });
