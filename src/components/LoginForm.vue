@@ -2,10 +2,11 @@
   <div class="container">
     <form class="form" @submit.prevent.stop="handleSubmit">
       <div class="form-row">
-        <label for="email">帳號</label
-        ><input
-          id="email"
-          name="email"
+        <label for="account">帳號</label>
+        <span class="symbol">@</span>
+        <input
+          id="account"
+          name="account"
           type="text"
           v-model="account"
           required
