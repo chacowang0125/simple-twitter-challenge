@@ -9,7 +9,7 @@
 				@update-following="updateFollowing"
       />
     </div>
-    <PopularBar />
+    <PopularBar @after-follow-click="afterFollowClick"/>
   </div>
 </template>
 
@@ -69,6 +69,9 @@ export default {
 		updateFollowing() {
 			const { id } = this.$route.params;
 			this.fetchFollowings(id)
+		},
+		afterFollowClick() {
+			this.fetchFollowings(this.user.id)
 		}
   },
   created() {
