@@ -2,9 +2,9 @@
   <div id="admin-navbar">
     <div class="container">
       <div class="logo">
-        <a href="#"
+        <router-link to="/admin/main" class="nav-link"
           ><img class="nav-logo" src="../assets/images/logo.svg" alt="logo"
-        /></a>
+        /></router-link>
       </div>
       <ul>
         <li
@@ -60,7 +60,7 @@ export default {
   methods: {
     logout() {
       this.$store.commit("revokeAuthentication");
-      this.$router.push("/admin/signin");
+      this.$router.go();
     },
   },
 };

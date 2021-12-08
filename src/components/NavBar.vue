@@ -20,7 +20,7 @@
         <li
           class="nav-list"
           :class="{
-            active: currentRouteName === 'tweet',
+            active: currentRouteName === 'tweet' || 'comment' || 'liked',
           }"
         >
           <!-- link user tweet -->

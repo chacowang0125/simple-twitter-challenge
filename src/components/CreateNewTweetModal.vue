@@ -1,39 +1,41 @@
 <template>
-  <div class="modal-container">
-    <div class="modal">
-      <div class="modal-header">
-        <img
-          src="../assets/images/close-icon.svg"
-          alt=""
-          @click.stop.prevent="closeModal"
-        />
-      </div>
-      <div class="modal-content">
-        <div class="modal-content-img">
+  <transition name="fade" appear>
+    <div class="modal-container">
+      <div class="modal">
+        <div class="modal-header">
           <img
-            class="page-content-img"
-            :src="currentUser.avatar | emptyImage"
+            src="../assets/images/close-icon.svg"
             alt=""
+            @click.stop.prevent="closeModal"
           />
         </div>
-        <textarea
-          class="modal-content-input"
-          placeholder="有什麼新鮮事？"
-          v-model="inputText"
-        >
-        </textarea>
-        <span v-show="inputLengthError">字數不可超過140字</span>
-        <div class="modal-content-button">
-          <button
-            :disabled="inputLengthError || !inputText || isProcessing"
-            @click.stop.prevent="handleSubmit"
+        <div class="modal-content">
+          <div class="modal-content-img">
+            <img
+              class="page-content-img"
+              :src="currentUser.avatar | emptyImage"
+              alt=""
+            />
+          </div>
+          <textarea
+            class="modal-content-input"
+            placeholder="有什麼新鮮事？"
+            v-model="inputText"
           >
-            {{ isProcessing ? "推文中" : "推文" }}
-          </button>
+          </textarea>
+          <span v-show="inputLengthError">字數不可超過140字</span>
+          <div class="modal-content-button">
+            <button
+              :disabled="inputLengthError || !inputText || isProcessing"
+              @click.stop.prevent="handleSubmit"
+            >
+              {{ isProcessing ? "推文中" : "推文" }}
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <script>

@@ -43,7 +43,7 @@ export default {
   methods: {
     async fetchTweet(tweetId) {
       try {
-        const response = await tweetAPI.getTweet({tweetId});
+        const response = await tweetAPI.getTweet({ tweetId });
         if (response.status !== 200) {
           throw new Error(response.statusText);
         }
@@ -57,7 +57,7 @@ export default {
     },
     async fetchReplies(tweetId) {
       try {
-        const response = await tweetAPI.getTweetReplies({tweetId});
+        const response = await tweetAPI.getTweetReplies({ tweetId });
         if (response.status !== 200) {
           throw new Error(response.statusText);
         }
@@ -69,7 +69,7 @@ export default {
         });
       }
     },
-    async handleAfterSubmit(id,inputData) {
+    async handleAfterSubmit(id, inputData) {
       try {
         this.isProcessing = true;
         const { data } = await tweetAPI.addTweetReply({

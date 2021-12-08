@@ -42,24 +42,24 @@
       <div class="profile-follow-wrapper">
         <div class="profile-follow group">
           <router-link
-            :to="{ name: 'user-followed', params: { id: user.id } }"
+            :to="{ name: 'user-following', params: { id: user.id } }"
             class="profile-follow count"
             >{{ user.followings }} 個</router-link
           >
           <router-link
-            :to="{ name: 'user-followed', params: { id: user.id } }"
+            :to="{ name: 'user-following', params: { id: user.id } }"
             class="profile-follow text"
             >跟隨中</router-link
           >
         </div>
         <div class="profile-follow group">
           <router-link
-            :to="{ name: 'user-following', params: { id: user.id } }"
+            :to="{ name: 'user-followed', params: { id: user.id } }"
             class="profile-follow count"
             >{{ user.followers }} 個</router-link
           >
           <router-link
-            :to="{ name: 'user-following', params: { id: user.id } }"
+            :to="{ name: 'user-followed', params: { id: user.id } }"
             class="profile-follow text"
             >跟隨者</router-link
           >

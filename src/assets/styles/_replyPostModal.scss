@@ -8,6 +8,15 @@
     background-color: rgba(0, 0, 0, 0.2);
 }
 
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s;
+}
+.fade-enter,
+.fade-leave-to {
+    opacity: 0;
+}
+
 .modal {
     width: 600px;
     height: 450px;

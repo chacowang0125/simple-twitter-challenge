@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       tweets: [],
-      modaltweet: "",
+      modaltweet: {},
     };
   },
   methods: {

@@ -14,13 +14,19 @@
       </div>
     </div>
     <div class="popularbar-container">
-      <PopularBar />
+      <PopularBar @after-follow-click="afterFollowClick" />
     </div>
     <UserEditModal
       :initialUser="user"
       :is-processing="isProcessing"
       @after-submit="handleAfterSubmit"
     />
+    <div class="modal">
+      <CreateNewTweetModal
+        v-show="openCreateNewTweetModal"
+        @after-add-tweet="afterAddTweet"
+      />
+    </div>
   </div>
 </template>
 
@@ -32,8 +38,10 @@ import UserTopNav from "../components/UserTopNav.vue";
 import UserProfileComponent from "../components/UserProfileComponent.vue";
 import UserStepper from "../components/UserStepper.vue";
 import UserEditModal from "../components/UserEditModal.vue";
+import CreateNewTweetModal from "../components/CreateNewTweetModal.vue";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
+import { mapState } from "vuex";
 
 export default {
   name: "UserProfile",
@@ -44,6 +52,7 @@ export default {
     UserProfileComponent,
     UserStepper,
     UserEditModal,
+    CreateNewTweetModal,
   },
   data() {
     return {
@@ -70,6 +79,9 @@ export default {
     const { id } = to.params;
     this.fetchUser(id);
     next();
+  },
+  computed: {
+    ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),
   },
   methods: {
     async handleAfterSubmit(formData) {
@@ -133,6 +145,14 @@ export default {
         });
       }
     },
+    afterFollowClick() {
+      const { id } = this.$route.params;
+      this.fetchUser(id);
+    },
+    afterAddTweet() {
+      this.$store.commit("toggleCreateNewTweetModal");
+      this.$store.commit("toggleTweetCreated");
+    },
   },
 };
 </script>
@@ -150,6 +170,11 @@ export default {
 
 .container {
   display: flex;
+  .modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+  }
 }
 #profile {
   display: flex;
