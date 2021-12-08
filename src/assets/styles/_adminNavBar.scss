@@ -1,4 +1,4 @@
-@import './variables';
+@import "./variables";
 
 #admin-navbar {
   position: relative;
@@ -10,7 +10,7 @@
     width: 70%;
     margin: auto;
     li {
-      cursor:pointer;
+      cursor: pointer;
       align-items: center;
       margin: 30px 0;
       .nav-link {
@@ -50,5 +50,5 @@
 .nav-title {
   height: 100%;
   margin-left: 20px;
-  @extend %navtop-style
+  @extend %navtop-style;
 }

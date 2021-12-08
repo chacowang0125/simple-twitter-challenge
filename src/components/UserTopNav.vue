@@ -19,44 +19,33 @@ import usersAPI from "./../apis/users";
 import { Toast } from "./../utils/helpers";
 export default {
   name: "UserTopNav",
-  data() {
-    return {
-      user: {
-        name: "",
-        tweetsCounts: "",
-      },
-    };
-  },
-  created() {
-    const { id } = this.$route.params;
-    this.fetchUser(id);
-  },
-  beforeRouteUpdate(to, from, next) {
-    const { id } = to.params;
-    this.fetchUser(id);
-    next();
-  },
-  methods: {
-    async fetchUser(userId) {
-      try {
-        const response = await usersAPI.getUser({
-          userId,
-        });
-        const { data } = response;
-        const { name, tweetsCounts } = data;
-        this.user = {
-          name,
-          tweetsCounts,
-        };
-      } catch (error) {
-        console.log("error", error);
-        Toast.fire({
-          icon: "error",
-          title: "無法取得使用者，請稍後再試",
-        });
-      }
+  props: {
+    user: {
+      type: Object,
+      required: true,
     },
   },
+  // methods: {
+  //   async fetchUser(userId) {
+  //     try {
+  //       const response = await usersAPI.getUser({
+  //         userId,
+  //       });
+  //       const { data } = response;
+  //       const { name, tweetsCounts } = data;
+  //       this.user = {
+  //         name,
+  //         tweetsCounts,
+  //       };
+  //     } catch (error) {
+  //       console.log("error", error);
+  //       Toast.fire({
+  //         icon: "error",
+  //         title: "無法取得使用者，請稍後再試",
+  //       });
+  //     }
+  //   },
+  // },
 };
 </script>
 

@@ -15,92 +15,11 @@
 import AdminNavBar from "./../components/AdminNavBar";
 import AdminTopNav from "./../components/AdminTopNav";
 import AdminUser from "./../components/AdminUser";
-
-const dummyUser = {
-  user: [
-    {
-      id: 1,
-      name: "John Adams",
-      account: "gang",
-      avatar:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      cover:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      likeCounts: 12000,
-      commentCounts: 15000,
-      followerCounts: 16,
-      followingCounts: 18,
-    },
-    {
-      id: 1,
-      name: "John Adams",
-      account: "gang",
-      avatar:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      cover:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      likeCounts: 12000,
-      commentCounts: 15000,
-      followerCounts: 16,
-      followingCounts: 18,
-    },
-    {
-      id: 1,
-      name: "John Adams",
-      account: "gang",
-      avatar:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      cover:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      likeCounts: 12000,
-      commentCounts: 15000,
-      followerCounts: 16,
-      followingCounts: 18,
-    },
-    {
-      id: 1,
-      name: "John Adams",
-      account: "gang",
-      avatar:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      cover:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      likeCounts: 12000,
-      commentCounts: 15000,
-      followerCounts: 16,
-      followingCounts: 18,
-    },
-    {
-      id: 1,
-      name: "John Adams",
-      account: "gang",
-      avatar:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      cover:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      likeCounts: 12000,
-      commentCounts: 15000,
-      followerCounts: 16,
-      followingCounts: 18,
-    },
-    {
-      id: 1,
-      name: "John Adams",
-      account: "gang",
-      avatar:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      cover:
-        "https://loremflickr.com/320/240/restaurant,food/?random=37.9512586281334",
-      likeCounts: 12000,
-      commentCounts: 15000,
-      followerCounts: 16,
-      followingCounts: 18,
-    },
-  ],
-};
+import adminAPI from "./../apis/admin";
+import { Toast } from "./../utils/helpers";
 
 export default {
-  name: "Admin",
+  name: "AdminUsers",
   components: {
     AdminNavBar,
     AdminTopNav,
@@ -115,13 +34,23 @@ export default {
     this.fetchUsers();
   },
   methods: {
-    fetchUsers() {
-      this.users = dummyUser.user;
+    async fetchUsers() {
+      try {
+        const response = await adminAPI.getAllUsers();
+        const { data } = response;
+        this.users = data;
+      } catch (error) {
+        const { data } = error.response;
+        Toast.fire({
+          icon: "warning",
+          title: data.message,
+        });
+      }
     },
   },
 };
 </script>
 
 <style lang="scss">
-@import "./../assets/styles/_admin.scss";
+@import "./../assets/styles/_adminUser.scss";
 </style>
