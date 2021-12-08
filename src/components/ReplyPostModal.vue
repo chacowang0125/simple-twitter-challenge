@@ -17,7 +17,8 @@
           <div class="modal-content-info">
             <div class="modal-content-info-name">
               <span class="name">{{ tweet.User.name }}</span>
-              <span>@{{ tweet.User.account }}</span>
+							<span>@</span>
+              <span>{{ tweet.User.account }}</span>
               <span> • {{ tweet.createdAt | fromNow }}</span>
             </div>
             <div class="modal-content-info-text">
@@ -38,7 +39,7 @@
           </div>
           <textarea
             class="modal-content-reply-input"
-            placeholder="有什麼新鮮事？"
+            placeholder="推你的回覆"
             v-model="inputText"
           >
           </textarea>
