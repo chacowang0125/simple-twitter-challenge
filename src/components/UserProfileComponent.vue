@@ -1,7 +1,7 @@
 <template>
   <div class="profile-user-card">
     <div class="profile-user-img">
-      <img class="profile-user-img cover" :src="user.cover" />
+      <img class="profile-user-img cover" :src="user.cover | emptyCoverImage" />
       <img class="profile-user-img avatar" :src="user.avatar" />
       <button
         class="btn btn-profile-edit"
@@ -73,9 +73,11 @@
 import { mapState } from "vuex";
 import usersAPI from "./../apis/users";
 import { Toast } from "./../utils/helpers";
+import { emptyCoverFilter } from "./../utils/mixins";
 
 export default {
   name: "ProfileUser",
+  mixins: [emptyCoverFilter],
   props: {
     initialUser: {
       type: Object,

@@ -113,7 +113,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions, mapGetters } from "vuex";
 import { Toast } from "../utils/helpers";
 import { emptyCoverFilter } from "./../utils/mixins";
 import usersAPI from "../apis/users";
@@ -148,19 +148,37 @@ export default {
       introLengthError: false,
     };
   },
+  // data() {
+  //   return {
+  //     cover: "",
+  //     avatar: "",
+  //     name: "",
+  //     introduction: "",
+  //     isProcessing: false,
+  //     nameLengthError: false,
+  //     introLengthError: false,
+  //   };
+  // },
+  // mounted() {
+  //   this.cover = this.getCurrentUser.cover || "";
+  //   this.avatar = this.getCurrentUser.avatar || "";
+  //   this.name = this.getCurrentUser.name || "";
+  //   this.introduction = this.getCurrentUser.introduction || "";
+  // },
+  // beforeRouteUpdate(to, from, next) {
+  //   this.$data = { ...this.$data };
+  //   next();
+  // },
   methods: {
+    ...mapActions(["setCurrentUser"]),
     closeModal() {
       this.$store.commit("toggleProfileEditModal");
-      this.name = this.getCurrentUser.name || "";
-      this.introduction = this.getCurrentUser.introduction || "";
     },
     uploadCover() {
       this.$refs.cover.click();
     },
     removeCover() {
       this.user.cover = "";
-      const coverElement = document.getElementsByName("modal-img-cover");
-      coverElement.value = "";
     },
     handleCoverChange(e) {
       const { files } = e.target;
@@ -173,42 +191,17 @@ export default {
     handleAvatarChange(e) {
       const { files } = e.target;
       const imgURL = window.URL.createObjectURL(files[0]);
-      this.user.avatar = imgURL;
+      this.avatar = imgURL;
     },
-    // handleSubmit(e) {
-    //   if (!this.user.name) {
-    //     Toast.fire({
-    //       icon: "warning",
-    //       title: "請填寫姓名",
-    //     });
-    //     return;
-    //   }
-
-    //   const formData = new FormData(e.target);
-    //   console.log(e.target);
-    //   this.$emit("after-submit", formData);
-    // },
-    async handleSubmit(e) {
-      try {
-        const formData = new FormData(e.target);
-        console.log(formData);
-        const { data } = await usersAPI.updateUserProfile({
-          userId: this.user.id,
-          formData,
-        });
-
-        if (data.status !== "success") {
-          throw new Error(data.message);
-        }
-        this.$store.commit("toggleProfileEditModal");
-        this.$router.go();
-      } catch (error) {
-        const { data } = error.response;
+    handleSubmit(e) {
+      if (!this.user.name) {
         Toast.fire({
           icon: "warning",
-          title: data.message,
+          title: "請填寫姓名",
         });
+        return;
       }
+      this.$emit("after-submit", this.user);
     },
   },
   computed: {

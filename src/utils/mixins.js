@@ -33,7 +33,8 @@ export const emptyImageFilter = {
 export const emptyCoverFilter = {
   filters: {
     emptyCoverImage (src) {
-      return src || 'https://via.placeholder.com/350x220/DFDFDF?text=No+Image'
+      return src || 'https://i.ibb.co/yyTyjTV/Cover-Photo.png'
+
     }
   }
 }
