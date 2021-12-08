@@ -2,7 +2,7 @@
   <div class="profile-user-card">
     <div class="profile-user-img">
       <img class="profile-user-img cover" :src="user.cover | emptyCoverImage" />
-      <img class="profile-user-img avatar" :src="user.avatar" />
+      <img class="profile-user-img avatar" :src="user.avatar | emptyImage" />
       <button
         class="btn btn-profile-edit"
         @click.prevent.stop="callModal"
@@ -74,10 +74,11 @@ import { mapState } from "vuex";
 import usersAPI from "./../apis/users";
 import { Toast } from "./../utils/helpers";
 import { emptyCoverFilter } from "./../utils/mixins";
+import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
   name: "ProfileUser",
-  mixins: [emptyCoverFilter],
+  mixins: [emptyCoverFilter, emptyImageFilter],
   props: {
     initialUser: {
       type: Object,

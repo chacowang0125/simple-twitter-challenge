@@ -25,7 +25,7 @@ export const formatNumber = {
 export const emptyImageFilter = {
     filters: {
         emptyImage(src) {
-            return src || 'https://cdn-icons-png.flaticon.com/512/483/483361.png'
+            return src || 'https://i.ibb.co/hX5vD63/Rectangle-28.png'
         }
     }
   }
