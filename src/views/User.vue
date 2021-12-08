@@ -9,7 +9,9 @@
       <div id="stepper">
         <UserStepper />
       </div>
-      <router-view />
+      <div class="router-container">
+        <router-view />
+      </div>
     </div>
     <div class="popularbar-container">
       <PopularBar />
@@ -136,6 +138,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/styles/_variables.scss";
 #profile {
   min-width: 600px;
   flex: 1;
@@ -147,5 +150,23 @@ export default {
 
 .container {
   display: flex;
+}
+#profile {
+  display: flex;
+  flex-direction: column;
+  .router-container {
+    flex: 1;
+    overflow-y: auto;
+    &::-webkit-scrollbar {
+      //捲軸寬度
+      width: 3px;
+      background-color: transparent;
+      //捲軸本體顏色
+      &-thumb {
+        border-radius: 10px;
+        background-color: $page-divider;
+      }
+    }
+  }
 }
 </style>
