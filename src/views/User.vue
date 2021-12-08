@@ -14,8 +14,11 @@
     <div class="popularbar-container">
       <PopularBar />
     </div>
-    <UserEditModal :initialUser="user" :is-processing="isProcessing" />
-    <!-- @after-submit="handleAfterSubmit" -->
+    <UserEditModal
+      :initialUser="user"
+      :is-processing="isProcessing"
+      @after-submit="handleAfterSubmit"
+    />
   </div>
 </template>
 

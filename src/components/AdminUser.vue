@@ -1,7 +1,7 @@
 <template>
   <div class="admin-user-card">
     <div class="admin-user-img">
-      <img class="admin-user-img cover" :src="user.cover" />
+      <img class="admin-user-img cover" :src="user.cover | emptyCoverImage" />
       <img class="admin-user-img avatar" :src="user.avatar" />
     </div>
     <div class="admin-user-content">
@@ -45,9 +45,10 @@
 
 <script>
 import { formatNumber } from "./../utils/mixins";
+import { emptyCoverFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [formatNumber],
+  mixins: [formatNumber, emptyCoverFilter],
   name: "AdminUserList",
   props: {
     user: {
