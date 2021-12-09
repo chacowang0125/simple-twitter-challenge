@@ -17,6 +17,36 @@
             <span class="nav-title">首頁</span>
           </router-link>
         </li>
+				<!-- 通知 -->
+				<li class="nav-list" :class="{ active: currentRouteName === 'notification' }">
+          <router-link to="/notification" class="nav-link">
+            <img
+              class="nav-icon"
+              src="../assets/images/home-icon.svg"
+            />
+            <span class="nav-title">通知</span>
+          </router-link>
+        </li>
+				<!-- 公開聊天室 -->
+				<li class="nav-list" :class="{ active: currentRouteName === 'chat-room' }">
+          <router-link to="/chatroom" class="nav-link">
+            <img
+              class="nav-icon"
+              src="../assets/images/home-icon.svg"
+            />
+            <span class="nav-title">公開聊天室</span>
+          </router-link>
+        </li>
+				<!-- 私人訊息 -->
+				<li class="nav-list" :class="{ active: currentRouteName === 'private-chat' }">
+          <router-link to="/privatechat" class="nav-link">
+            <img
+              class="nav-icon"
+              src="../assets/images/home-icon.svg"
+            />
+            <span class="nav-title">私人訊息</span>
+          </router-link>
+        </li>
         <li
           class="nav-list"
           :class="[
