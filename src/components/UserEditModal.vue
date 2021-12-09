@@ -103,7 +103,7 @@
               <div class="error-message" v-show="introLengthError">
                 字數超出上限！
               </div>
-              <span class="length-hint">{{ introLength }}/160</span>
+              <span class="length-hint">{{ introLength || 0}}/160</span>
             </div>
           </div>
         </div>

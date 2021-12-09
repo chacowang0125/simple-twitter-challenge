@@ -6,8 +6,8 @@
     </div>
     <div class="admin-user-content">
       <div class="admin-user-info">
-        <span class="admin-user-info name">{{ user.name }}</span>
-        <span class="admin-user-info detail">@{{ user.account }}</span>
+        <span class="admin-user-info name">{{ user.name | nameLength}}</span>
+        <span class="admin-user-info detail">@{{ user.account | nameLength}}</span>
       </div>
       <div class="admin-user-data-wrapper">
         <div class="admin-user-data group">
@@ -44,11 +44,11 @@
 </template>
 
 <script>
-// import { formatNumber } from "./../utils/mixins";
+import { nameLengthFilter } from "./../utils/mixins";
 import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [ emptyImageFilter],
+  mixins: [ emptyImageFilter,nameLengthFilter],
   name: "AdminUser",
   props: {
 		user: {
