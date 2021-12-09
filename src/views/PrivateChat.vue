@@ -26,6 +26,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/styles/_variables.scss";
 .container {
   display: flex;
   .private-message-list {
@@ -33,7 +34,7 @@ export default {
   }
   .private-message-content {
     flex: 2;
-		border-left: 1px solid gray;
+		border-left: 1px solid $page-divider;
   }
 }
 </style>

@@ -1,15 +1,19 @@
 <template>
   <div class="container">
     <Navbar />
-		<NotificationList />
-    <div class="notification-area"></div>
-    <PopularBar :initial-top-users="topUsers" @after-follow-click="afterFollowClick"/>
+    <div class="notification-area">
+      <NotificationList />
+    </div>
+    <PopularBar
+      :initial-top-users="topUsers"
+      @after-follow-click="afterFollowClick"
+    />
   </div>
 </template>
 
 <script>
 import Navbar from "../components/NavBar.vue";
-import NotificationList from "../components/NotificationList.vue"
+import NotificationList from "../components/NotificationList.vue";
 import PopularBar from "../components/PopularBar.vue";
 import { Toast } from "../utils/helpers";
 import usersAPI from "../apis/users";
@@ -19,15 +23,15 @@ export default {
   components: {
     Navbar,
     PopularBar,
-		NotificationList
+    NotificationList,
   },
-	data() {
-		return{
-			topUsers: []
-		}
-	},
-	methods:{
-		async fetchTopUsers() {
+  data() {
+    return {
+      topUsers: [],
+    };
+  },
+  methods: {
+    async fetchTopUsers() {
       try {
         const { data } = await usersAPI.getTopUsers();
         this.topUsers = data;
@@ -38,17 +42,18 @@ export default {
         });
       }
     },
-		afterFollowClick() {
-			this.fetchTopUsers();
+    afterFollowClick() {
+      this.fetchTopUsers();
     },
-	},
-	created() {
-		this.fetchTopUsers()
-	}
+  },
+  created() {
+    this.fetchTopUsers();
+  },
 };
 </script>
 
 <style lang="scss" scoped>
+
 .container {
   display: flex;
   .notification-area {

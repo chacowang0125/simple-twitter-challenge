@@ -26,13 +26,14 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import "../assets/styles/_variables.scss";
 .container {
   display: flex;
 	.user-online-list {
 		flex: 1;
 	}
 	.chat-room-message {
-		border-left: 1px solid gray;
+		border-left: 1px solid $page-divider;
 		flex: 2;
 	}
 }
