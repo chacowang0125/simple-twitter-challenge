@@ -108,6 +108,7 @@ export default {
           icon: "success",
           title: "成功追蹤此使用者",
         });
+				this.$emit('after-follow-click')
       } catch (err) {
         Toast.fire({
           icon: "warning",
@@ -130,6 +131,7 @@ export default {
           icon: "success",
           title: "成功取消追蹤此使用者",
         });
+				this.$emit('after-follow-click')
       } catch (err) {
         Toast.fire({
           icon: "warning",

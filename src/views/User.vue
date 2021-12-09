@@ -4,7 +4,7 @@
     <div id="profile">
       <UserTopNav :user="user" />
       <div id="profile-user">
-        <UserProfileComponent :initialUser="user" />
+        <UserProfileComponent :initialUser="user" @after-follow-click="afterFollowClick"/>
       </div>
       <div id="stepper">
         <UserStepper />
@@ -104,7 +104,6 @@ export default {
           userId: this.user.id,
           formData,
         });
-
         if (data.status !== "success") {
           throw new Error(data.message);
         }
