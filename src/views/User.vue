@@ -4,7 +4,10 @@
     <div id="profile">
       <UserTopNav :user="user" />
       <div id="profile-user">
-        <UserProfileComponent :initialUser="user" @after-follow-click="afterFollowClick"/>
+        <UserProfileComponent
+          :initialUser="user"
+          @after-follow-click="afterFollowClick"
+        />
       </div>
       <div id="stepper">
         <UserStepper />
@@ -14,7 +17,10 @@
       </div>
     </div>
     <div class="popularbar-container">
-      <PopularBar :initial-top-users="topUsers" @after-follow-click="afterFollowClick" />
+      <PopularBar
+        :initial-top-users="topUsers"
+        @after-follow-click="afterFollowClick"
+      />
     </div>
     <UserEditModal
       :initialUser="user"
@@ -68,13 +74,13 @@ export default {
         isFollowed: "",
       },
       isProcessing: false,
-			topUsers: [],
+      topUsers: [],
     };
   },
   created() {
     const { id } = this.$route.params;
     this.fetchUser(id);
-		this.fetchTopUsers()
+    this.fetchTopUsers();
   },
   beforeRouteUpdate(to, from, next) {
     const { id } = to.params;
@@ -85,7 +91,7 @@ export default {
     ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),
   },
   methods: {
-		async fetchTopUsers() {
+    async fetchTopUsers() {
       try {
         const { data } = await usersAPI.getTopUsers();
         this.topUsers = data;
@@ -159,7 +165,7 @@ export default {
     afterFollowClick() {
       const { id } = this.$route.params;
       this.fetchUser(id);
-			this.fetchTopUsers()
+      this.fetchTopUsers();
     },
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");
