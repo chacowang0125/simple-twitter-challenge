@@ -84,10 +84,10 @@ export default {
       this.$store.commit("toggleReplyPostModal");
     },
     handleSubmit() {
-      if (!this.inputText) {
+      if (!this.inputText.trim()) {
         Toast.fire({
           icon: "warning",
-          title: "無法送出回覆，請稍後再試",
+          title: "內容不可空白",
         });
         return;
       }

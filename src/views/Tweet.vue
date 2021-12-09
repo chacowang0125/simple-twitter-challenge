@@ -96,7 +96,6 @@ export default {
           tweetId: id,
           comment: inputData,
         });
-
         if (data.status !== "success") {
           throw new Error(data.message);
         }
@@ -126,7 +125,6 @@ export default {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
-    console.log(id);
   },
 };
 </script>

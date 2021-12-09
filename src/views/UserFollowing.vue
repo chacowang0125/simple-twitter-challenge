@@ -11,7 +11,7 @@
         @update-following="updateFollowing"
       />
     </div>
-    <PopularBar @after-follow-click="afterFollowClick" />
+    <PopularBar :initial-top-users="topUsers" @after-follow-click="afterFollowClick" />
     <div class="modal">
       <CreateNewTweetModal
         v-show="openCreateNewTweetModal"
@@ -43,6 +43,7 @@ export default {
   data() {
     return {
       user: "",
+			topUsers: [],
       followings: [],
       userTweetsCount: "",
       isLoading: true,
@@ -57,6 +58,17 @@ export default {
         Toast.fire({ icon: "warning", title: "無法取得使用者資料請後再試" });
       }
     },
+		async fetchTopUsers() {
+      try {
+        const { data } = await usersAPI.getTopUsers();
+        this.topUsers = data;
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取得資料請稍後再試",
+        });
+      }
+    },
     async fetchFollowings(userId) {
       try {
         this.isLoading = true;
@@ -64,6 +76,7 @@ export default {
         this.followings = response.data;
         this.isLoading = false;
       } catch (error) {
+				this.isLoading = false;
         Toast.fire({
           icon: "warning",
           title: "無法取得跟隨者資料，請稍後再試",
@@ -75,8 +88,9 @@ export default {
         this.isLoading = true;
         const { data } = await usersAPI.getTotalTweets({ userId });
         this.userTweetsCount = data.length;
-        this.isLoading = true;
+        this.isLoading = false;
       } catch (error) {
+				this.isLoading = false;
         Toast.fire({
           icon: "warning",
           title: "無法取得所有推文資料，請稍後再試",
@@ -87,9 +101,13 @@ export default {
     updateFollowing() {
       const { id } = this.$route.params;
       this.fetchFollowings(id);
+			this.fetchTopUsers();
+			this.isLoading = false;
     },
     afterFollowClick() {
       this.fetchFollowings(this.user.id);
+			this.fetchTopUsers()
+			this.isLoading = false;
     },
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");
@@ -101,7 +119,7 @@ export default {
     this.fetchFollowings(id);
     this.getUser(id);
     this.fetchTotaltweets(id);
-    console.log(id);
+		this.fetchTopUsers()
   },
   computed: {
     ...mapState(["openCreateNewTweetModal"]),

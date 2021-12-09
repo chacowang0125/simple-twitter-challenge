@@ -23,9 +23,10 @@
 
       <div
         class="tweet-card-content-reply"
-        @click.stop.prevent="replyModalClick(likedTweet.TweetId)"
+
       >
-        <div class="content-reply">
+        <div class="content-reply"
+				@click.stop.prevent="replyModalClick(likedTweet.TweetId)">
           <img
             class="content-reply-icon"
             src="./../assets/images/comment-icon.svg"

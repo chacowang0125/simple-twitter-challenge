@@ -58,11 +58,18 @@ export default {
     async handleSubmit() {
       try {
         //前端錯誤訊息提示
-        if (!this.inputText || this.inputText.length > 140) {
+        if (!this.inputText.trim()) {
+          Toast.fire({
+            icon: "warning",
+            title: "內容不可空白",
+          });
+					return
+        }else if(this.inputText.length > 140) {
           Toast.fire({
             icon: "warning",
             title: "內容長度錯誤，請稍後再試",
           });
+					return
         }
         //前端驗證內容長度後送後端
         this.isProcessing = true;

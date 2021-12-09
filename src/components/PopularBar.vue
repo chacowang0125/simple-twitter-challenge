@@ -2,7 +2,7 @@
   <div class="container">
     <ul class="list-container">
       <li class="list-header">Popular</li>
-      <li v-for="user in users" :key="user.id" class="list-card">
+      <li v-for="user in topUsers" :key="user.id" class="list-card">
         <div class="list-card-avatar">
           <router-link :to="{ name: 'tweet', params: { id: user.id } }">
             <img :src="user.avatar | emptyImage" alt="user-avatar" />
@@ -51,41 +51,24 @@ import { nameLengthFilter } from "./../utils/mixins";
 export default {
   name: "PopularBar",
   mixins: [emptyImageFilter, nameLengthFilter],
+  props: {
+    initialTopUsers: {
+      type: Array,
+      required: true,
+    },
+  },
   data() {
     return {
-      users: [],
+      topUsers: this.initialTopUsers
     };
   },
   methods: {
-    async fetchUsers() {
-      try {
-        const { data } = await usersAPI.getTopUsers();
-        this.users = data;
-      } catch (error) {
-        Toast.fire({
-          icon: "warning",
-          title: "無法取得資料請稍後再試",
-        });
-      }
-    },
     async addFollow(userId) {
       try {
         const { data } = await usersAPI.addFollow({ userId });
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.users = this.users.map((user) => {
-          if (user.id === userId) {
-            return {
-              ...user,
-              isFollowed: 1,
-            };
-          }
-          return {
-            user,
-          };
-        });
-        this.fetchUsers();
         Toast.fire({
           icon: "success",
           title: "成功追蹤此使用者",
@@ -104,18 +87,6 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-        this.users = this.users.map((user) => {
-          if (user.id === userId) {
-            return {
-              ...user,
-              isFollowed: 0,
-            };
-          }
-          return {
-            user,
-          };
-        });
-        this.fetchUsers();
         Toast.fire({
           icon: "success",
           title: "成功取消追蹤此使用者",
@@ -129,11 +100,16 @@ export default {
       }
     },
   },
-  created() {
-    this.fetchUsers();
-  },
   computed: {
     ...mapState(["currentUser"]),
+  },
+	watch: {
+    initialTopUsers(newValue) {
+      this.topUsers = {
+        ...this.topUsers,
+        ...newValue,
+      };
+    },
   },
 };
 </script>
