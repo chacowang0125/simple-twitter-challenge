@@ -8,7 +8,7 @@
         />
       </router-link>
       <div class="page-title-name">
-        <div class="name">{{ user.name | nameLength}}</div>
+        <div class="name">{{ user.name | nameLength }}</div>
         <div class="tweets">{{ userTweetsCount }}推文</div>
       </div>
     </div>
@@ -31,22 +31,26 @@
         </div>
         <div class="list-card-content">
           <div class="list-card-content-header">
-            <div class="name">{{ follower.name | nameLength}}</div>
-            <div class="account"><span>@</span>	 {{ follower.account | nameLength}}</div>
-            <button
-              v-if="follower.isFollowed"
-              class="list-card-button following"
-              @click.stop.prevent="deleteFollow(follower.followerId)"
-            >
-              正在跟隨
-            </button>
-            <button
-              v-else
-              class="list-card-button follow"
-              @click.stop.prevent="addFollow(follower.followerId)"
-            >
-              跟隨
-            </button>
+            <div class="name">{{ follower.name | nameLength }}</div>
+            <div class="account">
+              <span>@</span> {{ follower.account | nameLength }}
+            </div>
+            <div v-if="follower.followerId !== currentUser.id">
+              <button
+                v-if="follower.isFollowed"
+                class="list-card-button following"
+                @click.stop.prevent="deleteFollow(follower.followerId)"
+              >
+                正在跟隨
+              </button>
+              <button
+                v-else
+                class="list-card-button follow"
+                @click.stop.prevent="addFollow(follower.followerId)"
+              >
+                跟隨
+              </button>
+            </div>
           </div>
           <div class="list-card-content-description">
             {{ follower.introduction }}
@@ -62,14 +66,15 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
-import { emptyImageFilter,nameLengthFilter } from "../utils/mixins";
+import { emptyImageFilter, nameLengthFilter } from "../utils/mixins";
 
 export default {
   name: "UserFollowingFeed",
   props: ["followers", "userTweetsCount", "user"],
-	mixins: [emptyImageFilter,nameLengthFilter],
+  mixins: [emptyImageFilter, nameLengthFilter],
   data() {
     return {
       currentRouteName: "followed",
@@ -86,7 +91,7 @@ export default {
           icon: "success",
           title: "成功追蹤此使用者",
         });
-				this.$emit("update-followed");
+        this.$emit("update-followed");
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -105,7 +110,7 @@ export default {
           icon: "success",
           title: "成功取消追蹤此使用者",
         });
-				this.$emit("update-followed");
+        this.$emit("update-followed");
       } catch (error) {
         Toast.fire({
           icon: "warning",
@@ -116,6 +121,9 @@ export default {
   },
   toggleTab(value) {
     this.currentRouteName = value;
+  },
+  computed: {
+    ...mapState(["currentUser"]),
   },
 };
 </script>

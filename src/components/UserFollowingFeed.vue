@@ -33,20 +33,22 @@
             <div class="account">
               <span>@</span>{{ following.account | nameLength }}
             </div>
-            <button
-              class="list-card-button following"
-              v-if="following.isFollowed"
-              @click.stop.prevent="deleteFollow(following.followingId)"
-            >
-              正在跟隨
-            </button>
-            <button
-              class="list-card-button follow"
-              v-else
-              @click.stop.prevent="addFollow(following.followingId)"
-            >
-              跟隨
-            </button>
+            <div v-if="following.followingId !== currentUser.id">
+              <button
+                class="list-card-button following"
+                v-if="following.isFollowed"
+                @click.stop.prevent="deleteFollow(following.followingId)"
+              >
+                正在跟隨
+              </button>
+              <button
+                class="list-card-button follow"
+                v-else
+                @click.stop.prevent="addFollow(following.followingId)"
+              >
+                跟隨
+              </button>
+            </div>
           </div>
           <div class="list-card-content-description">
             {{ following.introduction }}
@@ -62,6 +64,7 @@
 </style>
 
 <script>
+import { mapState } from "vuex";
 import usersAPI from "../apis/users";
 import { Toast } from "../utils/helpers";
 import { emptyImageFilter } from "../utils/mixins";
@@ -113,9 +116,12 @@ export default {
         });
       }
     },
+    toggleTab(value) {
+      this.currentRouteName = value;
+    },
   },
-  toggleTab(value) {
-    this.currentRouteName = value;
+  computed: {
+    ...mapState(["currentUser"]),
   },
 };
 </script>
