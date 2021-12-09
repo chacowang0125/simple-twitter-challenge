@@ -105,11 +105,11 @@ export default {
         });
       }
     },
-    async handleAfterSubmit(id, inputData) {
+    async handleAfterSubmit(userId, inputData) {
       try {
         this.isProcessing = true;
         const { data } = await tweetAPI.addTweetReply({
-          tweetId: id,
+          tweetId: userId,
           comment: inputData,
         });
         if (data.status !== "success") {
@@ -120,7 +120,9 @@ export default {
           title: "新增回覆成功",
         });
         this.$store.commit("toggleReplyPostModal");
-        this.$router.go(); //跳頁
+        // this.$router.go(); //跳頁
+        const { id } = this.$route.params;
+        this.fetchReplies(id);
       } catch (error) {
         this.isProcessing = false;
         Toast.fire({
