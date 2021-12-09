@@ -25,7 +25,7 @@
 import Navbar from "../components/NavBar.vue";
 import PopularBar from "../components/PopularBar.vue";
 import UserFollowedFeed from "../components/UserFollowedFeed.vue";
-import CreateNewTweetModal from "../components/CreateNewTweetModal.vue"
+import CreateNewTweetModal from "../components/CreateNewTweetModal.vue";
 import Spinner from "../components/Spinner.vue";
 import usersAPI from "../apis/users";
 import { mapState } from "vuex";
@@ -37,7 +37,7 @@ export default {
     Navbar,
     UserFollowedFeed,
     PopularBar,
-		CreateNewTweetModal,
+    CreateNewTweetModal,
     Spinner,
   },
   data() {
@@ -53,7 +53,9 @@ export default {
       try {
         const response = await usersAPI.getUser({ userId });
         this.user = response.data;
+        this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         Toast.fire({ icon: "warning", title: "無法取得使用者資料請後再試" });
       }
     },
@@ -64,6 +66,7 @@ export default {
         this.followers = data;
         this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         Toast.fire({
           icon: "warning",
           title: "無法取得跟隨者資料，請稍後再試",
@@ -77,6 +80,7 @@ export default {
         this.userTweetsCount = data.length;
         this.isLoading = false;
       } catch (error) {
+        this.isLoading = false;
         Toast.fire({
           icon: "warning",
           title: "無法取得所有推文資料，請稍後再試",
@@ -87,9 +91,11 @@ export default {
     updateFollowed() {
       const { id } = this.$route.params;
       this.fetchFollowers(id);
+      this.isLoading = false;
     },
     afterFollowClick() {
       this.fetchFollowers(this.user.id);
+      this.isLoading = false;
     },
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");

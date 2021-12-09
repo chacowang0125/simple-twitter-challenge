@@ -64,6 +64,7 @@ export default {
         this.followings = response.data;
         this.isLoading = false;
       } catch (error) {
+				this.isLoading = false;
         Toast.fire({
           icon: "warning",
           title: "無法取得跟隨者資料，請稍後再試",
@@ -75,8 +76,9 @@ export default {
         this.isLoading = true;
         const { data } = await usersAPI.getTotalTweets({ userId });
         this.userTweetsCount = data.length;
-        this.isLoading = true;
+        this.isLoading = false;
       } catch (error) {
+				this.isLoading = false;
         Toast.fire({
           icon: "warning",
           title: "無法取得所有推文資料，請稍後再試",
@@ -87,9 +89,11 @@ export default {
     updateFollowing() {
       const { id } = this.$route.params;
       this.fetchFollowings(id);
+			this.isLoading = false;
     },
     afterFollowClick() {
       this.fetchFollowings(this.user.id);
+			this.isLoading = false;
     },
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");
