@@ -16,7 +16,7 @@
             src="./../assets/images/comment-icon.svg"
           />
           <span class="admin-user-data number">{{
-            user.tweetCounts | formatNumber
+            user.tweetCounts
           }}</span>
         </div>
         <div class="admin-user-data group">
@@ -25,7 +25,7 @@
             src="./../assets/images/like-icon.svg"
           />
           <span class="admin-user-data number">{{
-            user.likeCounts | formatNumber
+            user.likeCounts
           }}</span>
         </div>
       </div>
@@ -44,18 +44,18 @@
 </template>
 
 <script>
-import { formatNumber } from "./../utils/mixins";
+// import { formatNumber } from "./../utils/mixins";
 import { emptyImageFilter } from "./../utils/mixins";
 
 export default {
-  mixins: [formatNumber, emptyImageFilter],
-  name: "AdminUserList",
+  mixins: [ emptyImageFilter],
+  name: "AdminUser",
   props: {
-    user: {
-      type: Object,
-      required: true,
-    },
-  },
+		user: {
+			type: Object,
+			require: true
+		}
+	}
 };
 </script>
 
