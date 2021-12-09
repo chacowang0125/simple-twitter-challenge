@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="popularbar-container">
-      <PopularBar @after-follow-click="afterFollowClick" />
+      <PopularBar :initial-top-users="topUsers" @after-follow-click="afterFollowClick" />
     </div>
     <UserEditModal
       :initialUser="user"
@@ -31,7 +31,6 @@
 </template>
 
 <script>
-// import { Toast } from "./../utils/helpers";
 import NavBar from "../components/NavBar.vue";
 import PopularBar from "../components/PopularBar.vue";
 import UserTopNav from "../components/UserTopNav.vue";
@@ -69,11 +68,13 @@ export default {
         isFollowed: "",
       },
       isProcessing: false,
+			topUsers: [],
     };
   },
   created() {
     const { id } = this.$route.params;
     this.fetchUser(id);
+		this.fetchTopUsers()
   },
   beforeRouteUpdate(to, from, next) {
     const { id } = to.params;
@@ -84,6 +85,17 @@ export default {
     ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),
   },
   methods: {
+		async fetchTopUsers() {
+      try {
+        const { data } = await usersAPI.getTopUsers();
+        this.topUsers = data;
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取得資料請稍後再試",
+        });
+      }
+    },
     async handleAfterSubmit(formData) {
       try {
         console.log(formData);
@@ -148,6 +160,7 @@ export default {
     afterFollowClick() {
       const { id } = this.$route.params;
       this.fetchUser(id);
+			this.fetchTopUsers()
     },
     afterAddTweet() {
       this.$store.commit("toggleCreateNewTweetModal");

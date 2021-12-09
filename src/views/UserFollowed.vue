@@ -11,7 +11,7 @@
         @update-followed="updateFollowed"
       />
     </div>
-    <PopularBar @after-follow-click="afterFollowClick" />
+    <PopularBar :initial-top-users="topUsers" @after-follow-click="afterFollowClick" />
     <div class="modal">
       <CreateNewTweetModal
         v-show="openCreateNewTweetModal"
@@ -44,6 +44,7 @@ export default {
     return {
       user: "",
       followers: [],
+			topUsers: [],
       userTweetsCount: "",
       isLoading: true,
     };
@@ -57,6 +58,17 @@ export default {
       } catch (error) {
         this.isLoading = false;
         Toast.fire({ icon: "warning", title: "無法取得使用者資料請後再試" });
+      }
+    },
+		async fetchTopUsers() {
+      try {
+        const { data } = await usersAPI.getTopUsers();
+        this.topUsers = data;
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取得資料請稍後再試",
+        });
       }
     },
     async fetchFollowers(userId) {
@@ -91,10 +103,12 @@ export default {
     updateFollowed() {
       const { id } = this.$route.params;
       this.fetchFollowers(id);
+			this.fetchTopUsers();
       this.isLoading = false;
     },
     afterFollowClick() {
       this.fetchFollowers(this.user.id);
+			this.fetchTopUsers();
       this.isLoading = false;
     },
     afterAddTweet() {
@@ -107,7 +121,7 @@ export default {
     this.fetchFollowers(id);
     this.getUser(id);
     this.fetchTotaltweets(id);
-    console.log(id);
+		this.fetchTopUsers();
   },
   computed: {
     ...mapState(["openCreateNewTweetModal"]),

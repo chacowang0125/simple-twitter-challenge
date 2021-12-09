@@ -82,7 +82,6 @@ export default {
         if (data.status !== "success") {
           throw new Error(data.message);
         }
-
         Toast.fire({
           icon: "success",
           title: "成功追蹤此使用者",
