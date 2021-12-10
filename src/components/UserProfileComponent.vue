@@ -11,7 +11,9 @@
         編輯個人資料
       </button>
       <div class="btn other-user" v-show="currentUser.id !== user.id">
-        <img class="other-user-icon" src="../assets/images/btn-messege.svg" />
+        <router-link :to="{ name: 'private-chat' }" @click="sendMessage">
+          <img class="other-user-icon" src="../assets/images/btn-messege.svg" />
+        </router-link>
         <img class="other-user-icon" src="../assets/images/btn-noti.svg" />
         <div class="other-user-btn">
           <button
@@ -108,7 +110,7 @@ export default {
           icon: "success",
           title: "成功追蹤此使用者",
         });
-				this.$emit('after-follow-click')
+        this.$emit("after-follow-click");
       } catch (err) {
         Toast.fire({
           icon: "warning",
@@ -131,13 +133,19 @@ export default {
           icon: "success",
           title: "成功取消追蹤此使用者",
         });
-				this.$emit('after-follow-click')
+        this.$emit("after-follow-click");
       } catch (err) {
         Toast.fire({
           icon: "warning",
           title: err.message,
         });
       }
+    },
+    sendMessage() {
+      this.$socket.emit("sendMessage", {
+        userId: this.user.id,
+        currentUserId: this.currentUser.id,
+      });
     },
   },
   computed: {

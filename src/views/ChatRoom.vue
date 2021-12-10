@@ -10,7 +10,10 @@
     <div class="chat-room-message">
       <div class="title">公開聊天室</div>
       <div class="content">
-        <ChatRoomMessage />
+        <ChatRoomMessage
+          :contents="contents"
+          @after-send-message="afterSendMessage"
+        />
       </div>
     </div>
   </div>
@@ -31,13 +34,61 @@
 import Navbar from "../components/NavBar.vue";
 import UserListCard from "../components/UserListCard.vue";
 import ChatRoomMessage from "../components/ChatRoomMessage.vue";
+import { mapState } from "vuex";
+import chatAPI from "./../apis/chat";
 
 export default {
-  name: "PrivateChat",
+  name: "PublicChat",
   components: {
     Navbar,
     UserListCard,
     ChatRoomMessage,
+  },
+  data() {
+    return {
+      room: "public",
+      loginUser: [],
+      contents: [],
+      content: {},
+    };
+  },
+  sockets: {
+    connect() {
+      console.log("socket connected");
+      // this.socketConnect();
+      this.$socket.emit("login", this.currentUser.id);
+    },
+    message(data) {
+      console.log("Page：" + data);
+      this.content = data;
+      this.contents.push(this.content);
+    },
+    loginUser(data) {
+      console.log(data);
+      this.loginUser = data;
+    },
+    disconnected() {
+      this.$socket.emit("disconnect", this.currentUser.id);
+    },
+  },
+  methods: {
+    afterSendMessage(text) {
+      this.$socket.emit("sendMessage", {
+        text: text,
+        id: this.currentUser.id,
+        room: this.room,
+      });
+    },
+    async fetchChatHistory() {
+      const data = await chatAPI.publicHistory();
+      this.contents = data.data;
+    },
+  },
+  computed: {
+    ...mapState(["currentUser"]),
+  },
+  created() {
+    this.fetchChatHistory();
   },
 };
 </script>

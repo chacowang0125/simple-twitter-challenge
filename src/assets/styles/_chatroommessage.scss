@@ -41,9 +41,9 @@
             @extend %chatroom-avatar-img-style;
             border: 1px solid gray;
         }
-        &-area {
+        .area {
             margin-left: 10px;
-            &-text {
+            .text {
                 max-width: 400px;
                 padding: 10px 15px;
                 color: $main-font-color;
@@ -56,7 +56,7 @@
         display: flex;
         flex-direction: column;
         align-items: end;
-        &-text {
+        .text {
             max-width: 400px;
             padding: 10px 15px;
             color: $white;
