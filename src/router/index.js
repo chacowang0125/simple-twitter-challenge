@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import SignIn from '../views/SignIn.vue'
+
 import UserMain from '../views/UserMain.vue'
 import NotFound from '../views/NotFound.vue'
 import AdminSignIn from '../views/AdminSignIn.vue'
@@ -9,11 +10,23 @@ import store from '../store'
 
 Vue.use(VueRouter)
 
-const routes = [{
+const routes = [
+    {
         path: '/',
         name: 'root',
         redirect: '/signin'
-    }, {
+    },     
+    //   {
+    //     path: '/',
+    //     name: 'root',
+    //     redirect: '/test'
+    // },
+    // {
+    //     path: '/test',
+    //     name: 'test',
+    //     component: test
+    // },
+    {
         path: '/signin',
         name: 'SignIn',
         component: SignIn
