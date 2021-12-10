@@ -18,7 +18,7 @@
 - 管理員帳號: `root`
 - 密碼：皆為`12345678`
 
-## 專案啟動
+## 專案啟動 (連heroku)
 ### Project setup
 ```
 git clone https://github.com/VinceLee9527/twitter-front-end-vue.git
@@ -29,16 +29,49 @@ npm install
 ```
 npm run serve
 ```
-### Compiles and minifies for production
+
+## 專案啟動 (連本地localhost)
+### Project setup (後端)
 ```
-npm run build
+git clone https://github.com/Emily81926/twitter-api-2020.git
+cd twitter-api-2020
+npm install
 ```
-### Lints and fixes files
+### 創建資料庫(利用MySQLＷorkbench)
 ```
-npm run lint
+create database ac_twitter_workspace;
 ```
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 建立table
+```
+ npx sequelize db:migrate
+```
+### 建立種子資料
+```
+npx sequelize db:seed:all
+```
+### 建立`.env`檔案並設定環境參數(`.env.example`檔案內有實例)
+### 啟動伺服器
+```
+npm run dev  
+nodemon app.js // windows使用者使用這行
+```
+### 若看到以下字串即代表成功啟動
+`Example app listening on port 3000!`
+
+### Project setup(前端)
+```
+git clone https://github.com/VinceLee9527/twitter-front-end-vue.git
+cd twitter-front-end-vue
+npm install
+```
+### 進入/src/utils/helpers 第四行修改為：
+```
+const baseURL = 'http://localhost:3000/api'
+```
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
 ## 開發人員
 - （後端）[小鹿 Kerwin](https://github.com/tkoleo84119)
