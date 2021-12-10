@@ -18,6 +18,25 @@
 - 管理員帳號: `root`
 - 密碼：皆為`12345678`
 
+## 專案啟動
+```
+npm install
+```
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+### Compiles and minifies for production
+```
+npm run build
+```
+### Lints and fixes files
+```
+npm run lint
+```
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
+
 ## 開發人員
 - （後端）[小鹿 Kerwin](https://github.com/tkoleo84119)
 - （前端）[Ya chu](https://github.com/Emily81926)
