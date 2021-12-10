@@ -22,7 +22,7 @@
           <router-link to="/notification" class="nav-link">
             <img
               class="nav-icon"
-              src="../assets/images/home-icon.svg"
+              src="../assets/images/bell-icon.svg"
             />
             <span class="nav-title">通知</span>
           </router-link>
@@ -32,7 +32,7 @@
           <router-link to="/chatroom" class="nav-link">
             <img
               class="nav-icon"
-              src="../assets/images/home-icon.svg"
+              src="../assets/images/message-icon.svg"
             />
             <span class="nav-title">公開聊天室</span>
           </router-link>
@@ -42,7 +42,7 @@
           <router-link to="/privatechat" class="nav-link">
             <img
               class="nav-icon"
-              src="../assets/images/home-icon.svg"
+              src="../assets/images/message-icon.svg"
             />
             <span class="nav-title">私人訊息</span>
           </router-link>
@@ -55,7 +55,6 @@
             { active: currentRouteName === 'liked' },
           ]"
         >
-          <!-- link user tweet -->
           <router-link
             :to="{ name: 'tweet', params: { id: currentUser.id } }"
             class="nav-link"

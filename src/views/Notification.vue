@@ -5,7 +5,7 @@
       <NotificationList />
     </div>
     <PopularBar
-      :initial-top-users="topUsers"
+      :initial-followed-users="followedUsers"
       @after-follow-click="afterFollowClick"
     />
   </div>
@@ -15,8 +15,8 @@
 import Navbar from "../components/NavBar.vue";
 import NotificationList from "../components/NotificationList.vue";
 import PopularBar from "../components/PopularBar.vue";
-import { Toast } from "../utils/helpers";
-import usersAPI from "../apis/users";
+// import { Toast } from "../utils/helpers";
+// import usersAPI from "../apis/users";
 
 export default {
   name: "Notification",
@@ -27,27 +27,27 @@ export default {
   },
   data() {
     return {
-      topUsers: [],
+      followedUsers: [],
     };
   },
   methods: {
-    async fetchTopUsers() {
-      try {
-        const { data } = await usersAPI.getTopUsers();
-        this.topUsers = data;
-      } catch (error) {
-        Toast.fire({
-          icon: "warning",
-          title: "無法取得資料請稍後再試",
-        });
-      }
-    },
-    afterFollowClick() {
-      this.fetchTopUsers();
-    },
-  },
-  created() {
-    this.fetchTopUsers();
+    // async fetchTopUsers() {
+  //     try {
+  //       const { data } = await usersAPI.getTopUsers();
+  //       this.topUsers = data;
+  //     } catch (error) {
+  //       Toast.fire({
+  //         icon: "warning",
+  //         title: "無法取得資料請稍後再試",
+  //       });
+  //     }
+  //   },
+  //   afterFollowClick() {
+  //     this.fetchTopUsers();
+  //   },
+  // },
+  // created() {
+  //   this.fetchTopUsers();
   },
 };
 </script>

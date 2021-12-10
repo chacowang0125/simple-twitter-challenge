@@ -1,49 +1,32 @@
 <template>
   <div class="container">
-    <div class="title">公開聊天室</div>
-    <div class="content">聊天內容</div>
-    <div class="input-area">
-			<input type="text" placeholder="輸入訊息..."/>
-      <div class="submit-icon">
-        <img src="" alt="" />
+
+    <div class="content">
+      <div class="notice">
+        <div class="notice-message">上線了</div>
       </div>
-		</div>
+      <div class="left-message">
+        <img src="" alt="" />
+        <div class="left-message-area">
+          <div class="left-message-area-text">左邊訊息</div>
+          <div class="left-message-area-time">下午6:02</div>
+        </div>
+      </div>
+      <div class="right-message">
+        <div class="right-message-text">右邊訊息如果自很多會長什麼樣子！！！！右邊訊息如果自很多會長什麼樣子！！！！右邊訊息如果自很多會長什麼樣子！！！！右邊訊息如果自很多會長什麼樣子！！！！右邊訊息如果自很多會長什麼樣子！！！！右邊訊息如果自很多會長什麼樣子！！！！右邊訊息如果自很多會長什麼樣子！！！！右邊訊息如果自很多會長什麼樣子！！！！</div>
+        <div class="right-message-time">下午6:02</div>
+      </div>
+    </div>
+    <div class="input-area">
+      <input type="text" placeholder="輸入訊息..." />
+      <div class="send-icon">
+        <img src="../assets/images/send-icon.svg" alt="" />
+      </div>
+    </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-@import "../assets/styles/_variables.scss";
-.container {
-	height: 100vh;
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-  .title {
-    @extend %page-title-style;
-  }
-}
-.content {
-  flex: 1;
-}
+@import "../assets/styles/_chatroommessage.scss";
 
-.input-area {
-  height: 55px;
-  border-top: 1px solid $page-divider;
-  padding: 10px 20px;
-	display: flex;
-  input {
-    width: 100%;
-    height: 100%;
-		padding: 15px;
-		border: none;
-    border-radius: 20px;
-		background-color: $page-divider;
-		font-size: 20px;
-  }
-	.submit-icon {
-		border: 1px solid red;
-		margin-left: 20px;
-		width: 40px;
-	}
-}
 </style>

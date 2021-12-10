@@ -15,6 +15,7 @@ $link-blue: #0099ff;
 $card-background-gray:#f6f7f8;
 $modal-background-gray: #E5E5E5;
 $input-hover-blue: #50B5FF;
+$message-background: #e6ecf0;
 $main-font: "Noto Sans TC",
 sans-serif;
 %title-style {
@@ -68,6 +69,7 @@ sans-serif;
     font-size: 15px;
     font-weight: 700;
     color: $main-font-color;
+    letter-spacing: 0.5px;
 }
 
 //user account & create time
@@ -81,6 +83,12 @@ sans-serif;
 %avatar-img-style {
     width: 50px;
     height: 50px;
+    border-radius: 50%;
+}
+
+%chatroom-avatar-img-style {
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
 }
 

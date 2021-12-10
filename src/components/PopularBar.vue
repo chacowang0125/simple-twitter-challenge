@@ -1,7 +1,9 @@
 <template>
   <div class="container">
     <ul class="list-container">
-      <li class="list-header">Popular</li>
+      <li class="list-header">
+        {{ this.$route.name === "notification" ? "跟隨誰" : "Popular" }}
+      </li>
       <li v-for="user in topUsers" :key="user.id" class="list-card">
         <div class="list-card-avatar">
           <router-link :to="{ name: 'tweet', params: { id: user.id } }">
@@ -59,7 +61,7 @@ export default {
   },
   data() {
     return {
-      topUsers: this.initialTopUsers
+      topUsers: this.initialTopUsers,
     };
   },
   methods: {
@@ -103,7 +105,7 @@ export default {
   computed: {
     ...mapState(["currentUser"]),
   },
-	watch: {
+  watch: {
     initialTopUsers(newValue) {
       this.topUsers = {
         ...this.topUsers,

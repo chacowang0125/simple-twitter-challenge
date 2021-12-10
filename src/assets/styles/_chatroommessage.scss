@@ -1,0 +1,93 @@
+@import "../styles/variables";
+.container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+}
+
+.content {
+    flex: 1;
+    padding: 20px 15px;
+    font-weight: 400;
+    font-size: 15px;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+        width: 3px;
+        background-color: transparent;
+        &-thumb {
+            border-radius: 10px;
+            background-color: $page-divider;
+        }
+    }
+    .notice {
+        display: flex;
+        justify-content: center;
+        &-message {
+            display: flex;
+            align-items: center;
+            height: 30px;
+            padding: 7px 14px;
+            font-weight: 500;
+            color: $input-bottom-color;
+            background-color: $modal-background-gray;
+            border-radius: 50px;
+        }
+    }
+    .left-message {
+        display: flex;
+        justify-content: start;
+        img {
+            @extend %chatroom-avatar-img-style;
+            border: 1px solid gray;
+        }
+        &-area {
+            margin-left: 10px;
+            &-text {
+                max-width: 400px;
+                padding: 10px 15px;
+                color: $main-font-color;
+                border-radius: 25px 25px 25px 0;
+                background-color: $message-background;
+            }
+        }
+    }
+    .right-message {
+        display: flex;
+        flex-direction: column;
+        align-items: end;
+        &-text {
+            max-width: 400px;
+            padding: 10px 15px;
+            color: $white;
+            border-radius: 25px 25px 0 25px;
+            background-color: $main-orange;
+        }
+    }
+    .time {
+        color: $label-font-color;
+        font-size: 13px;
+    }
+}
+
+.input-area {
+    height: 55px;
+    border-top: 1px solid $page-divider;
+    padding: 10px 20px;
+    display: flex;
+    input {
+        flex: 1;
+        height: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 20px;
+        background-color: $page-divider;
+        font-size: 20px;
+    }
+    .send-icon {
+        margin-left: 15px;
+        img {
+            width: 30px;
+        }
+    }
+}

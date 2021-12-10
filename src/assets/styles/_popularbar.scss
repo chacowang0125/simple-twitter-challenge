@@ -7,12 +7,13 @@
         margin: 15px 30px;
         width: 350px;
         .list-header {
-            width: 100%;
+            @extend %title-style;
+            display: flex;
+            align-items: center;
             height: 45px;
+            padding: 10px 15px;
             border-radius: 14px 14px 0 0;
             background-color: $popularList-background-color;
-            padding: 10px 15px;
-            @extend %title-style;
             color: $main-font-color;
             text-align: left;
         }
