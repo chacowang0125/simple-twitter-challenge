@@ -21,6 +21,8 @@
 ## 專案啟動
 ### Project setup
 ```
+git clone https://github.com/VinceLee9527/twitter-front-end-vue.git
+cd twitter-front-end-vue
 npm install
 ```
 ### Compiles and hot-reloads for development
