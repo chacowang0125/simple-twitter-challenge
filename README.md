@@ -19,6 +19,7 @@
 - 密碼：皆為`12345678`
 
 ## 專案啟動
+### Project setup
 ```
 npm install
 ```
@@ -39,6 +40,6 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 
 ## 開發人員
 - （後端）[小鹿 Kerwin](https://github.com/tkoleo84119)
-- （前端）[Ya chu](https://github.com/Emily81926)
+- （後端）[Ya chu](https://github.com/Emily81926)
 - （前端）[Chaco](https://github.com/chacowang0125)
 - （前端）[Vince](https://github.com/VinceLee9527)
