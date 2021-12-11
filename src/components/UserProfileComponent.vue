@@ -11,8 +11,12 @@
         編輯個人資料
       </button>
       <div class="btn other-user" v-show="currentUser.id !== user.id">
-        <router-link :to="{ name: 'private-chat' }" @click="sendMessage">
-          <img class="other-user-icon" src="../assets/images/btn-messege.svg" />
+        <router-link :to="{ name: 'private-chat' }">
+          <img
+            class="other-user-icon"
+            @click.stop.prevent="sendMessage"
+            src="../assets/images/btn-messege.svg"
+          />
         </router-link>
         <img class="other-user-icon" src="../assets/images/btn-noti.svg" />
         <div class="other-user-btn">
@@ -92,6 +96,13 @@ export default {
       user: this.initialUser,
     };
   },
+  sockets: {
+    connect() {
+      console.log("socket connected");
+      // this.socketConnect();
+      this.$socket.emit("login");
+    },
+  },
   methods: {
     callModal() {
       this.$store.commit("toggleProfileEditModal");
@@ -142,10 +153,9 @@ export default {
       }
     },
     sendMessage() {
-      this.$socket.emit("sendMessage", {
-        userId: this.user.id,
-        currentUserId: this.currentUser.id,
-      });
+      this.$store.commit("setChatUser", this.user);
+      console.log(this.user.id);
+      this.$router.push({ name: "private-chat", params: { id: this.user.id } });
     },
   },
   computed: {

@@ -4,5 +4,8 @@ export default {
     publicHistory() {
         return apiHelper.get('/messages/public')
     },
+    privateHistory({ userId }) {
+        return apiHelper.get(`/messages/private/${userId}`)
+    },
    
 }

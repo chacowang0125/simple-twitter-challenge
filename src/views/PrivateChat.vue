@@ -40,7 +40,7 @@ export default {
   },
   data() {
     return {
-      room: "1",
+      roomName: "1",
       loginUser: [],
       contents: [],
       content: {},
@@ -60,10 +60,10 @@ export default {
       this.content = data;
       this.contents.push(this.content);
     },
-    loginUser(data) {
-      console.log(data);
-      this.loginUser = data;
-    },
+    // loginUser(data) {
+    //   console.log(data);
+    //   this.loginUser = data;
+    // },
     loginStatus(data) {
       this.logged = data;
       this.contents.push({ online: data });
@@ -76,20 +76,33 @@ export default {
     afterSendMessage(text) {
       this.$socket.emit("sendMessage", {
         text: text,
-        id: this.currentUser.id,
-        room: this.room,
+        id: this.$route.params,
       });
     },
-    async fetchChatHistory() {
-      const data = await chatAPI.publicHistory();
+    async fetchChatHistory(userId) {
+      const data = await chatAPI.privateHistory({ userId });
+      console.log(data);
       this.contents = data.data;
+    },
+    joinRoom() {
+      this.$socket.emit("joinRoom", { id: this.$route.params });
+      console.log("joined");
+    },
+    leaveRoom() {
+      this.$socket.emit("leaveRoom", { id: this.$route.params });
+      console.log("left");
     },
   },
   computed: {
-    ...mapState(["currentUser", "token"]),
+    ...mapState(["currentUser", "chatUser"]),
   },
   created() {
-    this.fetchChatHistory();
+    const { id } = this.$route.params;
+    this.fetchChatHistory(id);
+    this.joinRoom();
+  },
+  beforeDestroy() {
+    this.leaveRoom();
   },
 };
 </script>

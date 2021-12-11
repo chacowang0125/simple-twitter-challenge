@@ -47,7 +47,7 @@ export default {
   },
   data() {
     return {
-      room: "public",
+      roomName: "public",
       loginUser: [],
       contents: [],
       content: {},
@@ -78,6 +78,9 @@ export default {
     //   this.$socket.emit("disconnect", this.currentUser.id);
     // },
   },
+  mounted() {
+    this.$socket.open();
+  },
   methods: {
     afterSendMessage(text) {
       this.$socket.emit("sendMessage", {
@@ -90,16 +93,24 @@ export default {
       const data = await chatAPI.publicHistory();
       this.contents = data.data;
     },
-			joinRoom() {
-			this.$socket.emit("joinRoom",{ room : this.room })
-		}
+    joinRoom() {
+      this.$socket.emit("joinRoom", { room: this.roomName });
+      console.log("joined");
+    },
+    leaveRoom() {
+      this.$socket.emit("leaveRoom", { room: this.roomName });
+      console.log("left");
+    },
   },
   computed: {
     ...mapState(["currentUser", "token"]),
   },
   created() {
     this.fetchChatHistory();
-		this.joinRoom()
+    this.joinRoom();
+  },
+  beforeDestroy() {
+    this.leaveRoom();
   },
 };
 </script>
