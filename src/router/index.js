@@ -14,21 +14,7 @@ const routes = [{
         path: '/',
         name: 'root',
         redirect: '/signin'
-<<<<<<< Updated upstream
     },     
-=======
-    },
-    //   {
-    //     path: '/',
-    //     name: 'root',
-    //     redirect: '/test'
-    // },
-    // {
-    //     path: '/test',
-    //     name: 'test',
-    //     component: test
-    // },
->>>>>>> Stashed changes
     {
         path: '/signin',
         name: 'SignIn',
@@ -135,11 +121,6 @@ router.beforeEach(async(to, from, next) => {
 
     let isAuthenticated = store.state.isAuthenticated
     let isAdmin = store.state.isAdmin
-<<<<<<< Updated upstream
-    // this.$socket.emit("login");
-=======
-        // this.$socket.emit("login");
->>>>>>> Stashed changes
 
     // 有 token 的情況下，才向後端驗證
     if (token && token !== tokenInStore && !admin) {
