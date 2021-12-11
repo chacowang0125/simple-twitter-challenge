@@ -4,7 +4,7 @@
     <div class="user-list">
       <div class="title">上線使用者({{ this.loginUser.length }})</div>
       <div class="user-list-content">
-        <UserListCard />
+        <UserListCard v-for="user in loginUser" :key="user.id" :user="user" />
       </div>
     </div>
     <div class="chat-room-message">
