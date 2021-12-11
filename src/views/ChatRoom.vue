@@ -2,7 +2,7 @@
   <div class="container">
     <Navbar />
     <div class="user-list">
-      <div class="title">上線使用者(2)</div>
+      <div class="title">上線使用者({{ this.loginUser.length }})</div>
       <div class="user-list-content">
         <UserListCard />
       </div>
@@ -52,11 +52,17 @@ export default {
       content: {},
     };
   },
+  mounted() {
+    this.$socket.open();
+  },
+  // created() {
+  //   this.$socket.client.open();
+  // },
   sockets: {
     connect() {
       console.log("socket connected");
       // this.socketConnect();
-      this.$socket.emit("login", this.currentUser.id);
+      this.$socket.emit("login");
     },
     message(data) {
       console.log("Page：" + data);
@@ -67,9 +73,9 @@ export default {
       console.log(data);
       this.loginUser = data;
     },
-    disconnected() {
-      this.$socket.emit("disconnect", this.currentUser.id);
-    },
+    // disconnected() {
+    //   this.$socket.emit("disconnect", this.currentUser.id);
+    // },
   },
   methods: {
     afterSendMessage(text) {
@@ -85,7 +91,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["currentUser"]),
+    ...mapState(["currentUser", "token"]),
   },
   created() {
     this.fetchChatHistory();

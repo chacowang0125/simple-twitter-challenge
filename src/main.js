@@ -3,13 +3,23 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import './assets/styles/basic.scss'
-import io from 'socket.io-client';
-
-
+import SocketIO from 'socket.io-client';
 import VueSocketIO from 'vue-socket.io'
-const connection = io.connect('http://e631-1-171-46-111.ngrok.io')
+
+const token= localStorage.getItem('token')
+
+
+// const connection = io.connect('http://ce59-2001-b011-1005-5e71-545-8c13-cfec-99ff.ngrok.io',{
+//   auth: { token },
+  
+//   auth: {token: store.state.token}
+// }
+// )
+
 Vue.use( new VueSocketIO({
-    connection,
+  debug: true,
+    connection: SocketIO('http://ce59-2001-b011-1005-5e71-545-8c13-cfec-99ff.ngrok.io',{auth: { token },autoConnect: false}),
+    // options: {autoConnect: false},
     vuex: {
         store,
         actionPrefix: 'SOCKET_',

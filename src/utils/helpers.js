@@ -1,7 +1,7 @@
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-const baseURL = 'http://e631-1-171-46-111.ngrok.io/api'
+const baseURL = 'http://ce59-2001-b011-1005-5e71-545-8c13-cfec-99ff.ngrok.io/api'
 
 const axiosInstance = axios.create({
     baseURL

@@ -75,9 +75,6 @@ export default {
     contents: {
       type: Array,
     },
-    publicHistory: {
-      type: Array,
-    },
   },
   data() {
     return {
