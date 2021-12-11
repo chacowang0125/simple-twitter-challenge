@@ -86,7 +86,7 @@ export default {
       this.$socket.emit("sendMessage", {
         text: text,
         id: this.currentUser.id,
-        room: this.room,
+        roomName: this.roomName,
       });
     },
     async fetchChatHistory() {
@@ -94,11 +94,11 @@ export default {
       this.contents = data.data;
     },
     joinRoom() {
-      this.$socket.emit("joinRoom", { room: this.roomName });
+      this.$socket.emit("joinRoom", { roomName: this.roomName });
       console.log("joined");
     },
     leaveRoom() {
-      this.$socket.emit("leaveRoom", { room: this.roomName });
+      this.$socket.emit("leaveRoom", { roomName: this.roomName });
       console.log("left");
     },
   },

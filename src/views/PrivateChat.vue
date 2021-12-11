@@ -7,7 +7,7 @@
         <img src="../assets/images/mail-icon.svg" alt="" />
       </div>
       <div class="user-list-content">
-        <UserListCard />
+        <PrivateUserListCard />
       </div>
       <PrivateMessageList />
     </div>
@@ -26,7 +26,7 @@
 
 <script>
 import Navbar from "../components/NavBar.vue";
-import UserListCard from "../components/UserListCard.vue";
+import PrivateUserListCard from "../components/PrivateUserListCard.vue";
 import ChatRoomMessage from "../components/ChatRoomMessage.vue";
 import { mapState } from "vuex";
 import chatAPI from "./../apis/chat";
@@ -35,7 +35,7 @@ export default {
   name: "PrivateChat",
   components: {
     Navbar,
-    UserListCard,
+    PrivateUserListCard,
     ChatRoomMessage,
   },
   data() {
