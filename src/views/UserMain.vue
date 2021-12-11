@@ -15,7 +15,10 @@
       </div>
     </div>
     <div class="popularbar-container">
-      <PopularBar :initial-top-users="topUsers" @after-follow-click="afterFollowClick"/>
+      <PopularBar
+        :initial-top-users="topUsers"
+        @after-follow-click="afterFollowClick"
+      />
     </div>
     <div class="modal">
       <ReplyPostModal
@@ -58,13 +61,13 @@ export default {
   data() {
     return {
       tweets: [],
-			topUsers: [],
+      topUsers: [],
       modaltweet: "",
       isLoading: true,
     };
   },
   methods: {
-		async fetchTopUsers() {
+    async fetchTopUsers() {
       try {
         const { data } = await usersAPI.getTopUsers();
         this.topUsers = data;
@@ -79,8 +82,8 @@ export default {
       this.$store.commit("toggleCreateNewTweetModal");
       this.getAllTweets();
     },
-		afterFollowClick() {
-			this.fetchTopUsers();
+    afterFollowClick() {
+      this.fetchTopUsers();
     },
     async getAllTweets() {
       try {
@@ -142,7 +145,10 @@ export default {
   },
   created() {
     this.getAllTweets();
-		this.fetchTopUsers()
+    this.fetchTopUsers();
+  },
+  mounted() {
+    this.$socket.open();
   },
 };
 </script>

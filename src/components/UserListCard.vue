@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+		<router-link :to="{ name: 'tweet', params: { id: user.id } }">
     <li class="card">
       <img :src="user.avatar" alt="" />
       <div class="card-info">
@@ -7,6 +8,7 @@
         <span class="account"> @{{ user.account }}</span>
       </div>
     </li>
+		</router-link>
   </div>
 </template>
 

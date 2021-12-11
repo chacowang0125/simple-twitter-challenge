@@ -54,12 +54,7 @@ export default {
       logged: {},
     };
   },
-  mounted() {
-    this.$socket.open();
-  },
-  // created() {
-  //   this.$socket.client.open();
-  // },
+
   sockets: {
     connect() {
       console.log("socket connected");
@@ -78,6 +73,7 @@ export default {
       this.logged = data;
       this.contents.push({ online: data });
     },
+
     // disconnected() {
     //   this.$socket.emit("disconnect", this.currentUser.id);
     // },
@@ -94,12 +90,16 @@ export default {
       const data = await chatAPI.publicHistory();
       this.contents = data.data;
     },
+			joinRoom() {
+			this.$socket.emit("joinRoom",{ room : this.room })
+		}
   },
   computed: {
     ...mapState(["currentUser", "token"]),
   },
   created() {
     this.fetchChatHistory();
+		this.joinRoom()
   },
 };
 </script>
@@ -108,7 +108,7 @@ export default {
 @import "../assets/styles/_variables.scss";
 .chatroom-container {
   display: flex;
-	// border: 5px solid green;
+  // border: 5px solid green;
   .title {
     @extend %page-title-style;
   }

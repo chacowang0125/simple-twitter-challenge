@@ -13,6 +13,7 @@
     font-weight: 400;
     font-size: 15px;
     overflow-y: scroll;
+    overflow-x: clip;
     &::-webkit-scrollbar {
         width: 3px;
         background-color: transparent;
@@ -92,6 +93,9 @@
         margin-left: 15px;
         img {
             width: 30px;
+            &:hover {
+                border: 1px solid red;
+            }
         }
     }
 }
