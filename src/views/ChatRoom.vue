@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="chatroom-container">
     <Navbar />
     <div class="user-list">
       <div class="title">上線使用者({{ this.loginUser.length }})</div>
@@ -106,8 +106,9 @@ export default {
 
 <style lang="scss" scoped>
 @import "../assets/styles/_variables.scss";
-.container {
+.chatroom-container {
   display: flex;
+	// border: 5px solid green;
   .title {
     @extend %page-title-style;
   }

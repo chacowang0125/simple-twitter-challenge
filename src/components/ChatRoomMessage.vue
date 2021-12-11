@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div class="content">
+    <div class="content" ref="scrollBar" id="content">
       <!-- <div v-for="message in publicHistory" :key="content.id">
         <div
           :class="[
@@ -121,13 +121,17 @@ export default {
       }
       this.$emit("after-send-message", this.message);
       this.message = "";
+			this.scrollToBottom()
     },
+		scrollToBottom() {
+			this.$refs.scrollBar.scrollTop = this.$refs.scrollBar.scrollHeight
+		}
   },
   computed: {
     ...mapState(["currentUser"]),
   },
-  // beforeDestroy() {
-  //   this.$socket.emit("disconnect", this.currentUser.id);
-  // },
+	updated() {
+    this.scrollToBottom()
+	}
 };
 </script>
