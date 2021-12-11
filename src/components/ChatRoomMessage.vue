@@ -116,6 +116,9 @@ export default {
     //   });
     // },
     send() {
+      if (!this.message.trim()) {
+        return;
+      }
       this.$emit("after-send-message", this.message);
       this.message = "";
     },

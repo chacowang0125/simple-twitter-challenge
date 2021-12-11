@@ -1,6 +1,6 @@
 @import "../styles/variables";
 .container {
-    height: 100%;
+    height: calc(100vh - 55px);
     display: flex;
     flex-direction: column;
     text-align: left;
@@ -23,6 +23,7 @@
     .notice {
         display: flex;
         justify-content: center;
+        margin-top: 20px;
         &-message {
             display: flex;
             align-items: center;
