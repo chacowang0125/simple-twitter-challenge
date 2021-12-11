@@ -115,6 +115,13 @@ export default {
   beforeDestroy() {
     this.leaveRoom();
   },
+  watch: {
+    contents: {
+      handler: function () {
+        this.fetchLatest();
+      },
+    },
+  },
 };
 </script>
 
