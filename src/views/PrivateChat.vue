@@ -7,9 +7,12 @@
         <img src="../assets/images/mail-icon.svg" alt="" />
       </div>
       <div class="user-list-content">
-        <PrivateUserListCard />
+        <PrivateUserListCard
+          v-for="latestMessage in latestMessages"
+          :key="latestMessage.userId"
+          :latestMessage="latestMessage"
+        />
       </div>
-      <PrivateMessageList />
     </div>
     <div class="message-content">
       <div class="title">聊天對象</div>
@@ -45,6 +48,7 @@ export default {
       contents: [],
       content: {},
       logged: {},
+      latestMessages: [],
     };
   },
   mounted() {
@@ -78,10 +82,16 @@ export default {
         text: text,
         id: this.$route.params,
       });
+      this.fetchLatest();
     },
+    async fetchLatest() {
+      const data = await chatAPI.getLatest();
+      console.log(data);
+      this.latestMessages = data.data;
+    },
+
     async fetchChatHistory(userId) {
       const data = await chatAPI.privateHistory({ userId });
-      console.log(data);
       this.contents = data.data;
     },
     joinRoom() {
@@ -100,6 +110,7 @@ export default {
     const { id } = this.$route.params;
     this.fetchChatHistory(id);
     this.joinRoom();
+    this.fetchLatest();
   },
   beforeDestroy() {
     this.leaveRoom();

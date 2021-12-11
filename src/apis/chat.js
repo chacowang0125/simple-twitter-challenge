@@ -7,5 +7,8 @@ export default {
     privateHistory({ userId }) {
         return apiHelper.get(`/messages/private/${userId}`)
     },
+    getLatest() {
+      return apiHelper.get(`/messages/latest`)
+    }
    
 }
