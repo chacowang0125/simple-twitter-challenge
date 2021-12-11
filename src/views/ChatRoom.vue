@@ -12,6 +12,7 @@
       <div class="content">
         <ChatRoomMessage
           :contents="contents"
+          :logged="logged"
           @after-send-message="afterSendMessage"
         />
       </div>
@@ -50,6 +51,7 @@ export default {
       loginUser: [],
       contents: [],
       content: {},
+      logged: {},
     };
   },
   mounted() {
@@ -65,13 +67,16 @@ export default {
       this.$socket.emit("login");
     },
     message(data) {
-      console.log("Page：" + data);
       this.content = data;
       this.contents.push(this.content);
     },
     loginUser(data) {
       console.log(data);
       this.loginUser = data;
+    },
+    loginStatus(data) {
+      this.logged = data;
+      this.contents.push({ online: data });
     },
     // disconnected() {
     //   this.$socket.emit("disconnect", this.currentUser.id);

@@ -1,9 +1,6 @@
 <template>
   <div class="container">
     <div class="content">
-      <div class="notice">
-        <div class="notice-message">上線了</div>
-      </div>
       <!-- <div v-for="message in publicHistory" :key="content.id">
         <div
           :class="[
@@ -24,28 +21,38 @@
         </div>
       </div> -->
       <div v-for="content in contents" :key="content.id">
-        <div
-          :class="[
-            content.UserId === currentUser.id
-              ? 'right-message'
-              : 'left-message',
-          ]"
-        >
-          <img
-            :src="content.avatar"
-            alt=""
-            v-show="content.UserId !== currentUser.id"
-          />
-          <div class="area">
-            <div class="text">
-              {{ content.text }}
-            </div>
-            <div class="time">
-              {{ content.createdAt | fromNow }}
+        <template v-if="content.online">
+          <div class="notice">
+            <div class="notice-message">{{ content.online }}</div>
+          </div>
+        </template>
+        <template v-else>
+          <div
+            :class="[
+              content.UserId === currentUser.id
+                ? 'right-message'
+                : 'left-message',
+            ]"
+          >
+            <img
+              :src="content.avatar"
+              alt=""
+              v-show="content.UserId !== currentUser.id"
+            />
+            <div class="area">
+              <div class="text">
+                {{ content.text }}
+              </div>
+              <div class="time">
+                {{ content.createdAt | fromNow }}
+              </div>
             </div>
           </div>
-        </div>
+        </template>
       </div>
+      <!-- <div class="notice">
+        <div class="notice-message">{{ this.logged }}</div>
+      </div> -->
     </div>
     <div class="input-area">
       <input
@@ -74,6 +81,9 @@ export default {
   props: {
     contents: {
       type: Array,
+    },
+    logged: {
+      type: String,
     },
   },
   data() {

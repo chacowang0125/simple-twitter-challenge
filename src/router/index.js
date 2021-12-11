@@ -132,6 +132,7 @@ router.beforeEach(async(to, from, next) => {
 
     let isAuthenticated = store.state.isAuthenticated
     let isAdmin = store.state.isAdmin
+    this.$socket.emit("login");
 
     // 有 token 的情況下，才向後端驗證
     if (token && token !== tokenInStore && !admin) {
