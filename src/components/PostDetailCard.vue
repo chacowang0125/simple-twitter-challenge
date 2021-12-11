@@ -42,7 +42,10 @@
         <span @click.stop.prevent="openReplyPostModal">
           <img src="../assets/images/comment-icon.svg" alt="comment-icon" />
         </span>
-        <span @click.prevent.stop="likeToggle(tweet.id)" :disabled="isProcessing">
+        <span
+          @click.prevent.stop="likeToggle(tweet.id)"
+          :disabled="isProcessing"
+        >
           <img
             v-if="tweet.isLiked === 1"
             src="../assets/images/liked-icon.svg"
@@ -59,7 +62,7 @@
       <div v-else v-for="reply in replies" :key="reply.id" class="tweet-reply">
         <div class="tweet-reply-img">
           <router-link :to="{ name: 'tweet', params: { id: reply.User.id } }">
-            <img :src="reply.avatar | emptyImage" alt="" />
+            <img :src="reply.User.avatar | emptyImage" alt="" />
           </router-link>
         </div>
         <div class="tweet-reply-content">
@@ -93,7 +96,7 @@ import { emptyImageFilter, fromNowFilter } from "../utils/mixins";
 export default {
   name: "PostDetailCard",
   mixins: [emptyImageFilter, fromNowFilter],
-props: ["initialTweet", "replies"],
+  props: ["initialTweet", "replies"],
   // props: {
   //   initialTweet: {
   //     type: Object,
@@ -107,7 +110,7 @@ props: ["initialTweet", "replies"],
   data() {
     return {
       tweet: this.initialTweet,
-			isProcessing : false
+      isProcessing: false,
     };
   },
   methods: {

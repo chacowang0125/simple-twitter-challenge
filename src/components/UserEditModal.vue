@@ -34,6 +34,13 @@
               alt="close modal"
               @click="removeCover"
             />
+            <input
+              type="text"
+              id="noCover"
+              name="noCover"
+              hidden
+              v-model="coverRemove"
+            />
           </div>
           <img class="modal-img-cover" :src="user.cover | emptyCoverImage" />
           <input
@@ -103,7 +110,7 @@
               <div class="error-message" v-show="introLengthError">
                 字數超出上限！
               </div>
-              <span class="length-hint">{{ introLength || 0}}/160</span>
+              <span class="length-hint">{{ introLength || 0 }}/160</span>
             </div>
           </div>
         </div>
@@ -146,6 +153,7 @@ export default {
       },
       nameLengthError: false,
       introLengthError: false,
+      coverRemove: "",
     };
   },
   methods: {
@@ -158,6 +166,7 @@ export default {
     },
     removeCover() {
       this.user.cover = "";
+      this.coverRemove = "yes";
     },
     handleCoverChange(e) {
       const { files } = e.target;
@@ -172,7 +181,7 @@ export default {
       const imgURL = window.URL.createObjectURL(files[0]);
       this.user.avatar = imgURL;
     },
-    handleSubmit() {
+    handleSubmit(e) {
       if (!this.user.name) {
         Toast.fire({
           icon: "warning",
@@ -180,7 +189,9 @@ export default {
         });
         return;
       }
-      this.$emit("after-submit", this.user);
+      const form = e.target; // <form></form>
+      const formData = new FormData(form);
+      this.$emit("after-submit", formData);
     },
   },
   computed: {

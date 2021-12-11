@@ -10,7 +10,10 @@
       />
     </div>
     <div class="popularbar-container">
-      <PopularBar />
+      <PopularBar
+        :initial-top-users="topUsers"
+        @after-follow-click="afterFollowClick"
+      />
     </div>
     <div class="modal">
       <CreateNewTweetModal
@@ -34,6 +37,7 @@ import ReplyPostModal from "./../components/ReplyPostModal.vue";
 import CreateNewTweetModal from "./../components/CreateNewTweetModal.vue";
 import Spinner from "../components/Spinner.vue";
 import tweetAPI from "../apis/tweet";
+import usersAPI from "../apis/users";
 import { mapState } from "vuex";
 import { Toast } from "../utils/helpers";
 
@@ -51,10 +55,22 @@ export default {
     return {
       tweet: "",
       replies: [],
+      topUsers: [],
       isLoading: true,
     };
   },
   methods: {
+    async fetchTopUsers() {
+      try {
+        const { data } = await usersAPI.getTopUsers();
+        this.topUsers = data;
+      } catch (error) {
+        Toast.fire({
+          icon: "warning",
+          title: "無法取得資料請稍後再試",
+        });
+      }
+    },
     async fetchTweet(tweetId) {
       try {
         this.isLoading = true;
@@ -89,11 +105,11 @@ export default {
         });
       }
     },
-    async handleAfterSubmit(id, inputData) {
+    async handleAfterSubmit(userId, inputData) {
       try {
         this.isProcessing = true;
         const { data } = await tweetAPI.addTweetReply({
-          tweetId: id,
+          tweetId: userId,
           comment: inputData,
         });
         if (data.status !== "success") {
@@ -104,7 +120,9 @@ export default {
           title: "新增回覆成功",
         });
         this.$store.commit("toggleReplyPostModal");
-        this.$router.go(); //跳頁
+        // this.$router.go(); //跳頁
+        const { id } = this.$route.params;
+        this.fetchReplies(id);
       } catch (error) {
         this.isProcessing = false;
         Toast.fire({
@@ -117,6 +135,9 @@ export default {
       this.$store.commit("toggleCreateNewTweetModal");
       this.$router.push("/");
     },
+    afterFollowClick() {
+      this.fetchTopUsers();
+    },
   },
   computed: {
     ...mapState(["openReplyPostModal", "openCreateNewTweetModal"]),
@@ -125,6 +146,7 @@ export default {
     const { id } = this.$route.params;
     this.fetchTweet(id);
     this.fetchReplies(id);
+    this.fetchTopUsers();
   },
 };
 </script>

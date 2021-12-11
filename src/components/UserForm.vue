@@ -5,7 +5,7 @@
       <form class="page-content-form" @submit.stop.prevent="handleSubmit">
         <div class="form-group">
           <label for="account">帳號</label>
-					<span class="symbol">@</span>
+          <span class="symbol">@</span>
           <input
             type="text"
             id="account"
@@ -168,6 +168,7 @@ export default {
 
         this.user.password = "";
         this.user.checkPassword = "";
+        this.$store.commit("setCurrentUser", this.user);
       } catch (error) {
         this.isProcessing = false;
         const { data } = error.response;
