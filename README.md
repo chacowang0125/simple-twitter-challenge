@@ -1,8 +1,8 @@
 # twitter-front-end (vue)
 
-## 專案網址:https://vincelee9527.github.io/twitter-front-end-vue/#/signin 
+## 專案網址:https://vincelee9527.github.io/twitter-front-end-vue/#/signin
 
-[![Signin](https://i.ibb.co/yY2prnq/2021-12-10.png)](https://vincelee9527.github.io/twitter-front-end-vue/#/signin)
+[![Signin](https://i.ibb.co/yY2prnq/2021-12-10.png)](https://chacowang0125.github.io/simple-twitter-challenge/#/signin)
 
 ## 功能
 - 前台與後台有不同的登入入口, 使用者只能使用前台功能，管理員只能使用後台功能
@@ -10,8 +10,11 @@
 - 使用者可以發布新的tweet，並對現有的tweet進行回覆和like/unlike
 - 使用者可以追蹤/退追其他使用者，前10名最高追隨者的使用者也會顯示
 - 使用者可以更改基本資料，也可以更改顯示給其他使用者的資料
+- 使用者可以在私人聊天室傳訊息給特定使用者，並跳出未讀通知
+- 使用者可以在公開聊天室傳訊息給其他正在線上的使用者
 - 管理員可以看到所有tweets並對其進行刪除
 - 管理員可以看到所有使用者資料
+- 使用者可以在公開聊天室傳訊息給其他使用者
 
 ## 測試帳號
 - 使用者帳號：`user1`
@@ -21,8 +24,8 @@
 ## 專案啟動 (連heroku)
 ### Project setup
 ```
-git clone https://github.com/VinceLee9527/twitter-front-end-vue.git
-cd twitter-front-end-vue
+git clone https://github.com/chacowang0125/simple-twitter-challenge.git
+cd simple-twitter-challenge
 npm install
 ```
 ### Compiles and hot-reloads for development
@@ -52,7 +55,7 @@ npx sequelize db:seed:all
 ### 建立`.env`檔案並設定環境參數(`.env.example`檔案內有實例)
 ### 啟動伺服器
 ```
-npm run dev  
+npm run dev
 nodemon app.js // windows使用者使用這行
 ```
 ### 若看到以下字串即代表成功啟動
@@ -60,7 +63,7 @@ nodemon app.js // windows使用者使用這行
 
 ### Project setup(前端)
 ```
-git clone https://github.com/VinceLee9527/twitter-front-end-vue.git
+git clone https://github.com/chacowang0125/simple-twitter-challenge.git
 cd twitter-front-end-vue
 npm install
 ```
