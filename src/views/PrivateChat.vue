@@ -122,13 +122,16 @@ export default {
   //   this.joinRoom();
   //   next();
   // },
-  beforeMount() {
-    const { id } = this.chatUserId;
-    console.log(id);
-    this.fetchChatHistory(id);
-  },
+  // beforeUpdate() {
+  //   const { id } = this.chatUserId;
+  //   console.log(id);
+  //   this.fetchChatHistory(id);
+  // },
 
   created() {
+    const id = this.chatUserId;
+    console.log(id);
+    this.fetchChatHistory(id);
     this.joinRoom();
     this.fetchLatest();
   },

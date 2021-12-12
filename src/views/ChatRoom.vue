@@ -54,7 +54,6 @@ export default {
       logged: {},
     };
   },
-
   sockets: {
     connect() {
       console.log("socket connected");
@@ -73,7 +72,6 @@ export default {
       this.logged = data;
       this.contents.push({ online: data });
     },
-
     // disconnected() {
     //   this.$socket.emit("disconnect", this.currentUser.id);
     // },
@@ -108,6 +106,10 @@ export default {
   created() {
     this.fetchChatHistory();
     this.joinRoom();
+    // socket.on("connect", () => {
+    //   this.$socket.emit("login");
+    // });
+    console.log("created");
   },
   beforeDestroy() {
     this.leaveRoom();
