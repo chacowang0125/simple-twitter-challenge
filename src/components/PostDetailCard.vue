@@ -97,16 +97,6 @@ export default {
   name: "PostDetailCard",
   mixins: [emptyImageFilter, fromNowFilter],
   props: ["initialTweet", "replies"],
-  // props: {
-  //   initialTweet: {
-  //     type: Object,
-  //     required: true,
-  //   },
-  //   replies: {
-  //     type: Array,
-  //     required: true,
-  //   },
-  // },
   data() {
     return {
       tweet: this.initialTweet,

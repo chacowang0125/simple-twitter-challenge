@@ -22,7 +22,6 @@
 
 <script>
 import usersAPI from "../apis/users";
-// import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "../utils/mixins";
 import { nameLengthFilter } from "./../utils/mixins";
 
@@ -69,20 +68,6 @@ export default {
     const userId = this.latestMessage.userId;
     this.fetchUser(userId);
   },
-  // beforeRouteUpdate(to, from, next) {
-  //   const userId = this.user.id;
-  //   this.fetchUser(userId);
-  //   next();
-  // },
-  // filters: {
-  //   dateToString(value) {
-  //     const dateString = new Date(value).toLocaleDateString("zh-TW", {
-  //       month: "long",
-  //       day: "numeric",
-  //     });
-  //     return `${dateString}`;
-  //   },
-  // },
 };
 </script>
 

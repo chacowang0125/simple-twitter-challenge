@@ -1,9 +1,6 @@
 <template>
   <div class="container">
     <div class="content" ref="scrollBar" id="content">
-      <!-- <template v-if ="!contents" >
-        <h3>請選擇聊天對象</h3>
-      </template> -->
       <div v-for="content in contents" :key="content.id">
         <template v-if="content.online">
           <div class="notice">
@@ -59,43 +56,13 @@ import { fromNowFilter } from "../utils/mixins";
 
 export default {
   mixins: [fromNowFilter],
-  props: ["contents","logged"]
-    // contents: {
-    //   type: Array,
-    // },
-    // logged: {
-    //   type: String,
-    // },
-  ,
+  props: ["contents","logged"],
   data() {
     return {
       message: "",
     };
   },
-  // sockets: {
-  //   connect() {
-  //     console.log("socket connected");
-  //     // this.socketConnect();
-  //     this.$socket.emit("login", this.currentUser.id);
-  //   },
-  //   message(data) {
-  //     console.log("Page：" + data);
-  //     this.return = data;
-  //   },
-  //   loginUser(data) {
-  //     console.log(data);
-  //     this.loginUser = data;
-  //   },
-  //   disconnected() {
-  //     this.$socket.emit("disconnect", this.currentUser.id);
-  //   },
-  // },
   methods: {
-    // socketConnect() {
-    //   this.$socket.emit("login", {
-    //     id: this.currentUser.id,
-    //   });
-    // },
     send() {
       if (!this.message.trim()) {
         return;
@@ -116,11 +83,6 @@ export default {
   },
   filters: {
     dateToString(value) {
-      // const dateString = new Date(value).toLocaleDateString("zh-TW", {
-      //   year: "numeric",
-      //   month: "long",
-      //   day: "numeric",
-      // });
       const timeString = new Date(value).toLocaleTimeString("zh-TW", {
         hour: "2-digit",
         minute: "2-digit",

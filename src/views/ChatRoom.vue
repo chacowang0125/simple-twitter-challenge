@@ -21,17 +21,6 @@
 </template>
 
 <script>
-// const dummyChat = {
-//   User:{
-//     id: 100,
-//     account: test,
-//     name: test,
-//     avatar: 'https://images.unsplash.com/photo-1544725176-7c40e5a71c5e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1494&q=8'
-//   },
-//   message: 'yooooooo',
-//   createdAt: "2021-11-30T12:30:00",
-// },
-
 import Navbar from "../components/NavBar.vue";
 import UserListCard from "../components/UserListCard.vue";
 import ChatRoomMessage from "../components/ChatRoomMessage.vue";
@@ -69,9 +58,6 @@ export default {
       this.logged = data;
       this.contents.push({ online: data });
     },
-    // disconnected() {
-    //   this.$socket.emit("disconnect", this.currentUser.id);
-    // },
 		messageNotRead(data) {
 			this.$store.commit("updateReadMessage",data)
     },
@@ -117,7 +103,6 @@ export default {
 @import "../assets/styles/_variables.scss";
 .chatroom-container {
   display: flex;
-  // border: 5px solid green;
   .title {
     @extend %page-title-style;
   }

@@ -69,7 +69,6 @@ export default {
         };
 
         const { data } = await tweetAPI.addNewTweet({ newTweet });
-
         if (data.status !== "success") throw new Error(data.message);
         Toast.fire({
           icon: "success",

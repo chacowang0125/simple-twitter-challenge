@@ -59,7 +59,6 @@ export default {
   sockets: {
     connect() {
       console.log("socket connected");
-      // this.socketConnect();
       this.$socket.emit("login");
     },
     message(data) {

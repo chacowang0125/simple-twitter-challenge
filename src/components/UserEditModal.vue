@@ -93,7 +93,6 @@
               <span class="length-hint">{{ nameLength }}/50</span>
             </div>
           </div>
-
           <div class="modal-input-group">
             <div
               class="modal-input-group-input intro"

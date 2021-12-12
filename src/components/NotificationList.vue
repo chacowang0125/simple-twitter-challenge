@@ -19,7 +19,6 @@
     @extend %page-title-style;
   }
   .card {
-    // height: 100px;
     padding: 10px 15px;
     border-bottom: 1px solid $page-divider;
     img {
