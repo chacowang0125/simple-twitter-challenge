@@ -93,7 +93,10 @@
         margin-left: 15px;
         img {
             width: 30px;
-            &:hover {}
+            cursor: pointer;
+            &:hover {
+                transform: scale(1.2)
+            }
         }
     }
 }

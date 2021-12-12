@@ -18,6 +18,7 @@
             &:hover {
                 .nav-title {
                     color: $main-orange;
+                    transform: scale(1.1);
                 }
                 .nav-icon {
                     overflow: hidden;

@@ -44,7 +44,7 @@
                 {{ content.text }}
               </div>
               <div class="time">
-                {{ content.createdAt | fromNow }}
+                {{ content.createdAt | dateToString }}
               </div>
             </div>
           </div>
@@ -132,6 +132,19 @@ export default {
   },
 	updated() {
     this.scrollToBottom()
-	}
+	},filters: {
+    dateToString(value) {
+      // const dateString = new Date(value).toLocaleDateString("zh-TW", {
+      //   year: "numeric",
+      //   month: "long",
+      //   day: "numeric",
+      // });
+      const timeString = new Date(value).toLocaleTimeString("zh-TW", {
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      return `${timeString}`;
+    },
+  },
 };
 </script>

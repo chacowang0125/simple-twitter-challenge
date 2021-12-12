@@ -6,6 +6,9 @@
     .list-container {
         margin: 15px 30px;
         width: 350px;
+        border-radius: 14px;
+        box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+        background-color: $popularList-background-color;
         .list-header {
             @extend %title-style;
             display: flex;
@@ -13,7 +16,6 @@
             height: 45px;
             padding: 10px 15px;
             border-radius: 14px 14px 0 0;
-            background-color: $popularList-background-color;
             color: $main-font-color;
             text-align: left;
         }
@@ -22,7 +24,6 @@
             width: 100%;
             height: 70px;
             padding: 10px 20px;
-            background-color: $popularList-background-color;
             border-top: 1px solid $page-divider;
             display: flex;
             &-avatar {
@@ -59,6 +60,9 @@
                     width: 90px;
                     color: #fff;
                     background-color: $main-orange;
+                }
+                &:hover {
+                    transform: scale(1.1);
                 }
             }
             &:last-child {
