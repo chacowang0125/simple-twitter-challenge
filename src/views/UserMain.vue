@@ -138,9 +138,9 @@ export default {
         });
       }
     },
-    messageNotReadInit() {
-      this.$socket.emit("messageNotReadInit");
-    },
+    // messageNotReadInit() {
+    //   this.$socket.emit("messageNotReadInit");
+    // },
   },
   computed: {
     ...mapState(["openCreateNewTweetModal", "openReplyPostModal", "notReadMessages","updateReadMessage"]),
@@ -148,7 +148,7 @@ export default {
   created() {
     this.getAllTweets();
     this.fetchTopUsers();
-    this.messageNotReadInit();
+    // this.messageNotReadInit();
   },
   mounted() {
     this.$socket.open();
@@ -159,12 +159,12 @@ export default {
       // this.socketConnect();
       this.$socket.emit("login");
     },
-    messageNotRead(data) {
-			this.$store.commit("updateReadMessage",data)
-    },
-		privateMessage() {
-			this.messageNotReadInit();
-		}
+    // messageNotRead(data) {
+		// 	this.$store.commit("updateReadMessage",data)
+    // },
+		// privateMessage() {
+		// 	this.messageNotReadInit();
+		// }
   },
 };
 </script>

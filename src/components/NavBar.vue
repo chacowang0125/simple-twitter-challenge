@@ -45,7 +45,7 @@
           <router-link :to="{ name: 'private-chat' }" class="nav-link">
             <img class="nav-icon" src="../assets/images/message-icon.svg" />
             <span class="nav-title">私人訊息</span>
-						<span class="not-read">{{notReadMessages}}</span>
+            <span class="not-read">{{ notReadMessages }}</span>
           </router-link>
         </li>
         <li
@@ -130,12 +130,33 @@ export default {
       this.$router.push("/signin");
       this.$router.go();
     },
+		messageNotReadInit() {
+      this.$socket.emit("messageNotReadInit");
+    },
   },
   computed: {
     currentRouteName() {
       return this.$route.name;
     },
-    ...mapState(["currentUser","notReadMessages"]),
+    ...mapState(["currentUser", "notReadMessages", "updateReadMessage"]),
+  },
+  sockets: {
+		connect() {
+			console.log("connected")
+			this.$
+    },
+    messageNotRead(data) {
+      this.$store.commit("updateReadMessage", data);
+    },
+    privateMessage() {
+      this.messageNotReadInit();
+    },
+  },
+  mounted() {
+    this.$socket.open();
+  },
+  created() {
+    this.messageNotReadInit();
   },
 };
 </script>

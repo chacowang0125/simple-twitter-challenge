@@ -15,6 +15,7 @@
 import Navbar from "../components/NavBar.vue";
 import NotificationList from "../components/NotificationList.vue";
 import PopularBar from "../components/PopularBar.vue";
+import { mapState } from "vuex";
 // import { Toast } from "../utils/helpers";
 // import usersAPI from "../apis/users";
 
@@ -49,7 +50,22 @@ export default {
   // created() {
   //   this.fetchTopUsers();
   },
+	sockets: {
+    messageNotRead(data) {
+			this.$store.commit("updateReadMessage",data)
+    },
+		privateMessage() {
+			this.messageNotReadInit();
+		}
+  },
+	computed: {
+    ...mapState(["updateReadMessage"]),
+  },
+	mounted() {
+    this.$socket.open();
+  },
 };
+
 </script>
 
 <style lang="scss" scoped>

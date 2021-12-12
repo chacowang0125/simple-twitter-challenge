@@ -4,36 +4,36 @@
       <!-- <template v-if ="!contents" >
         <h3>請選擇聊天對象</h3>
       </template> -->
-        <div v-for="content in contents" :key="content.id">
-          <template v-if="content.online">
-            <div class="notice">
-              <div class="notice-message">{{ content.online }}</div>
-            </div>
-          </template>
-          <template v-else>
-            <div
-              :class="[
-                content.UserId === currentUser.id
-                  ? 'right-message'
-                  : 'left-message',
-              ]"
-            >
-              <img
-                :src="content.avatar"
-                alt=""
-                v-show="content.UserId !== currentUser.id"
-              />
-              <div class="area">
-                <div class="text">
-                  {{ content.text }}
-                </div>
-                <div class="time">
-                  {{ content.createdAt | dateToString }}
-                </div>
+      <div v-for="content in contents" :key="content.id">
+        <template v-if="content.online">
+          <div class="notice">
+            <div class="notice-message">{{ content.online }}</div>
+          </div>
+        </template>
+        <template v-else>
+          <div
+            :class="[
+              content.UserId === currentUser.id
+                ? 'right-message'
+                : 'left-message',
+            ]"
+          >
+            <img
+              :src="content.avatar"
+              alt=""
+              v-show="content.UserId !== currentUser.id"
+            />
+            <div class="area">
+              <div class="text">
+                {{ content.text }}
+              </div>
+              <div class="time">
+                {{ content.createdAt | dateToString }}
               </div>
             </div>
-          </template>
-        </div>
+          </div>
+        </template>
+      </div>
     </div>
     <div class="input-area">
       <input
@@ -59,14 +59,14 @@ import { fromNowFilter } from "../utils/mixins";
 
 export default {
   mixins: [fromNowFilter],
-  props: {
-    contents: {
-      type: Array,
-    },
-    logged: {
-      type: String,
-    },
-  },
+  props: ["contents","logged"]
+    // contents: {
+    //   type: Array,
+    // },
+    // logged: {
+    //   type: String,
+    // },
+  ,
   data() {
     return {
       message: "",

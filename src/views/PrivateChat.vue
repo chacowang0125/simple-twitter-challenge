@@ -64,6 +64,7 @@ export default {
     message(data) {
       this.content = data;
       this.contents.push(this.content);
+			this.joinRoom()
     },
     // loginUser(data) {
     //   console.log(data);
@@ -112,6 +113,9 @@ export default {
     leaveRoom() {
       this.$socket.emit("leaveRoom", { id: this.chatUserId });
       console.log("left");
+    },
+		messageNotReadInit() {
+      this.$socket.emit("messageNotReadInit");
     },
   },
   computed: {
