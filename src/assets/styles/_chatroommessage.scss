@@ -43,7 +43,6 @@
         margin-top: 20px;
         img {
             @extend %chatroom-avatar-img-style;
-            border: 1px solid gray;
         }
         .area {
             margin-left: 10px;

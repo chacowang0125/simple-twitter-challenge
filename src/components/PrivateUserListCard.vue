@@ -22,7 +22,7 @@
 
 <script>
 import usersAPI from "../apis/users";
-import { Toast } from "../utils/helpers";
+// import { Toast } from "../utils/helpers";
 import { fromNowFilter } from "../utils/mixins";
 import { nameLengthFilter } from "./../utils/mixins";
 

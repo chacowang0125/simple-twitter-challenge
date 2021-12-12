@@ -13,7 +13,7 @@
         :class="{ active: currentRouteName === 'comment' }"
         @click.stop.prevent="CommentPage"
       >
-        <span class="stepper-tab">推文與回復</span>
+        <span class="stepper-tab">推文與回覆</span>
       </div>
       <div
         class="stepper-container"

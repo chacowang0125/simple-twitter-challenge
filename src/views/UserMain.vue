@@ -64,7 +64,6 @@ export default {
       topUsers: [],
       modaltweet: "",
       isLoading: true,
-      notRead: "",
     };
   },
   methods: {
@@ -109,7 +108,6 @@ export default {
         console.log(tweetId);
         this.$store.commit("toggleReplyPostModal");
         const { data } = await tweetAPI.getTweet({ tweetId });
-
         this.modaltweet = data;
       } catch {
         Toast.fire({
@@ -145,7 +143,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),
+    ...mapState(["openCreateNewTweetModal", "openReplyPostModal", "notReadMessages","updateReadMessage"]),
   },
   created() {
     this.getAllTweets();
@@ -162,9 +160,11 @@ export default {
       this.$socket.emit("login");
     },
     messageNotRead(data) {
-      // this.$socket.emit("messageNotRead");
-      this.notRead = data;
+			this.$store.commit("updateReadMessage",data)
     },
+		privateMessage() {
+			this.messageNotReadInit();
+		}
   },
 };
 </script>

@@ -69,17 +69,18 @@ export default {
     //   console.log(data);
     //   this.loginUser = data;
     // },
-    loginStatus(data) {
-      this.logged = data;
-      this.contents.push({ online: data });
-    },
-    messageNotRead() {
-      this.$socket.emit("messageNotRead");
-    },
+    // loginStatus(data) {
+    //   this.logged = data;
+    //   this.contents.push({ online: data });
+    // },
 
     // disconnected() {
     //   this.$socket.emit("disconnect", this.currentUser.id);
     // },
+    messageNotRead(data) {
+      this.$store.commit("updateReadMessage", data);
+      console.log("not read", data);
+    },
   },
   methods: {
     afterChatClick(id) {
@@ -114,7 +115,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["currentUser", "chatUserId"]),
+    ...mapState(["currentUser", "chatUserId", "updateReadMessage"]),
   },
   // beforeRouteEnter(to, from, next) {
   //   const { id } = this.chatUserId;

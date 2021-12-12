@@ -28,7 +28,11 @@ export default {
 	computed: {
     ...mapState(["openCreateNewTweetModal"]),
   },
-
+	sockets: {
+    messageNotRead(data) {
+			this.$store.commit("updateReadMessage",data)
+    },
+  },
 };
 </script>
 <style scoped>

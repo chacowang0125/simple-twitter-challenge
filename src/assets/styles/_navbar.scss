@@ -58,3 +58,11 @@
     height: 38px;
     @extend %button-style;
 }
+
+.not-read {
+    margin-left: 5px;
+    font-size: 15px;
+    font-weight: 800;
+    color: red;
+    font-family: Raleway;
+}

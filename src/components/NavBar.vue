@@ -44,8 +44,8 @@
         >
           <router-link :to="{ name: 'private-chat' }" class="nav-link">
             <img class="nav-icon" src="../assets/images/message-icon.svg" />
-            <div class="msg-counter"></div>
             <span class="nav-title">私人訊息</span>
+						<span class="not-read">{{notReadMessages}}</span>
           </router-link>
         </li>
         <li
@@ -135,7 +135,7 @@ export default {
     currentRouteName() {
       return this.$route.name;
     },
-    ...mapState(["currentUser"]),
+    ...mapState(["currentUser","notReadMessages"]),
   },
 };
 </script>

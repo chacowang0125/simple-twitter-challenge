@@ -172,6 +172,11 @@ export default {
       this.$store.commit("toggleTweetCreated");
     },
   },
+	sockets: {
+    messageNotRead(data) {
+			this.$store.commit("updateReadMessage",data)
+    },
+  },
 };
 </script>
 

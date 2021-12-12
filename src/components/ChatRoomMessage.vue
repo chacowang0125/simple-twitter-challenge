@@ -1,58 +1,39 @@
 <template>
   <div class="container">
     <div class="content" ref="scrollBar" id="content">
-      <!-- <div v-for="message in publicHistory" :key="content.id">
-        <div
-          :class="[
-            content.User.id === currentUser.id
-              ? 'right-message'
-              : 'left-message',
-          ]"
-        >
-          <img src="" alt="" v-show="content.User.id !== currentUser.id" />
-          <div class="area">
-            <div class="text">
-              {{ content.text }}
+      <!-- <template v-if ="!contents" >
+        <h3>請選擇聊天對象</h3>
+      </template> -->
+        <div v-for="content in contents" :key="content.id">
+          <template v-if="content.online">
+            <div class="notice">
+              <div class="notice-message">{{ content.online }}</div>
             </div>
-            <div class="time">
-              {{ content.createdAt | fromNow }}
+          </template>
+          <template v-else>
+            <div
+              :class="[
+                content.UserId === currentUser.id
+                  ? 'right-message'
+                  : 'left-message',
+              ]"
+            >
+              <img
+                :src="content.avatar"
+                alt=""
+                v-show="content.UserId !== currentUser.id"
+              />
+              <div class="area">
+                <div class="text">
+                  {{ content.text }}
+                </div>
+                <div class="time">
+                  {{ content.createdAt | dateToString }}
+                </div>
+              </div>
             </div>
-          </div>
+          </template>
         </div>
-      </div> -->
-      <div v-for="content in contents" :key="content.id">
-        <template v-if="content.online">
-          <div class="notice">
-            <div class="notice-message">{{ content.online }}</div>
-          </div>
-        </template>
-        <template v-else>
-          <div
-            :class="[
-              content.UserId === currentUser.id
-                ? 'right-message'
-                : 'left-message',
-            ]"
-          >
-            <img
-              :src="content.avatar"
-              alt=""
-              v-show="content.UserId !== currentUser.id"
-            />
-            <div class="area">
-              <div class="text">
-                {{ content.text }}
-              </div>
-              <div class="time">
-                {{ content.createdAt | dateToString }}
-              </div>
-            </div>
-          </div>
-        </template>
-      </div>
-      <!-- <div class="notice">
-        <div class="notice-message">{{ this.logged }}</div>
-      </div> -->
     </div>
     <div class="input-area">
       <input
@@ -121,18 +102,19 @@ export default {
       }
       this.$emit("after-send-message", this.message);
       this.message = "";
-			this.scrollToBottom()
+      this.scrollToBottom();
     },
-		scrollToBottom() {
-			this.$refs.scrollBar.scrollTop = this.$refs.scrollBar.scrollHeight
-		}
+    scrollToBottom() {
+      this.$refs.scrollBar.scrollTop = this.$refs.scrollBar.scrollHeight;
+    },
   },
   computed: {
     ...mapState(["currentUser"]),
   },
-	updated() {
-    this.scrollToBottom()
-	},filters: {
+  updated() {
+    this.scrollToBottom();
+  },
+  filters: {
     dateToString(value) {
       // const dateString = new Date(value).toLocaleDateString("zh-TW", {
       //   year: "numeric",

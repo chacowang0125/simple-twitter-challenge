@@ -65,7 +65,6 @@ export default {
       this.contents.push(this.content);
     },
     loginUser(data) {
-      console.log(data);
       this.loginUser = data;
     },
     loginStatus(data) {
@@ -75,6 +74,9 @@ export default {
     // disconnected() {
     //   this.$socket.emit("disconnect", this.currentUser.id);
     // },
+		messageNotRead(data) {
+			this.$store.commit("updateReadMessage",data)
+    },
   },
   mounted() {
     this.$socket.open();
@@ -106,10 +108,6 @@ export default {
   created() {
     this.fetchChatHistory();
     this.joinRoom();
-    // socket.on("connect", () => {
-    //   this.$socket.emit("login");
-    // });
-    console.log("created");
   },
   beforeDestroy() {
     this.leaveRoom();
