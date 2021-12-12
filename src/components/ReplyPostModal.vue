@@ -68,7 +68,6 @@ export default {
   mixins: [emptyImageFilter, fromNowFilter],
   props: {
     tweet: {
-      type: Object,
       required: true,
     },
   },

@@ -36,6 +36,7 @@ export default {
   data() {
     return {
       user: {},
+      userChatting: "",
     };
   },
   methods: {
@@ -52,14 +53,16 @@ export default {
           account,
           avatar,
         };
+        this.userChatting = name;
       } catch (error) {
         console.log(error);
       }
     },
     setChatUser(id) {
       this.$store.commit("setChatUser", this.latestMessage.userId);
-      this.$emit("after-chat-click", id);
+      this.$emit("after-chat-click", id, this.userChatting);
       console.log(id);
+      console.log(this.userChatting, "!!!");
     },
   },
   created() {
@@ -96,9 +99,9 @@ export default {
   display: flex;
   border-bottom: 1px solid $page-divider;
   text-align: left;
+  cursor: pointer;
   img {
     @extend %avatar-img-style;
-    border: 1px solid $page-divider;
   }
   .card-content {
     margin-left: 10px;
@@ -121,6 +124,9 @@ export default {
     &-text {
       @extend %user-account-style;
     }
+  }
+  &:hover {
+    transform: scale(1.02);
   }
 }
 </style>

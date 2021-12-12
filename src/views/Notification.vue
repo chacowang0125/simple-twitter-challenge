@@ -5,7 +5,7 @@
       <NotificationList />
     </div>
     <PopularBar
-      :initial-followed-users="followedUsers"
+      :initial-followed-users="followings"
       @after-follow-click="afterFollowClick"
     />
   </div>
@@ -16,8 +16,8 @@ import Navbar from "../components/NavBar.vue";
 import NotificationList from "../components/NotificationList.vue";
 import PopularBar from "../components/PopularBar.vue";
 import { mapState } from "vuex";
-// import { Toast } from "../utils/helpers";
-// import usersAPI from "../apis/users";
+import { Toast } from "../utils/helpers";
+import usersAPI from "../apis/users";
 
 export default {
   name: "Notification",
@@ -28,42 +28,32 @@ export default {
   },
   data() {
     return {
-      followedUsers: [],
+      followings: "",
     };
   },
-  methods: {
-    // async fetchTopUsers() {
-  //     try {
-  //       const { data } = await usersAPI.getTopUsers();
-  //       this.topUsers = data;
-  //     } catch (error) {
-  //       Toast.fire({
-  //         icon: "warning",
-  //         title: "無法取得資料請稍後再試",
-  //       });
-  //     }
-  //   },
-  //   afterFollowClick() {
-  //     this.fetchTopUsers();
-  //   },
-  // },
-  // created() {
-  //   this.fetchTopUsers();
-  },
-	sockets: {
-    messageNotRead(data) {
-			this.$store.commit("updateReadMessage",data)
+			methods: {
+		async fetchFollowings(userId) {
+      try {
+        const response = await usersAPI.getFollowings(userId);
+        this.followings = response.data;
+				console.log(response)
+      } catch (error) {
+				this.isLoading = false;
+        Toast.fire({
+          icon: "warning",
+          title: "無法取得跟隨者資料，請稍後再試",
+        });
+      }
     },
-		privateMessage() {
-			this.messageNotReadInit();
-		}
+	
   },
+	created() {
+		this.fetchFollowings(this.currentUser.id)
+		console.log(this.currentUser.id)
+	},
 	computed: {
-    ...mapState(["updateReadMessage"]),
-  },
-	mounted() {
-    this.$socket.open();
-  },
+		...mapState(['currentUser'])
+	}
 };
 
 </script>

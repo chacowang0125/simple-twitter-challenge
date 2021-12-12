@@ -16,7 +16,7 @@
       </div>
     </div>
     <div class="message-content">
-      <div class="title">聊天對象</div>
+      <div class="title">{{ userChatting || '聊天對象'}}</div>
       <div class="content">
         <ChatRoomMessage
           :contents="contents"
@@ -50,6 +50,7 @@ export default {
       content: {},
       logged: {},
       latestMessages: [],
+      userChatting: "",
     };
   },
   mounted() {
@@ -64,30 +65,23 @@ export default {
     message(data) {
       this.content = data;
       this.contents.push(this.content);
-			this.joinRoom()
+      this.joinRoom();
     },
-    // loginUser(data) {
-    //   console.log(data);
-    //   this.loginUser = data;
-    // },
-    // loginStatus(data) {
-    //   this.logged = data;
-    //   this.contents.push({ online: data });
-    // },
-
-    // disconnected() {
-    //   this.$socket.emit("disconnect", this.currentUser.id);
-    // },
     messageNotRead(data) {
       this.$store.commit("updateReadMessage", data);
       console.log("not read", data);
     },
+		//有人發送private msg時，除了自己以外收到廣播
+		privateMessage() {
+			this.fetchLatest()
+    },
   },
   methods: {
-    afterChatClick(id) {
+    afterChatClick(id,userChatting) {
       this.$store.commit("setChatUser", id);
       this.joinRoom();
       this.fetchChatHistory(id);
+      this.userChatting = userChatting
     },
     afterSendMessage(text) {
       this.$socket.emit("sendMessage", {
@@ -114,25 +108,13 @@ export default {
       this.$socket.emit("leaveRoom", { id: this.chatUserId });
       console.log("left");
     },
-		messageNotReadInit() {
+    messageNotReadInit() {
       this.$socket.emit("messageNotReadInit");
     },
   },
   computed: {
     ...mapState(["currentUser", "chatUserId", "updateReadMessage"]),
   },
-  // beforeRouteEnter(to, from, next) {
-  //   const { id } = this.chatUserId;
-  //   this.fetchChatHistory(id);
-  //   this.joinRoom();
-  //   next();
-  // },
-  // beforeUpdate() {
-  //   const { id } = this.chatUserId;
-  //   console.log(id);
-  //   this.fetchChatHistory(id);
-  // },
-
   created() {
     const id = this.chatUserId;
     console.log(id);
