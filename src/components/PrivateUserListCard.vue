@@ -1,6 +1,6 @@
 <template>
   <div class="mescontainer" @click="setChatUser(user.id)">
-    <li class="card">
+    <li v-show="!isLoading" class="card">
       <img :src="user.avatar" alt="" />
       <div class="card-content">
         <div class="card-content-info">
@@ -36,6 +36,7 @@ export default {
     return {
       user: {},
       userChatting: "",
+			isLoading: true
     };
   },
   methods: {
@@ -53,6 +54,7 @@ export default {
           avatar,
         };
         this.userChatting = name;
+				this.isLoading = false
       } catch (error) {
         console.log(error);
       }
@@ -61,7 +63,6 @@ export default {
       this.$store.commit("setChatUser", this.latestMessage.userId);
       this.$emit("after-chat-click", id, this.userChatting);
       console.log(id);
-      console.log(this.userChatting, "!!!");
     },
   },
   created() {
