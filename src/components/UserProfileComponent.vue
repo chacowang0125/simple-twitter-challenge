@@ -153,9 +153,8 @@ export default {
       }
     },
     sendMessage() {
-      this.$store.commit("setChatUser", this.user);
-      console.log(this.user.id);
-      this.$router.push({ name: "private-chat", params: { id: this.user.id } });
+      this.$store.commit("setChatUser", this.user.id);
+      this.$router.push({ name: "private-chat" });
     },
   },
   computed: {

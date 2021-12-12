@@ -11,6 +11,7 @@
           v-for="latestMessage in latestMessages"
           :key="latestMessage.userId"
           :latestMessage="latestMessage"
+          @after-chat-click="afterChatClick"
         />
       </div>
     </div>
@@ -72,15 +73,24 @@ export default {
       this.logged = data;
       this.contents.push({ online: data });
     },
+    messageNotRead() {
+      this.$socket.emit("messageNotRead");
+    },
+
     // disconnected() {
     //   this.$socket.emit("disconnect", this.currentUser.id);
     // },
   },
   methods: {
+    afterChatClick(id) {
+      this.$store.commit("setChatUser", id);
+      this.joinRoom();
+      this.fetchChatHistory(id);
+    },
     afterSendMessage(text) {
       this.$socket.emit("sendMessage", {
         text: text,
-        id: this.$route.params,
+        id: this.chatUserId,
       });
       this.fetchLatest();
     },
@@ -95,25 +105,32 @@ export default {
       this.contents = data.data;
     },
     joinRoom() {
-      this.$socket.emit("joinRoom", { id: this.$route.params });
+      this.$socket.emit("joinRoom", { id: this.chatUserId });
       console.log("joined");
     },
     leaveRoom() {
-      this.$socket.emit("leaveRoom", { id: this.$route.params });
+      this.$socket.emit("leaveRoom", { id: this.chatUserId });
       console.log("left");
     },
   },
   computed: {
-    ...mapState(["currentUser", "chatUser"]),
+    ...mapState(["currentUser", "chatUserId"]),
   },
-  created() {
-    const { id } = this.$route.params;
+  // beforeRouteEnter(to, from, next) {
+  //   const { id } = this.chatUserId;
+  //   this.fetchChatHistory(id);
+  //   this.joinRoom();
+  //   next();
+  // },
+  beforeMount() {
+    const { id } = this.chatUserId;
+    console.log(id);
     this.fetchChatHistory(id);
+  },
+
+  created() {
     this.joinRoom();
     this.fetchLatest();
-  },
-  beforeDestroy() {
-    this.leaveRoom();
   },
   watch: {
     contents: {

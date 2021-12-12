@@ -64,6 +64,7 @@ export default {
       topUsers: [],
       modaltweet: "",
       isLoading: true,
+      notRead: "",
     };
   },
   methods: {
@@ -139,6 +140,9 @@ export default {
         });
       }
     },
+    messageNotReadInit() {
+      this.$socket.emit("messageNotReadInit");
+    },
   },
   computed: {
     ...mapState(["openCreateNewTweetModal", "openReplyPostModal"]),
@@ -146,9 +150,21 @@ export default {
   created() {
     this.getAllTweets();
     this.fetchTopUsers();
+    this.messageNotReadInit();
   },
   mounted() {
     this.$socket.open();
+  },
+  sockets: {
+    connect() {
+      console.log("socket connected");
+      // this.socketConnect();
+      this.$socket.emit("login");
+    },
+    messageNotRead(data) {
+      // this.$socket.emit("messageNotRead");
+      this.notRead = data;
+    },
   },
 };
 </script>

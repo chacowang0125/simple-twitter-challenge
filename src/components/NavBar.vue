@@ -42,8 +42,9 @@
           class="nav-list"
           :class="{ active: currentRouteName === 'private-chat' }"
         >
-          <router-link to="/privatechat" class="nav-link">
+          <router-link :to="{ name: 'private-chat' }" class="nav-link">
             <img class="nav-icon" src="../assets/images/message-icon.svg" />
+            <div class="msg-counter"></div>
             <span class="nav-title">私人訊息</span>
           </router-link>
         </li>

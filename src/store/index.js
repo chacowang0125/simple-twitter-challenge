@@ -23,12 +23,8 @@ export default new Vuex.Store({
     profileEditModal: false,
     tweetCreated: false,
     replyCreated: false,
-    chatUser: {
-      id: -1,
-      account: "",
-      name: "",
-      avatar: "",
-    },
+    chatUserId: -1,
+     
   },
   getters: {
     getCurrentUser: (state) => {
@@ -54,11 +50,8 @@ export default new Vuex.Store({
       state.isAuthenticated = true;
       state.token = localStorage.getItem("token");
     },
-    setChatUser(state, chatUser) {
-      state.chatUser = {
-        ...state.chatUser,
-        ...chatUser,
-      };
+    setChatUser(state, chatUserId) {
+      state.chatUserId =  chatUserId
     },
     revokeAuthentication(state) {
       state.currentUser = {};

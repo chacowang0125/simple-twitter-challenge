@@ -1,24 +1,22 @@
 <template>
-  <div class="mescontainer">
-    <router-link :to="{ name: 'tweet', params: { id: latestMessage.userId } }">
-      <li class="card">
-        <img :src="user.avatar" alt="" />
-        <div class="card-content">
-          <div class="card-content-info">
-            <span class="name">{{ user.name }}</span>
-            <span class="account"> @{{ user.account }}</span>
-            <span class="created">
-              {{ latestMessage.createdAt | fromNow }}
-            </span>
-          </div>
-          <div>
-            <span class="card-content-text">
-              {{ latestMessage.text | nameLength }}</span
-            >
-          </div>
+  <div class="mescontainer" @click="setChatUser(user.id)">
+    <li class="card">
+      <img :src="user.avatar" alt="" />
+      <div class="card-content">
+        <div class="card-content-info">
+          <span class="name">{{ user.name }}</span>
+          <span class="account"> @{{ user.account }}</span>
+          <span class="created">
+            {{ latestMessage.createdAt | fromNow }}
+          </span>
         </div>
-      </li>
-    </router-link>
+        <div>
+          <span class="card-content-text">
+            {{ latestMessage.text | nameLength }}</span
+          >
+        </div>
+      </div>
+    </li>
   </div>
 </template>
 
@@ -55,18 +53,24 @@ export default {
           avatar,
         };
       } catch (error) {
-        Toast.fire({
-          icon: "warning",
-          title: "無法抓取資料",
-        });
+        console.log(error);
       }
+    },
+    setChatUser(id) {
+      this.$store.commit("setChatUser", this.latestMessage.userId);
+      this.$emit("after-chat-click", id);
+      console.log(id);
     },
   },
   created() {
     const userId = this.latestMessage.userId;
-    console.log(userId);
     this.fetchUser(userId);
   },
+  // beforeRouteUpdate(to, from, next) {
+  //   const userId = this.user.id;
+  //   this.fetchUser(userId);
+  //   next();
+  // },
   // filters: {
   //   dateToString(value) {
   //     const dateString = new Date(value).toLocaleDateString("zh-TW", {
@@ -82,8 +86,8 @@ export default {
 <style lang="scss" scoped>
 @import "../assets/styles/_variables.scss";
 .mescontainer {
-	display: flex;
-	flex-direction: column-reverse;
+  display: flex;
+  flex-direction: column-reverse;
 }
 .card {
   width: 100%;
@@ -106,7 +110,7 @@ export default {
       }
       .account {
         @extend %user-account-style;
-				margin-left: 5px;
+        margin-left: 5px;
       }
       .created {
         position: absolute;
@@ -114,9 +118,9 @@ export default {
         @extend %user-account-style;
       }
     }
-		&-text {
-				@extend %user-account-style;
-      }
+    &-text {
+      @extend %user-account-style;
+    }
   }
 }
 </style>
