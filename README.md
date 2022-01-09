@@ -15,13 +15,13 @@ https://vincelee9527.github.io/twitter-front-end-vue/#/signin
 ## Preview
 
 - 首頁
-  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/index.png)
+  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/img/index.png)
 - 個人主頁面
-  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/personal.png)
+  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/img/personal.png)
 - 推文詳細頁
-  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/tweet.png)
+  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/img/tweet.png)
 - 公開聊天頁面
-  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/chat.png)
+  ![image](https://github.com/chacowang0125/simple-twitter-challenge/blob/challenge/public/img/chat.png)
 
 ## 功能
 
