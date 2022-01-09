@@ -4,7 +4,7 @@
 
 ## 專案網址:
 
-https://vincelee9527.github.io/twitter-front-end-vue/#/signin
+https://chacowang0125.github.io/simple-twitter-challenge/#/signin
 
 ## 測試帳號
 
